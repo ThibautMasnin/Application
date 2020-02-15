@@ -2,7 +2,6 @@ package Application.Controller;
 
 import Application.View.CreditView;
 import Application.View.ParametrePartieView;
-import Application.View.PartieView;
 import Application.View.ReglageView;
 import Application.View.ReglementView;
 import Application.View.ReprendrePartieView;
@@ -30,16 +29,16 @@ public class JeuController<T extends ActionEvent> implements EventHandler<T> {
         	else if (((Button) event.getSource()).getId() == "Reprendre partie") {
         		ReprendrePartieView pv = new ReprendrePartieView(s);
         	}
-        	else if (((Button) event.getSource()).getId() == "Réglement") {
+        	else if (((Button) event.getSource()).getId() == "Rï¿½glement") {
         		ReglementView rv = new ReglementView(s);
         	}        	
-        	else if (((Button) event.getSource()).getId() == "Crédits") {
+        	else if (((Button) event.getSource()).getId() == "Crï¿½dits") {
         		CreditView rv = new CreditView(s);
         	}	
         	else if (((Button) event.getSource()).getId() == "Statistiques") {
         		StatistiqueView rv = new StatistiqueView(s);
         	}        	
-        	else if (((Button) event.getSource()).getId() == "Réglages") {
+        	else if (((Button) event.getSource()).getId() == "Rï¿½glages") {
         		ReglageView rv = new ReglageView(s);
         	}
         	else if (((Button) event.getSource()).getId() == "Quitter") {

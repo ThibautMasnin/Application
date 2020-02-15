@@ -33,7 +33,7 @@ public class StatistiqueView implements Observer {
     	BorderPane bp = new BorderPane();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Images/wallpaper.png');" +
+        bp.setStyle("-fx-background-image: url('Application/Resources/Images/wallpaper.png');" +
 				"-fx-background-position: center center;" +
 	            "-fx-background-size: cover;");
 
@@ -41,7 +41,7 @@ public class StatistiqueView implements Observer {
         int ht  = (int)dimension.getHeight();
         
 		Label title = new Label("Statistiques");
-		title.setFont(Font.font("Viner Hand ITC", 64));
+		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 		
 		Text parties = new Text("Parties jouées : " + "");
@@ -53,7 +53,7 @@ public class StatistiqueView implements Observer {
 
         Button btnRetour = new Button();
         btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Images/retour.png');" +
+        btnRetour.setStyle("-fx-background-image: url('Application/Resources/Images/retour.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnRetour.setMinWidth(140);
         btnRetour.setMinHeight(54);

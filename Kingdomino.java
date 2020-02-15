@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.postgresql.ds.PGSimpleDataSource;
-
 import java.sql.SQLException;
 
 public class Kingdomino extends Application {
@@ -18,32 +17,35 @@ public class Kingdomino extends Application {
     @Override
     public void start(Stage primaryStage) throws SQLException {
 
-
-        // ZiiCTO
-        //Domino dmn = new Domino(0, 0, 50, 50, "Application/Images/chateau.png");
-        //ImageView dmn = new ImageView(new Image("Application/Images/dominoFaceRecto.jpg"));
-        //PartieView partieView = new PartieView(primaryStage, dmn, true);
-
-
-
-        // TheNordix
-        //primaryStage.setTitle("KingDomino");
-        //JeuView primaryScreen = new JeuView(primaryStage);
+        // Valentin
+/*
+    	Domino dmn = new Domino(0, 0, 50, 50, "Application/Resources/Images/chateau.png");
+        ImageView dmn = new ImageView(new Image("Application/Resources/Images/dominoFaceRecto.jpg"));
+        PartieView partieView = new PartieView(primaryStage, dmn, true);
+*/
 
 
-        /*
-        // Efekan, kevin, aymeric
-        PGSimpleDataSource ds = new PGSimpleDataSource();
+        // Thibaut
+    	
+        primaryStage.setTitle("KingDomino");
+        JeuView primaryScreen = new JeuView(primaryStage);
 
+
+        
+        // Efekan, Kevin, Aymeric
+/*        
+    	PGSimpleDataSource ds = new PGSimpleDataSource();
 		ds.setServerName("localhost");
 		ds.setDatabaseName("m4106");
 		ds.setUser("postgres");
 		ds.setPassword("MON MDP BDD");
 
-        //On dÃemarre une partie et on la lance
         PartieModel partieModel = new PartieModel();
         partieModel.jouer();
-         */
-
+*/
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
     }
 }

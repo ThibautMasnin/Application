@@ -134,7 +134,7 @@ public class PartieView implements Observer {
         vDetailPartie.setMinWidth(210);
 
 
-        /** PLlateau des joueurs **/
+        /** Plateau des joueurs **/
 
         // JOUEUR 1
         Grille grille = new Grille(50, 25, 10, 10);
@@ -159,12 +159,12 @@ public class PartieView implements Observer {
         ArrayList<Domino> arrayList = new ArrayList<Domino>();
         for (int i = 0 ; i < 8 ; i++){
             if (i < 4) {
-                Domino domino = new Domino(50, 100 * i, 50, 50, "Application/Images/chateau.png");
+                Domino domino = new Domino(50, 100 * i, 50, 50, "Application/Resources/Images/chateau.png");
                 dominoSelection.getChildren().add(domino);
                 arrayList.add(domino);
             }
             else {
-                Domino domino = new Domino(150, 100 * j, 50, 50, "Application/Images/chateau.png");
+                Domino domino = new Domino(150, 100 * j, 50, 50, "Application/Resources/Images/chateau.png");
                 dominoSelection.getChildren().add(domino);
                 arrayList.add(domino);
                 j++;

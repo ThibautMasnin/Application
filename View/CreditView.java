@@ -29,7 +29,7 @@ public class CreditView implements Observer {
     	BorderPane bp = new BorderPane();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Images/wallpaper.png');" +
+        bp.setStyle("-fx-background-image: url('Application/Resources/Images/wallpaper.png');" +
 				"-fx-background-position: center center;" +
 	            "-fx-background-size: cover;");
 
@@ -37,7 +37,7 @@ public class CreditView implements Observer {
         int ht  = (int)dimension.getHeight();
         
 		Label title = new Label("Crédits");
-		title.setFont(Font.font("Viner Hand ITC", 64));
+		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 		
 		Text devs = new Text("Jeu développé par :\n\nBAJARD Kévin\nDI BENEDETTO Valentin\nGOCER Efekan\nMASNIN Thibaut\nSULEK Aymeric");
@@ -45,7 +45,7 @@ public class CreditView implements Observer {
 
         Button btnRetour = new Button();
         btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Images/retour.png');" +
+        btnRetour.setStyle("-fx-background-image: url('Application/Resources/Images/retour.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnRetour.setMinWidth(140);
         btnRetour.setMinHeight(54);

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
+import Application.Controller.ReglageController;
 import Application.Controller.ReglementController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -17,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -26,18 +28,19 @@ import javafx.stage.Stage;
 public class ReprendrePartieView implements Observer {
 
 	final VBox vb = new VBox();
+	final HBox hb = new HBox();
 	
     public ReprendrePartieView(Stage stage) {
 		BorderPane bp = new BorderPane();
 		TableView tab = new TableView<>();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Images/wallpaper.png');" +
+        bp.setStyle("-fx-background-image: url('Application/Resources/Images/wallpaper.png');" +
 				"-fx-background-position: center center;" +
 	            "-fx-background-size: cover;");
 
 		Label title = new Label("Reprendre une sauvegarde");
-		title.setFont(Font.font("Viner Hand ITC", 64));
+		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -51,13 +54,23 @@ public class ReprendrePartieView implements Observer {
         
         Button btnRetour = new Button();
         btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Images/retour.png');" +
+        btnRetour.setStyle("-fx-background-image: url('Application/Resources/Images/retour.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnRetour.setMinWidth(140);
         btnRetour.setMinHeight(54);
-        btnRetour.setOnAction(new ReglementController<ActionEvent>(stage));
-
-        vb.getChildren().addAll(title, tab, btnRetour);   
+        btnRetour.setOnAction(new ReglageController<ActionEvent>(stage));
+        Button btnValider = new Button();
+        btnValider.setId("Valider");
+        btnValider.setStyle("-fx-background-image: url('Application/Resources/Images/valider.png');" +
+				   "-fx-background-color: rgba(0, 0, 0, 0);");
+        btnValider.setMinWidth(140);
+        btnValider.setMinHeight(54);
+        btnValider.setOnAction(new ReglageController<ActionEvent>(stage));
+        
+        hb.getChildren().addAll(btnRetour, btnValider);   
+        hb.setAlignment(Pos.CENTER);
+        hb.setSpacing(25);
+        vb.getChildren().addAll(title, tab, hb);   
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(45);
         vb.setPadding(new Insets(0, 0,10,0));

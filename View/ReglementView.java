@@ -31,12 +31,12 @@ public class ReglementView implements Observer {
 		ScrollPane sp = new ScrollPane();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         Scene scene = new Scene(bp, screenBounds.getWidth(), screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Images/wallpaper.png');" +
+        bp.setStyle("-fx-background-image: url('Application/Resources/Images/wallpaper.png');" +
 				"-fx-background-position: center center;" +
 	            "-fx-background-size: cover;");
 
 		Label title = new Label("Réglement");
-		title.setFont(Font.font("Viner Hand ITC", 64));
+		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 		
         String langue = new String("fr");
@@ -50,10 +50,10 @@ public class ReglementView implements Observer {
         Image src2 = null;
         Image src3 = null;
         Image src4 = null;
-		src1 = new Image("Application/Images/rules/rules1-" + langue + ".png");
-		src2 = new Image("Application/Images/rules/rules2-" + langue + ".png");
-		src3 = new Image("Application/Images/rules/rules3-" + langue + ".png");
-		src4 = new Image("Application/Images/rules/rules4.png");
+		src1 = new Image("Application/Resources/Images/rules/rules1-" + langue + ".png");
+		src2 = new Image("Application/Resources/Images/rules/rules2-" + langue + ".png");
+		src3 = new Image("Application/Resources/Images/rules/rules3-" + langue + ".png");
+		src4 = new Image("Application/Resources/Images/rules/rules4.png");
 
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int wd  = (int)dimension.getWidth();
@@ -74,7 +74,7 @@ public class ReglementView implements Observer {
 
         Button btnRetour = new Button();
         btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Images/retour.png');" +
+        btnRetour.setStyle("-fx-background-image: url('Application/Resources/Images/retour.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnRetour.setMinWidth(140);
         btnRetour.setMinHeight(54);
