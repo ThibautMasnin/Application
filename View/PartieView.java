@@ -1,53 +1,35 @@
 package Application.View;
 
-import Application.Controller.PartieController;
-import Application.Controller.PartieControllerME;
-import Application.Model.Deck;
 import Application.Model.Domino;
 import Application.Model.Grille;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.dom.DOMCryptoContext;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-
-public class PartieView implements Observer {
+public class PartieView implements EventHandler<ActionEvent> {
     private Domino dominoTMP;
-    private ImageView dmn;
-    private double initXCarte;
-    private double initYCarte;
-    private Point2D dragAnchor;
-    private boolean bool;
 
 
-    public PartieView(Stage partieStage, ImageView i, boolean b) {
+    public PartieView(Stage partieStage) {
         partieStage.setTitle("Partie en cours");
 
-        //dominoTMP = d;
-        dmn = i;
-        //initXCarte = posX;
-        //initYCarte = posY;
-        bool = b;
+        //dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
+        Domino d1 = new Domino(-50, 125, 50, 100, "Application/Ressources/Dominos/D1.jpg");
+        Domino d2 = new Domino(-150, 125, 50, 100, "Application/Ressources/Dominos/D2.jpg");
+        Domino d3 = new Domino(-250, 125, 50, 100, "Application/Ressources/Dominos/D3.jpg");
+        Domino d4 = new Domino(-350, 125, 50, 100, "Application/Ressources/Dominos/D4.jpg");
+        Domino d5 = new Domino(-50, 275, 50, 100, "Application/Ressources/Dominos/D5.jpg");
+        Domino d6 = new Domino(-150, 275, 50, 100, "Application/Ressources/Dominos/D6.jpg");
+        Domino d7 = new Domino(-250, 275, 50, 100, "Application/Ressources/Dominos/D7.jpg");
+        Domino d8 = new Domino(-350, 275, 50, 100, "Application/Ressources/Dominos/D8.jpg");
 
 
         /** BORDERPANE PRINCIPAL **/
@@ -134,13 +116,20 @@ public class PartieView implements Observer {
         vDetailPartie.setMinWidth(210);
 
 
-        /** Plateau des joueurs **/
-
+        /** PLATEAU DES JOUEURS **/
         // JOUEUR 1
         Grille grille = new Grille(50, 25, 10, 10);
         grille.dessinerGrille();
-        grille.dessinerBoard();
-        //dominoTMP = grille.getDm();
+        //dominoTMP.setOnMouseClicked(grille);
+        d1.setOnMouseClicked(grille);
+        d2.setOnMouseClicked(grille);
+        d3.setOnMouseClicked(grille);
+        d4.setOnMouseClicked(grille);
+        d5.setOnMouseClicked(grille);
+        d6.setOnMouseClicked(grille);
+        d7.setOnMouseClicked(grille);
+        d8.setOnMouseClicked(grille);
+
 
         // JOUEUR 2
 
@@ -148,140 +137,85 @@ public class PartieView implements Observer {
 
         // JOUEUR 4
 
-        Group test = new Group();
-        test.minWidth(1000);
-        test.getChildren().addAll(dmn, grille.getGroupe());
+        Group zoneJeu = new Group();
+        grille.setPane(d1);
+        grille.setPane(d2);
+        grille.setPane(d3);
+        grille.setPane(d4);
+        grille.setPane(d5);
+        grille.setPane(d6);
+        grille.setPane(d7);
+        grille.setPane(d8);
+        zoneJeu.getChildren().add(grille.getPane());
 
-        /*
-        // Zone dominos à selectionner
-        Group dominoSelection = new Group();
-        int j = 0;
-        ArrayList<Domino> arrayList = new ArrayList<Domino>();
-        for (int i = 0 ; i < 8 ; i++){
-            if (i < 4) {
-                Domino domino = new Domino(50, 100 * i, 50, 50, "Application/Resources/Images/chateau.png");
-                dominoSelection.getChildren().add(domino);
-                arrayList.add(domino);
-            }
-            else {
-                Domino domino = new Domino(150, 100 * j, 50, 50, "Application/Resources/Images/chateau.png");
-                dominoSelection.getChildren().add(domino);
-                arrayList.add(domino);
-                j++;
-            }
-        }
-        */
+        dominoTMP = d1;
 
 
+        /** EVENT DOMINO **/
+        bRotateDroit.setOnAction(this);
 
-        /** Event dominos **/
-        bRotateDroit.setOnAction(e -> {
-            PartieController partieController = new PartieController(partieStage, dmn, bool);
-            partieController.handle(e);
-        });
+        bRotateGauche.setOnAction(this);
 
-
-        bRotateGauche.setOnAction(e->{
-            PartieController partieController = new PartieController(partieStage, dmn, bool);
-            partieController.handle(e);
-        });
-
-        bRetourner.setOnAction(e->{
-            PartieController partieController = new PartieController(partieStage, dmn, bool);
-            partieController.handle(e);
-        });
+        bRetourner.setOnAction(this);
 
         bQuitter.setOnAction(e->{
-            PartieController partieController = new PartieController(partieStage);
-            partieController.handle(e);
+            partieStage.close();
         });
 
 
-        // Ajout au borderpane principal
+        /** AJOUT AU BORDERPANE PRINCIPALE **/
         borderPane.setTop(bpMenu);
         borderPane.setLeft(vActionDomino);
         borderPane.getLeft().setStyle("-fx-background-color: #336699;");
         borderPane.setRight(vDetailPartie);
         borderPane.getRight().setStyle("-fx-background-color: #336699;");
         //BorderPane.setAlignment(dominoTMP, Pos.CENTER_RIGHT);
-        borderPane.setCenter(test);
+        borderPane.setCenter(zoneJeu);
 
         partieStage.setScene(root);
         //partieStage.sizeToScene();
         partieStage.setResizable(false);
+        //partieStage.setMaximized(true);
         partieStage.setFullScreen(true);
         partieStage.show();
 
 
-
-        // DEPLACER LES CARTES DANS LA LIMITE DE LA FENETRE
-            // LE CURSEUR CHANGE QUAND ON SE PLACE SUR LA CARTE POUR MONTRER QU'ON PEUT REALISER DES ACTIONS DESSUS
-        dmn.setCursor(Cursor.HAND);
-
-
-            // ON AJOUTE L'OMBRE QUAND ON DEPLACE LA CARTE
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setBlurType(BlurType.GAUSSIAN);
-        dropShadow.setColor(Color.BLACK);
-        dropShadow.setOffsetX(5.0);
-        dropShadow.setOffsetY(5.0);
-        dropShadow.setRadius(10.0);
-
-            // ON CREE UN GLOW AUTOUR DE LA CARTE QUI MONTRE QU'ON PEUT LA SELECTIONNER
-        DropShadow dropShadow2 = new DropShadow();
-        dropShadow2.setSpread(0.5);
-        dropShadow2.setColor(Color.RED);
-        dropShadow2.setOffsetX(0);
-        dropShadow2.setOffsetY(0);
-        dropShadow2.setRadius(10.0);
-
-
-        // ON CREE LES DIFFERENTS MOUSE EVENT POUR LA CARTE
-            // EVENT DE DRAG
-        dmn.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                double dragX = mouseEvent.getSceneX() - dragAnchor.getX();
-                double dragY = mouseEvent.getSceneY() - dragAnchor.getY();
-
-                double newXPosition = initXCarte + dragX;
-                double newYPosition = initYCarte + dragY;
-
-                if ( newXPosition >= -643 && newXPosition <= 643){
-                    dmn.setTranslateX(newXPosition);
-                }
-
-                if ( newYPosition >= -415 && newYPosition <= 415) {
-                    dmn.setTranslateY(newYPosition);
-                }
-
-                //imageView.setTranslateX(newXPosition);
-                //imageView.setTranslateY(newYPosition);
-                System.out.println(newXPosition + " " + newYPosition);
-            }
-        });
-
-            // QUAND ON RENTRE DANS L'EVENT
-        dmn.setOnMouseEntered(mouseEvent -> { dmn.setEffect(dropShadow2); dmn.toFront();});
-
-            // QUAND ON SORT DE L'EVENT
-        dmn.setOnMouseExited(mouseEvent -> dmn.setEffect(null));
-
-            // QUAND ON APPUYE SUR LE BOUTON DE LA SOURIS
-        dmn.setOnMousePressed(mouseEvent -> {
-            dmn.toFront();
-            initXCarte = dmn.getTranslateX();
-            initYCarte = dmn.getTranslateY();
-            dragAnchor = new Point2D(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-            dmn.setEffect(dropShadow);
-        });
-
-            // QUAND ON RELACHE LE BOUTON DE LA SOURIS
-        dmn.setOnMouseReleased(mouseEvent -> dmn.setEffect(null));
+        /** LE CURSEUR CHANGE QUAND ON SE PLACE SUR LA CARTE POUR MONTRER QU'ON PEUT REALISER DES ACTIONS DESSUS **/
+        dominoTMP.setCursor(Cursor.HAND);
 
     }
 
+    public void setDominoTMP(Domino d){
+        dominoTMP = d;
+    }
+
+
     @Override
-    public void update(Observable o, Object arg) {
+    public void handle(ActionEvent actionEvent) {
+        if (actionEvent.getSource() instanceof Button) {
+
+            // EVENT ROTATION A DROITE
+            if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
+                dominoTMP.setRotate(dominoTMP.getRotate() + 90);
+            }
+
+            // EVENT ROTATION A GAUCHE
+            if (((Button) actionEvent.getSource()).getText() == "Rotation gauche" && dominoTMP.isSelected()) {
+                dominoTMP.setRotate(dominoTMP.getRotate() - 90);
+            }
+
+            // EVENT ANNULER SON COUP
+            if (((Button) actionEvent.getSource()).getText() == "Annuler coup") {
+            }
+
+            // EVENT FINIR SON TOUR
+            if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
+            }
+
+            // EVENT RETOURNER DOMINO
+            if (((Button) actionEvent.getSource()).getText() == "Retourner") {
+            }
+
+        }
     }
 }

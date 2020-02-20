@@ -1,12 +1,10 @@
 package Application.Model;
 
-import Application.Controller.PartieControllerME;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 public class Domino extends Rectangle {
@@ -27,23 +25,20 @@ public class Domino extends Rectangle {
         setFill(img);
 
 
-
-        this.setOnMouseClicked(event -> {
-            PartieControllerME pcME = new PartieControllerME(this);
-            pcME.handle(event);
-        });
-
-
         effectSelected = new DropShadow();
         effectSelected.setBlurType(BlurType.GAUSSIAN);
         effectSelected.setSpread(10);
         effectSelected.setColor(Color.RED);
-        effectSelected.setRadius(1);
+        effectSelected.setRadius(2);
     }
 
 
     public String getUrl() {
         return this.url;
+    }
+
+    public void setUrl(String u){
+        url = u;
     }
 
     public ImagePattern getImg() {

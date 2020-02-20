@@ -24,23 +24,15 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 public class PartieController<T extends ActionEvent> implements EventHandler<T> {
     private Stage stage;
     private Domino dominoTMP;
-    private ImageView frontCard;
-    private ImageView backCard;
-    private ImageView tmp;
-    private boolean bool;
 
-    public PartieController(){}
 
     public PartieController(Stage s) {
         stage = s;
     }
 
-    public PartieController(Stage s, ImageView i, boolean b) {
+    public PartieController(Stage s, Domino d) {
         stage = s;
-        tmp = i;
-        bool = b;
-        frontCard = new ImageView(new Image("Application/Images/dominoFaceRecto.jpg"));
-        backCard = new ImageView(new Image("Application/Images/dominoFaceVerso.jpg"));
+        dominoTMP = d;
     }
 
 
@@ -53,15 +45,17 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
         if (event.getSource() instanceof Button) {
 
             // EVENT ROTATION A DROITE
-            if (((Button) event.getSource()).getText() == "Rotation droite") {
-                tmp.setRotate(tmp.getRotate() + 90);
-                PartieView partieView = new PartieView(stage, tmp, true);
+            if (((Button) event.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
+
+                dominoTMP.setRotate(dominoTMP.getRotate() + 90);
+                //PartieView partieView = new PartieView(stage, dominoTMP);
             }
 
             // EVENT ROTATION A GAUCHE
-            if (((Button) event.getSource()).getText() == "Rotation gauche") {
-                tmp.setRotate(tmp.getRotate() - 90);
-                PartieView partieView = new PartieView(stage, tmp, true);
+            if (((Button) event.getSource()).getText() == "Rotation gauche" && dominoTMP.isSelected()) {
+
+                dominoTMP.setRotate(dominoTMP.getRotate() - 90);
+                //PartieView partieView = new PartieView(stage, dominoTMP);
             }
 
             // EVENT ANNULER SON COUP
@@ -75,15 +69,6 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 
             // EVENT RETOURNER DOMINO
             if (((Button) event.getSource()).getText() == "Retourner") {
-                if (bool) {
-                    tmp = new ImageView(new Image("Application/Images/dominoFaceVerso.jpg"));
-                    bool = false;
-                    PartieView partieView = new PartieView(stage, tmp, bool);
-                } else {
-                    tmp = new ImageView(new Image("Application/Images/dominoFaceRecto.jpg"));
-                    bool = true;
-                    PartieView partieView = new PartieView(stage, tmp, bool);
-                }
             }
 
             if (((Button) event.getSource()).getText() == "Quitter") {

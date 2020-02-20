@@ -1,6 +1,5 @@
 package Application.Model;
 
-import Application.Controller.PartieControllerME;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -16,6 +15,7 @@ public class Deck extends Rectangle {
         this.setFill(new ImagePattern(new Image("Application/Images/dominoFaceVerso.jpg")));
         nbDominos = 48;
         listeDominos = new ArrayList<Domino>();
+
         for (int i = 0 ; i < 8 ; i++) {
             Domino domino = new Domino(0,0,50,50,"Application/Images/chateau.png");
             domino.setSmooth(true);

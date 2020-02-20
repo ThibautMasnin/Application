@@ -50,10 +50,10 @@ public class ReglementView implements Observer {
         Image src2 = null;
         Image src3 = null;
         Image src4 = null;
-		src1 = new Image("Application/Resources/Images/rules/rules1-" + langue + ".png");
-		src2 = new Image("Application/Resources/Images/rules/rules2-" + langue + ".png");
-		src3 = new Image("Application/Resources/Images/rules/rules3-" + langue + ".png");
-		src4 = new Image("Application/Resources/Images/rules/rules4.png");
+		src1 = new Image("Application/Ressources/Images/rules/rules1-" + langue + ".png");
+		src2 = new Image("Application/Ressources/Images/rules/rules2-" + langue + ".png");
+		src3 = new Image("Application/Ressources/Images/rules/rules3-" + langue + ".png");
+		src4 = new Image("Application/Ressources/Images/rules/rules4.png");
 
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int wd  = (int)dimension.getWidth();

@@ -1,14 +1,16 @@
 package Application.Model;
 
-import Application.Controller.PartieController;
-import Application.Controller.PartieControllerME;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -19,12 +21,10 @@ public class Grille implements EventHandler<MouseEvent> {
     private int nbLignes;
     private int nbColonnes;
     private Domino dominoSelectionne;
-    private Domino dm;
-    private Domino[][] dominos;
     private Line ligne;
     private Rectangle caseGrille;
     private Group groupe;
-    private PartieControllerME partieControllerME;
+    private Pane pane;
 
 
     public Grille(int tc, int d, int l, int c) {
@@ -33,7 +33,6 @@ public class Grille implements EventHandler<MouseEvent> {
         nbLignes = l;
         nbColonnes = c;
         dominoSelectionne = null;
-        dominos = new Domino[1][6];
 
         ligne = new Line();
         ligne.setStrokeWidth(1);
@@ -44,8 +43,8 @@ public class Grille implements EventHandler<MouseEvent> {
         caseGrille.setStroke(Color.TRANSPARENT);
 
         groupe = new Group();
-
-        partieControllerME = new PartieControllerME();
+        pane = new Pane();
+        //pane.setPrefSize(1000,1000);
     }
 
 
@@ -60,50 +59,46 @@ public class Grille implements EventHandler<MouseEvent> {
                 Line ligne = new Line((decalage + tailleCase * j), decalage, (decalage + tailleCase * j), (decalage + 9 * tailleCase));
                 ligne.setStrokeWidth(1);
                 ligne.setStroke(Color.BLACK);
-                groupe.getChildren().add(ligne);
+                pane.getChildren().add(ligne);
 
                 if (i < nbLignes-1 && j < nbColonnes-1) {
-                    Rectangle caseGrille = new Rectangle((decalage + tailleCase * i), (decalage + tailleCase * j), tailleCase, tailleCase);
-                    caseGrille.setFill(Color.TRANSPARENT);
-                    caseGrille.setStroke(Color.TRANSPARENT);
-                    /*caseGrille.setOnMouseClicked(event -> {
-                        Application.Controller.PartieControllerME pcME = new PartieControllerME();
-                        pcME.handle(event);
-                    });*/
-                    caseGrille.setOnMouseClicked(this);
-                    groupe.getChildren().add(caseGrille);
+                    if (i == 4 && j == 4){
+                        Rectangle caseGrille = new Rectangle((decalage + tailleCase * i), (decalage + tailleCase * j), tailleCase, tailleCase);
+                        caseGrille.setFill(new ImagePattern(new Image("Application/Ressources/Dominos/C1.jpg")));
+                        pane.getChildren().add(caseGrille);
+                    }
+                    else {
+                        Rectangle caseGrille = new Rectangle((decalage + tailleCase * i), (decalage + tailleCase * j), tailleCase, tailleCase);
+                        caseGrille.setFill(Color.TRANSPARENT);
+                        caseGrille.setStroke(Color.TRANSPARENT);
+                        caseGrille.setOnMouseClicked(this);
+                        pane.getChildren().add(caseGrille);
+                    }
                 }
             }
             // LIGNES HORIZONTALES
             Line ligne = new Line(decalage, (decalage + tailleCase * i), (decalage + 9 * tailleCase), (decalage + tailleCase * i));
             ligne.setStrokeWidth(1);
             ligne.setStroke(Color.BLACK);
-            groupe.getChildren().add(ligne);
+            pane.getChildren().add(ligne);
         }
     }
 
-    // CREATION DU BOARD
-    public void dessinerBoard() {
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 6; j++) {
-                int x = decalage + j * tailleCase + j * decalage;
-                int y = nbLignes * tailleCase + decalage;
-
-                dm = new Domino(x, y, 50, 50, "Application/Images/chateau.png");
-                groupe.getChildren().add(dm);
-                dm.setSmooth(true);
-                dm.setOnMouseClicked(this);
-                dominos[i][j] = dm;
-            }
-        }
-    }
-
-    public Domino getDm(){
-        return dm;
-    }
 
     public Group getGroupe() {
         return groupe;
+    }
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public void setGroupe(Node e) {
+        groupe.getChildren().add(e);
+    }
+
+    public void setPane(Node e) {
+        pane.getChildren().add(e);
     }
 
     public int getTailleCase() {
@@ -177,6 +172,6 @@ public class Grille implements EventHandler<MouseEvent> {
             dominoSelectionne = null;
         }
         System.out.println("fin event");
+        System.out.println();
     }
-
 }

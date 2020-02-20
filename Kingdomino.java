@@ -1,15 +1,10 @@
 package Application;
 
-import Application.Model.Deck;
 import Application.Model.Domino;
-import Application.Model.PartieModel;
-import Application.View.JeuView;
 import Application.View.PartieView;
 import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import org.postgresql.ds.PGSimpleDataSource;
+
 import java.sql.SQLException;
 
 public class Kingdomino extends Application {
@@ -18,17 +13,14 @@ public class Kingdomino extends Application {
     public void start(Stage primaryStage) throws SQLException {
 
         // Valentin
-/*
-    	Domino dmn = new Domino(0, 0, 50, 50, "Application/Resources/Images/chateau.png");
-        ImageView dmn = new ImageView(new Image("Application/Resources/Images/dominoFaceRecto.jpg"));
-        PartieView partieView = new PartieView(primaryStage, dmn, true);
-*/
+        PartieView partieView = new PartieView(primaryStage);
 
 
+        /*
         // Thibaut
-    	
         primaryStage.setTitle("KingDomino");
         JeuView primaryScreen = new JeuView(primaryStage);
+         */
 
 
         
