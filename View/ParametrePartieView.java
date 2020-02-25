@@ -35,7 +35,7 @@ public class ParametrePartieView implements Observer {
     	BorderPane bp = new BorderPane();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Resources/Images/wallpaper.png');" +
+        bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
 				"-fx-background-position: center center;" +
 	            "-fx-background-size: cover;");
 
@@ -65,14 +65,14 @@ public class ParametrePartieView implements Observer {
 		
         Button btnRetour = new Button();
         btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Resources/Images/retour.png');" +
+        btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnRetour.setMinWidth(140);
         btnRetour.setMinHeight(54);
         btnRetour.setOnAction(new ReglageController<ActionEvent>(stage));
         Button btnValider = new Button();
         btnValider.setId("Valider");
-        btnValider.setStyle("-fx-background-image: url('Application/Resources/Images/valider.png');" +
+        btnValider.setStyle("-fx-background-image: url('Application/Ressources/Images/valider.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnValider.setMinWidth(140);
         btnValider.setMinHeight(54);
