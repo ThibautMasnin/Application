@@ -3,6 +3,11 @@ package Application.Model;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -11,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -127,7 +133,7 @@ public class Grille implements EventHandler<MouseEvent> {
         double x = event.getX();
         double y = event.getY();
 
-        System.out.println("clic en " + x + "," + y);
+        //System.out.println("clic en " + x + "," + y);
 
         Object o = event.getSource();
 
@@ -142,7 +148,7 @@ public class Grille implements EventHandler<MouseEvent> {
 
                 if(dominoSelectionne == null) {
                     dominoSelectionne = d;
-                    System.out.println("Je suis selectionné");
+                    System.out.println("Le domino est selectionné");
                 }
                 else {
                     dominoSelectionne = null;
@@ -153,25 +159,76 @@ public class Grille implements EventHandler<MouseEvent> {
         {
             Rectangle r = (Rectangle)o;
 
-            //le nouveau centre du jeton sera au centre du rectangle sélectionné
+            // On récupère le centre de la case selectionné
             double newX =  r.getX();
             double newY =  r.getY();
 
-            int tps = 10;
+            System.out.println("Position RECTANGLE : (" + newX + " ; " + newY + ")");
+
+            // temps de l'animation
+            int tps = 1000;
 
             dominoSelectionne.switchSelected();
 
-            Timeline timeline = new Timeline();
+//            if (dominoSelectionne.getCptRotation() == 2){
+//                dominoSelectionne.setPivotTX(dominoSelectionne.getX() - 50);
+//                dominoSelectionne.setPivotTY(dominoSelectionne.getY() - 100);
+//            }
+//
+//            dominoSelectionne.xProperty().set(dominoSelectionne.getPivotTX());
+//            dominoSelectionne.yProperty().set(dominoSelectionne.getPivotTY());
+
+            /*Timeline timeline = new Timeline();
             timeline.getKeyFrames().addAll(
                     new KeyFrame(new Duration(tps),
                             new KeyValue(dominoSelectionne.xProperty(), newX),
                             new KeyValue(dominoSelectionne.yProperty(), newY),
                             new KeyValue(dominoSelectionne.fillProperty(), dominoSelectionne.getImg())
                     ));
-            timeline.play();
+            timeline.play();*/
+
+            dominoSelectionne.setPivotX(newX + (tailleCase/2));
+            dominoSelectionne.setPivotY(newY + (tailleCase/2));
+            if (dominoSelectionne.getCptRotation() == 2){
+                dominoSelectionne.setX(newX);
+                dominoSelectionne.setY(newY);
+            } else
+            {
+                dominoSelectionne.setX(newX);
+                dominoSelectionne.setY(newY);
+            }
+
+//            dominoSelectionne.setPivotTX(newX);
+//            dominoSelectionne.setPivotTY(newY);
+
+            System.out.println("Compteur : " + dominoSelectionne.getCptRotation());
+            System.out.println("Position DOMINO : (" + dominoSelectionne.getX() + " ; " + dominoSelectionne.getY() + ")");
+            System.out.println("Position DOMINO2 : (" + dominoSelectionne.xProperty().get() + " ; " + dominoSelectionne.yProperty().get() + ")");
+
+            /** Position du pivot**/
+            Circle circle1 = new Circle(dominoSelectionne.getX(), dominoSelectionne.getY(), 5);
+            circle1.setFill(Color.RED);
+
+            Circle circle2 = new Circle(dominoSelectionne.getX() + 50, dominoSelectionne.getY(), 5);
+            circle2.setFill(Color.GREEN);
+
+            Circle circle3 = new Circle(dominoSelectionne.getX() + 50, dominoSelectionne.getY() + 100, 5);
+            circle3.setFill(Color.BLUE);
+
+            Circle circle4 = new Circle(dominoSelectionne.getX(), dominoSelectionne.getY() + 100, 5);
+            circle4.setFill(Color.BLACK);
+
+            Circle circle5 = new Circle(dominoSelectionne.getPivotTX(), dominoSelectionne.getPivotTY(), 5);
+            circle5.setFill(Color.YELLOW);
+
+            pane.getChildren().addAll(circle1, circle2, circle3, circle4, circle5);
             dominoSelectionne = null;
         }
-        System.out.println("fin event");
+
+
+
+
+        System.out.println("Fin d'event");
         System.out.println();
     }
 }

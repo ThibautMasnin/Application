@@ -12,10 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 public class PartieView implements EventHandler<ActionEvent> {
     private Domino dominoTMP;
+    private int cpt;
 
 
     public PartieView(Stage partieStage) {
@@ -31,6 +34,7 @@ public class PartieView implements EventHandler<ActionEvent> {
         Domino d7 = new Domino(-250, 275, 50, 100, "Application/Ressources/Dominos/D7.jpg");
         Domino d8 = new Domino(-350, 275, 50, 100, "Application/Ressources/Dominos/D8.jpg");
 
+        cpt = 0;
 
         /** BORDERPANE PRINCIPAL **/
         BorderPane borderPane = new BorderPane();
@@ -189,6 +193,11 @@ public class PartieView implements EventHandler<ActionEvent> {
         dominoTMP = d;
     }
 
+    public int getCpt(){
+        return cpt;
+    }
+
+
 
     @Override
     public void handle(ActionEvent actionEvent) {
@@ -196,12 +205,52 @@ public class PartieView implements EventHandler<ActionEvent> {
 
             // EVENT ROTATION A DROITE
             if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
-                dominoTMP.setRotate(dominoTMP.getRotate() + 90);
+                Rotate rotate = new Rotate(90,dominoTMP.getPivotX(), dominoTMP.getPivotY());
+                dominoTMP.getTransforms().add(rotate);
+                cpt += 1;
+                dominoTMP.setCptRotation(cpt);
+
+
+
+                if (cpt == 1){
+                    dominoTMP.setPivotTX(dominoTMP.getX() + 50);
+                    dominoTMP.setPivotTY(dominoTMP.getY());
+                    System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
+                    System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
+                    System.out.println();
+                }
+                else if (cpt == 2){
+                    //dominoTMP.setPivotTX(dominoTMP.getX());
+                    dominoTMP.setPivotTY(dominoTMP.getY() + 50);
+                    //System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
+                    System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
+                    System.out.println();
+                }
+                else if (cpt == 3){
+                    dominoTMP.setPivotTX(dominoTMP.getPivotTX() - 50);
+                    //dominoTMP.setPivotTY(dominoTMP.getY());
+                    //System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
+                    System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
+                    System.out.println();
+                }
+                else if (cpt == 4){
+                    //dominoTMP.setPivotTX(dominoTMP.getX());
+                    dominoTMP.setPivotTY(dominoTMP.getPivotTY() - 50);
+                    //System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
+                    System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
+                    System.out.println();
+                }
+
+
+                //dominoTMP.setRotate(dominoTMP.getRotate() + 90);
             }
 
             // EVENT ROTATION A GAUCHE
             if (((Button) actionEvent.getSource()).getText() == "Rotation gauche" && dominoTMP.isSelected()) {
-                dominoTMP.setRotate(dominoTMP.getRotate() - 90);
+                Rotate rotate = new Rotate(-90,dominoTMP.getPivotX(), dominoTMP.getPivotY());
+                dominoTMP.getTransforms().add(rotate);
+                cpt += 1;
+                dominoTMP.setCptRotation(cpt);
             }
 
             // EVENT ANNULER SON COUP
