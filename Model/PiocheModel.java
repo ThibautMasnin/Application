@@ -4,20 +4,26 @@ import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Random;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.StringWriter;
 import java.sql.*;
 import org.postgresql.ds.*;
 
 public class PiocheModel
 {
+	private PartieModel partieEnCours;
 	private ArrayList<DominoModel> pioche = null;
 	private ArrayList<DominoModel> tirageCache;     //Les dominos pour le tour d'apres, on les enverra dans tirageRetournee
 	private ArrayList<DominoModel> tirageRetourne;      //Le joueur chosit un domino parmis celle propose ici
 
 	//On crÃ©e la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
-	public ArrayList<DominoModel> getPioche()
+	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
 	{
 		if(pioche == null)
 		{
+			partieEnCours = partieModel;
 			pioche = new ArrayList<>();
 			tirageCache = new ArrayList<>();
 			tirageRetourne = new ArrayList<>();
@@ -29,8 +35,29 @@ public class PiocheModel
 		return pioche;
 	}
 
+	//Méthode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
+	public String getPwd() {
+		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
+		String password = "";
+		try {
+			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
+			StringWriter out = new StringWriter();
+			int b;
+			while ((b=in.read()) != -1)
+				out.write(b);
+			out.flush();
+			password = out.toString();
+			out.close();
+			in.close();
+		} catch (Exception ex){
+			System.err.println("Error. "+ex.getMessage());
+		}
+		return password;
+	}
+
 	public void creerPioche() throws SQLException
 	{
+		String password = getPwd(); // regarder la methode getPwd, sinon mettre directement en clair le mdp pour se co a la bdd (pour les flemmards :p)
 		//Variables nï¿½cessaires pour rï¿½cupï¿½rer les donnï¿½es des requï¿½tes
 		List<Integer> idPaysage = new ArrayList<>(); // Liste avec tous les ID des paysages
 		int idPaysage1;
@@ -50,7 +77,7 @@ public class PiocheModel
 			ds.setServerName("localhost");
 			ds.setDatabaseName("m4106");
 			ds.setUser("postgres");
-			ds.setPassword("TON MDP");
+			ds.setPassword(password);
 			Connection con = ds.getConnection();
 
 			//Requï¿½te pour rï¿½cupï¿½rer ce que contient la table Domino
@@ -106,8 +133,6 @@ public class PiocheModel
 			System.out.println(e.getMessage());
 		}
 
-		//TerrainType TT = 
-
 		for (int i=0 ; i<192 ; i = i + 4) {
 			//Variables pour la crï¿½ation d'un domino
 			PaysageModel paysage1 = null ;
@@ -152,17 +177,17 @@ public class PiocheModel
 				paysage2 = new PaysageModel(TerrainType.PRAIRIE,id_CouPaysages.get(i+3));
 			}
 
-			if(i % 4 == 0) {
+			/*if(i % 4 == 0) {
 				System.out.println("Domino " + ((i/4) + 1) + " : ");
 			}
 
 			System.out.print("Paysage 1 : " + paysage1.toString());
 			System.out.println("\t Paysage 2 : " + paysage2.toString() + "\n");
-
+			 */
 			pioche.add(new DominoModel(paysage1,paysage2));
 		}
 		System.out.println("\n");
-		//melangerPioche();
+		melangerPioche();
 	}
 
 	public void affichePioche()
@@ -176,32 +201,50 @@ public class PiocheModel
 		}
 	}
 
-	public void tirage()
-	{
-		if(tirageRetourne.size() == 0)
-		{
-			for(int i = 0; i < 4; i++)      //On prend les 4 premiers de la pioche melange et on la met dans tirageRetournee
-			{
-				tirageRetourne.add(pioche.get(0));
-				pioche.remove(0);
-			}
-			for(int i = 0; i < 4; i++)      //On fait de meme pour tirageCachee
-			{
-				tirageCache.add(pioche.get(0));
-				pioche.remove(0);
-			}
-		}
-		else
-		{
-			tirageRetourne.removeAll(tirageRetourne);           //Les dominos ont ete choisis donc on vide la liste
-			tirageRetourne.addAll(tirageCache);                 //On deplace les dominos de tirageCachee dans retournee
-			tirageCache.removeAll(tirageCache);                 //...
-			if(pioche.size() != 0)              //S'il reste encore des dominos on prepare le tour d'apres donc on remplis tirageCachee
-			{
-				for(int i = 0; i < 4; i++)
+	public void tirage() {
+
+		if (tirageRetourne.size() == 0) {
+			if (partieEnCours.getListeJoueur().size() != 2) {
+				for (int i = 0; i < partieEnCours.getListeJoueur().size(); i++)      //On prend les 4 premiers de la pioche melange et on la met dans tirageRetournee
+				{
+					tirageRetourne.add(pioche.get(0));
+					pioche.remove(0);
+				}
+				for (int i = 0; i < partieEnCours.getListeJoueur().size(); i++)      //On fait de meme pour tirageCachee
 				{
 					tirageCache.add(pioche.get(0));
 					pioche.remove(0);
+				}
+			} else {
+				for (int i = 0; i < 4; i++)      //On prend les 4 premiers de la pioche melange et on la met dans tirageRetournee
+				{
+					tirageRetourne.add(pioche.get(0));
+					pioche.remove(0);
+				}
+				for (int i = 0; i < 4; i++)      //On fait de meme pour tirageCachee
+				{
+					tirageCache.add(pioche.get(0));
+					pioche.remove(0);
+				}
+			}
+
+		} else {
+
+			tirageRetourne.removeAll(tirageRetourne);           //Les dominos ont ete choisis donc on vide la liste
+			tirageRetourne.addAll(tirageCache);                 //On deplace les dominos de tirageCachee dans retournee
+			tirageCache.removeAll(tirageCache);                 //...
+			if (pioche.size() != 0)              //S'il reste encore des dominos on prepare le tour d'apres donc on remplis tirageCachee
+			{
+				if (partieEnCours.getListeJoueur().size() != 2) {
+					for (int i = 0; i < partieEnCours.getListeJoueur().size(); i++) {
+						tirageCache.add(pioche.get(0));
+						pioche.remove(0);
+					}
+				} else {
+					for (int i = 0; i < 4; i++) {
+						tirageCache.add(pioche.get(0));
+						pioche.remove(0);
+					}
 				}
 			}
 		}
@@ -209,22 +252,27 @@ public class PiocheModel
 
 	public void afficheTirageRetournee()
 	{
-		System.out.println("retournee : ");
+		triDomino(tirageRetourne);
+		System.out.println("|||||Les retournés|||||");
 		for(int i=0; i < tirageRetourne.size(); i++)
 		{
-			System.out.println(tirageRetourne.get(i).getIdElement() + " " + tirageRetourne.get(i).getPaysage1().getNomTerrain()
-					+ " " +tirageRetourne.get(i).getPaysage1().getNbCouronne() +" "+tirageRetourne.get(i).getPaysage2().getNomTerrain() +" "+ tirageRetourne.get(i).getPaysage2().getNbCouronne());
+			if(tirageRetourne.get(i).getNumDomino()<10) {
+				System.out.println("[Domino n°0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+			}
+			else {
+				System.out.println("[Domino n°" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+			}
 		}
 		System.out.println("\n\n");
 	}
 
 	public void afficheTirageCachee()
 	{
-		System.out.println("cachee : " + tirageCache.size());
+		triDomino(tirageCache);
+		System.out.println("|||||Les cachés|||||");
 		for(int i=0; i < tirageCache.size(); i++)
 		{
-			System.out.println(tirageCache.get(i).getIdElement() + " " + tirageCache.get(i).getPaysage1().getNomTerrain()
-					+ " " + tirageCache.get(i).getPaysage1().getNbCouronne()+ " " +tirageCache.get(i).getPaysage2().getNomTerrain()+" " + tirageCache.get(i).getPaysage2().getNbCouronne());
+			System.out.println("[Domino n°" + tirageCache.get(i).getNumDomino()+ "]") ;
 		}
 		System.out.println("\n\n");
 	}
@@ -239,6 +287,51 @@ public class PiocheModel
 		return tirageCache;
 	}
 
+	public ArrayList<DominoModel> triDomino(ArrayList<DominoModel> ld){
+		ArrayList<DominoModel> listT = ld;
+		boolean good = false;
+		while(good==false){
+			for(int i = 0 ; i<listT.size();i++) {
+				DominoModel tmp;
+				DominoModel tmp2;
+				if (i<listT.size()-1) {
+					if(listT.get(i).getNumDomino()>listT.get(i+1).getNumDomino()) {
+						tmp = listT.get(i);
+						tmp2 = listT.get(i+1);
+						listT.remove(i);
+						listT.add(i, tmp2);
+
+						listT.remove(i+1);
+						listT.add(i+1, tmp);
+					}
+					/*for (int j = 0 ; j<listT.size();j++) {
+						System.out.println(listT.get(j).getNumDomino());
+					}*/
+				}
+
+				else if (i == listT.size()-1) {
+					if (listT.get(i).getNumDomino()<listT.get(0).getNumDomino()) {
+						tmp = listT.get(i);
+						tmp2 = listT.get(0);
+
+						listT.remove(i);
+						listT.add(i,tmp2);
+
+						listT.remove(0);
+						listT.add(0, tmp);
+						/*for (int j = 0 ; j<listT.size();j++) {
+							System.out.println(listT.get(j).getNumDomino());
+						}*/
+					}
+				}
+
+			}
+			if (listT.get(0).getNumDomino() < listT.get(1).getNumDomino() && listT.get(1).getNumDomino() < listT.get(2).getNumDomino() && listT.get(2).getNumDomino() < listT.get(3).getNumDomino() && listT.get(0).getNumDomino() < listT.get(3).getNumDomino() ){
+				good = true;
+			}
+		}
+		return listT;
+	}
 	public void melangerPioche()
 	{
 		Random r = new Random();

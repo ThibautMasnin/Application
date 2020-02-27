@@ -1,10 +1,17 @@
 package Application.Model;
 
-import java.util.ArrayList;
+import javafx.scene.shape.Rectangle;
 
-public class DominoModel extends ElementModel
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+
+public class DominoModel extends Rectangle
+//extends ElementModel
 {
-	//    private int numero;
+	private int numero;
 	private PaysageModel paysage1;      //Face 1 du domino
 	private PaysageModel paysage2;      //Face 2 du domino
 	private String sens = null;
@@ -13,23 +20,123 @@ public class DominoModel extends ElementModel
 	private int abscisse2;
 	private int ordonnee2;
 
-	//    Les boolean sont les etats mais pas utile pour l'instant
-	private boolean choisi = false;
-	private boolean joue = false;
-	private boolean ecarte = false;
 	private static int compteurNumero = 1;         //Compte le nombre de domino existant
+
+	private String url;
+	private ImagePattern img;
+	private DropShadow effectSelected;
+	private boolean isSelected;
+	private double pivotX;
+	private double pivotY;
+	private double pivotTX;
+	private double pivotTY;
+	private int cptRotation;
 
 	public DominoModel(PaysageModel p1, PaysageModel p2)
 	{
-		super("D");
-		super.setIdElement(compteurNumero);
-		//        numero = compteurNumero;
+		//		super("D");
+		//		super.setIdElement(compteurNumero);
+		numero = compteurNumero;
 		compteurNumero++;
 		paysage1 = p1;
 		paysage2 = p2;
 	}
 
+	public DominoModel(double centerX, double centerY, double width, double height, String u) {
+		super(centerX, centerY, width, height);
+		isSelected = false;
 
+		url = u;
+		img = new ImagePattern(new Image(getUrl()));
+		setFill(img);
+
+
+		effectSelected = new DropShadow();
+		effectSelected.setBlurType(BlurType.GAUSSIAN);
+		effectSelected.setSpread(10);
+		effectSelected.setColor(Color.RED);
+		effectSelected.setRadius(2);
+
+		pivotX = this.getX() + (this.getWidth()/2);
+		pivotY = this.getY() + (this.getHeight()/4);
+
+		pivotTX = this.getX();
+		pivotTY = this.getY();
+
+		cptRotation = 0;
+
+	}
+
+	public int getNumDomino()
+	{
+		return numero;
+	}
+
+	public String getUrl() {
+		return this.url;
+	}
+
+	public void setUrl(String u){
+		url = u;
+	}
+
+	public ImagePattern getImg() {
+		return img;
+	}
+
+	public DropShadow getEffectSelectedJ1() {
+		return effectSelected;
+	}
+
+	public double getPivotX() {
+		return pivotX;
+	}
+
+	public void setPivotX(double pivotX) {
+		this.pivotX = pivotX;
+	}
+
+	public double getPivotY() {
+		return pivotY;
+	}
+
+	public void setPivotY(double pivotY) {
+		this.pivotY = pivotY;
+	}
+
+	public double getPivotTX() {
+		return pivotTX;
+	}
+
+	public void setPivotTX(double pivotTX) {
+		this.pivotTX = pivotTX;
+	}
+
+	public double getPivotTY() {
+		return pivotTY;
+	}
+
+	public void setPivotTY(double pivotTY) {
+		this.pivotTY = pivotTY;
+	}
+
+	public int getCptRotation() {
+		return cptRotation;
+	}
+
+	public void setCptRotation(int cptRotation) {
+		this.cptRotation = cptRotation;
+	}
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void switchSelected()
+	{
+		isSelected = !isSelected;
+		if (isSelected) this.setEffect(effectSelected); else this.setEffect(null);
+	}
 
 	public PaysageModel getPaysage1() {
 		return paysage1;
@@ -77,5 +184,9 @@ public class DominoModel extends ElementModel
 
 	public void setY2(int y) {
 		this.ordonnee2 = y;
+	}
+
+	public String toStringPaysage() {
+		return  paysage1.toString() +"\t\t"+ paysage2.toString();
 	}
 }
