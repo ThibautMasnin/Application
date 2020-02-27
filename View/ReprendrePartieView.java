@@ -33,15 +33,10 @@ public class ReprendrePartieView implements Observer {
 	public ReprendrePartieView(Stage stage) {
 		BorderPane bp = new BorderPane();
 		TableView tab = new TableView<>();
-<<<<<<< HEAD
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
-=======
+
 		Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 		Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
 		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
->>>>>>> master
 				"-fx-background-position: center center;" +
 				"-fx-background-size: cover;");
 
@@ -52,7 +47,6 @@ public class ReprendrePartieView implements Observer {
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		int ht  = (int)dimension.getHeight();
 		int wd  = (int)dimension.getWidth();
-
 
 		tab.setMinHeight(ht*0.66);
 		tab.setMaxWidth(wd-40);
@@ -81,38 +75,12 @@ public class ReprendrePartieView implements Observer {
 		vb.setSpacing(45);
 		vb.setPadding(new Insets(0, 0,10,0));
 
-<<<<<<< HEAD
         tab.setMinHeight(ht*0.66);
         tab.setMaxWidth(wd-40);
         tab.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);");
-        
-        Button btnRetour = new Button();
-        btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnRetour.setMinWidth(140);
-        btnRetour.setMinHeight(54);
-        btnRetour.setOnAction(new ReglageController<ActionEvent>(stage));
-        Button btnValider = new Button();
-        btnValider.setId("Valider");
-        btnValider.setStyle("-fx-background-image: url('Application/Ressources/Images/valider.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnValider.setMinWidth(140);
-        btnValider.setMinHeight(54);
-        btnValider.setOnAction(new ReglageController<ActionEvent>(stage));
-        
-        hb.getChildren().addAll(btnRetour, btnValider);   
-        hb.setAlignment(Pos.CENTER);
-        hb.setSpacing(25);
-        vb.getChildren().addAll(title, tab, hb);   
-        vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(45);
-        vb.setPadding(new Insets(0, 0,10,0));
-        
-        bp.setCenter(vb);       
-=======
+
+        bp.setCenter(vb);
 		bp.setCenter(vb);       
->>>>>>> master
 
 		stage.setScene(scene);
 		stage.setResizable(false);

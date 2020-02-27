@@ -28,21 +28,12 @@ public class StatistiqueView implements Observer {
 
 	final VBox vb = new VBox();
 	final VBox vbt = new VBox();
-<<<<<<< HEAD
-	
-    public StatistiqueView(Stage stage) {
-    	BorderPane bp = new BorderPane();
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
-=======
 
 	public StatistiqueView(Stage stage) {
 		BorderPane bp = new BorderPane();
 		Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 		Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
 		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
->>>>>>> master
 				"-fx-background-position: center center;" +
 				"-fx-background-size: cover;");
 
@@ -53,24 +44,13 @@ public class StatistiqueView implements Observer {
 		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 
-		Text parties = new Text("Parties jouées : " + "");
-		Text joueurs = new Text("Joueurs créés : " + "");
-		Text temps = new Text("Temps joué : " + "" + " heures");
+		Text parties = new Text("Parties jouÃ©es : " + "");
+		Text joueurs = new Text("Joueurs crÃ©Ã©s : " + "");
+		Text temps = new Text("Temps jouÃ© : " + "" + " heures");
 		parties.setFont(Font.font(36));
 		joueurs.setFont(Font.font(36));
 		temps.setFont(Font.font(36));
 
-<<<<<<< HEAD
-        Button btnRetour = new Button();
-        btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnRetour.setMinWidth(140);
-        btnRetour.setMinHeight(54);
-        btnRetour.setMaxHeight(54);
-        btnRetour.setOnAction(new ReglageController<ActionEvent>(stage));
-        btnRetour.setOnAction(new StatistiqueController<ActionEvent>(stage));
-=======
 		Button btnRetour = new Button();
 		btnRetour.setId("Retour");
 		btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
@@ -87,7 +67,6 @@ public class StatistiqueView implements Observer {
 		vbt.setSpacing(50);
 		vbt.setAlignment(Pos.CENTER);
 		vb.setAlignment(Pos.CENTER);
->>>>>>> master
 
 		bp.setCenter(vb);
 

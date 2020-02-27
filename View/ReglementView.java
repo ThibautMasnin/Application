@@ -29,19 +29,14 @@ public class ReglementView implements Observer {
 	public ReglementView(Stage stage) {
 		BorderPane bp = new BorderPane();
 		ScrollPane sp = new ScrollPane();
-<<<<<<< HEAD
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        Scene scene = new Scene(bp, screenBounds.getWidth(), screenBounds.getHeight()-80);  
-        bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
-=======
+
 		Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 		Scene scene = new Scene(bp, screenBounds.getWidth(), screenBounds.getHeight()-80);  
 		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
->>>>>>> master
 				"-fx-background-position: center center;" +
 				"-fx-background-size: cover;");
 
-		Label title = new Label("Réglement");
+		Label title = new Label("RÃ©glement");
 		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 
@@ -61,7 +56,6 @@ public class ReglementView implements Observer {
 		src3 = new Image("Application/Ressources/Images/rules/rules3-" + langue + ".png");
 		src4 = new Image("Application/Ressources/Images/rules/rules4.png");
 
-<<<<<<< HEAD
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int wd  = (int)dimension.getWidth();
         int ht  = (int)dimension.getHeight();
@@ -101,7 +95,6 @@ public class ReglementView implements Observer {
         
         sp.setContent(vb1);  
         bp.setCenter(vb2);       
-        
 
         stage.setScene(scene);
         stage.setResizable(false);
@@ -114,57 +107,3 @@ public class ReglementView implements Observer {
 
     }
 }
-=======
-		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		int wd  = (int)dimension.getWidth();
-		int ht  = (int)dimension.getHeight();
-
-		ImageView image1 = new ImageView(src1);
-		ImageView image2 = new ImageView(src2);
-		ImageView image3 = new ImageView(src3);
-		ImageView image4 = new ImageView(src4);
-		image1.setFitWidth(wd-55);
-		image2.setFitWidth(wd-55);
-		image3.setFitWidth(wd-55);
-		image4.setFitWidth(wd-55);    
-		image1.setFitHeight(wd-55);
-		image2.setFitHeight(wd-55);
-		image3.setFitHeight(wd-55);
-		image4.setFitHeight(wd-55);    
-
-		Button btnRetour = new Button();
-		btnRetour.setId("Retour");
-		btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
-				"-fx-background-color: rgba(0, 0, 0, 0);");
-		btnRetour.setMinWidth(140);
-		btnRetour.setMinHeight(54);
-		btnRetour.setOnAction(new ReglementController<ActionEvent>(stage));
-
-		imageView1.setCenter(image1);  
-		imageView2.setCenter(image2); 
-		imageView3.setCenter(image3);  
-		imageView4.setCenter(image4);
-
-		vb1.getChildren().addAll(imageView1, imageView2, imageView3, imageView4); 
-		vb2.getChildren().addAll(title, sp, btnRetour);   
-		vb1.setAlignment(Pos.CENTER);
-		vb2.setAlignment(Pos.CENTER);
-		vb2.setSpacing(10);
-		vb2.setPadding(new Insets(0, 20,10,20));
-
-		sp.setContent(vb1);  
-		bp.setCenter(vb2);       
-
-
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.setFullScreen(true);
-		stage.show();
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-
-	}
-}
->>>>>>> master

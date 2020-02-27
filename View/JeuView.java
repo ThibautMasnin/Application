@@ -29,29 +29,6 @@ public class JeuView implements Observer {
 	final VBox vb = new VBox();
 	final HBox hb = new HBox();
 
-<<<<<<< HEAD
-    public JeuView(Stage stage) {
-    	BorderPane bp = new BorderPane();
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
-		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/background.png');" +
-					"-fx-background-position: center center;" +
-		            "-fx-background-size: cover;");
-		
-		Label espace = new Label("");
-		espace.setMinHeight(300);
-        Button btnNouvellePartie = new Button();
-        btnNouvellePartie.setId("Nouvelle partie");
-        btnNouvellePartie.setMinWidth(267);
-        btnNouvellePartie.setMinHeight(64);
-        btnNouvellePartie.setStyle("-fx-background-image: url('Application/Ressources/Images/nouvellePartie.png');" +
-        						   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnNouvellePartie.setOnAction(new JeuController<ActionEvent>(stage));
-		Button btnReprendrePartie = new Button();
-		btnReprendrePartie.setId("Reprendre partie");
-		btnReprendrePartie.setStyle("-fx-background-image: url('Application/Ressources/Images/reprendrePartie.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-=======
 	public JeuView(Stage stage) {
 		BorderPane bp = new BorderPane();
 		Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -62,6 +39,8 @@ public class JeuView implements Observer {
 
 		Label espace = new Label("");
 		espace.setMinHeight(300);
+
+		/** BOUTON NOUVELLE PARTIE **/
 		Button btnNouvellePartie = new Button();
 		btnNouvellePartie.setId("Nouvelle partie");
 		btnNouvellePartie.setMinWidth(267);
@@ -69,56 +48,27 @@ public class JeuView implements Observer {
 		btnNouvellePartie.setStyle("-fx-background-image: url('Application/Ressources/Images/nouvellePartie.png');" +
 				"-fx-background-color: rgba(0, 0, 0, 0);");
 		btnNouvellePartie.setOnAction(new JeuController<ActionEvent>(stage));
+
+		/** BOUTON REPRENDRE PARTIE **/
 		Button btnReprendrePartie = new Button();
 		btnReprendrePartie.setId("Reprendre partie");
 		btnReprendrePartie.setStyle("-fx-background-image: url('Application/Ressources/Images/reprendrePartie.png');" +
 				"-fx-background-color: rgba(0, 0, 0, 0);");
->>>>>>> master
 		btnReprendrePartie.setMinWidth(246);
 		btnReprendrePartie.setMinHeight(54);
 		btnReprendrePartie.setOnAction(new JeuController<ActionEvent>(stage));
+
+		/** BOUTON REGLEMENT **/
 		Button btnReglement = new Button();
 		btnReglement.setId("R�glement");
 		btnReglement.setStyle("-fx-background-image: url('Application/Ressources/Images/reglement.png');" +
-<<<<<<< HEAD
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
 		btnReglement.setMinWidth(266);
 		btnReglement.setMinHeight(54);
         btnReglement.setOnAction(new JeuController<ActionEvent>(stage));
-        Button btnStatistiques = new Button();
-        btnStatistiques.setId("Statistiques");
-        btnStatistiques.setStyle("-fx-background-image: url('Application/Ressources/Images/statistiques.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnStatistiques.setMinWidth(283);
-        btnStatistiques.setMinHeight(51);
-        btnStatistiques.setOnAction(new JeuController<ActionEvent>(stage));
-        Button btnCredits = new Button();
-        btnCredits.setId("Cr�dits");
-        btnCredits.setStyle("-fx-background-image: url('Application/Ressources/Images/credits2.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnCredits.setMinWidth(140);
-        btnCredits.setMinHeight(54);
-        btnCredits.setOnAction(new JeuController<ActionEvent>(stage));
-        Button btnReglages = new Button();
-        btnReglages.setId("R�glages");
-        btnReglages.setStyle("-fx-background-image: url('Application/Ressources/Images/reglages.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnReglages.setMinWidth(140);
-        btnReglages.setMinHeight(54);
-        btnReglages.setOnAction(new JeuController<ActionEvent>(stage));
-        Button btnQuitter = new Button();
-        btnQuitter.setId("Quitter");
-        btnQuitter.setStyle("-fx-background-image: url('Application/Ressources/Images/quitter.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnQuitter.setMinWidth(245);
-        btnQuitter.setMinHeight(56);
-        btnQuitter.setOnAction(new JeuController<ActionEvent>(stage));
-        
-=======
-				"-fx-background-color: rgba(0, 0, 0, 0);");
-		btnReglement.setMinWidth(266);
-		btnReglement.setMinHeight(54);
-		btnReglement.setOnAction(new JeuController<ActionEvent>(stage));
+
+
+		/** BOUTON STATS **/
 		Button btnStatistiques = new Button();
 		btnStatistiques.setId("Statistiques");
 		btnStatistiques.setStyle("-fx-background-image: url('Application/Ressources/Images/statistiques.png');" +
@@ -126,6 +76,8 @@ public class JeuView implements Observer {
 		btnStatistiques.setMinWidth(283);
 		btnStatistiques.setMinHeight(51);
 		btnStatistiques.setOnAction(new JeuController<ActionEvent>(stage));
+
+		/** BOUTON CREDITS **/
 		Button btnCredits = new Button();
 		btnCredits.setId("Cr�dits");
 		btnCredits.setStyle("-fx-background-image: url('Application/Ressources/Images/credits2.png');" +
@@ -133,6 +85,8 @@ public class JeuView implements Observer {
 		btnCredits.setMinWidth(140);
 		btnCredits.setMinHeight(54);
 		btnCredits.setOnAction(new JeuController<ActionEvent>(stage));
+
+		/** BOUTON REGLAGES **/
 		Button btnReglages = new Button();
 		btnReglages.setId("R�glages");
 		btnReglages.setStyle("-fx-background-image: url('Application/Ressources/Images/reglages.png');" +
@@ -140,6 +94,8 @@ public class JeuView implements Observer {
 		btnReglages.setMinWidth(140);
 		btnReglages.setMinHeight(54);
 		btnReglages.setOnAction(new JeuController<ActionEvent>(stage));
+
+		/** BOUTON QUITTER **/
 		Button btnQuitter = new Button();
 		btnQuitter.setId("Quitter");
 		btnQuitter.setStyle("-fx-background-image: url('Application/Ressources/Images/quitter.png');" +
@@ -157,7 +113,6 @@ public class JeuView implements Observer {
 		vb.setAlignment(Pos.CENTER);
 
 		bp.setCenter(vb);
->>>>>>> master
 
 		stage.setScene(scene);
 		stage.setResizable(false);

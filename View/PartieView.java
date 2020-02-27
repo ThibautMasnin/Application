@@ -81,8 +81,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 		hbox3.setSpacing(25);
 		hbox3.setMinWidth(600);
 		Button bSauvegarder = new Button("Sauvegarder");
-		Button bReglement = new Button("Réglement");
-		Button bReglage = new Button("Réglages");
+		Button bReglement = new Button("RÃ©glement");
+		Button bReglage = new Button("RÃ©glages");
 		Button bQuitter = new Button("Quitter");
 		hbox3.getChildren().addAll(bSauvegarder, bReglement, bReglage, bQuitter);
 		hbox3.setAlignment(Pos.CENTER);
