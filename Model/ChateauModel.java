@@ -1,17 +1,20 @@
 package Application.Model;
 
-public class ChateauModel extends ElementModel
+public class ChateauModel
 {
-	//    private int idChateau;
+	private int idChateau;
 	private static int compteur = 1;
-	//    private int x;
-	//    private int y;
 
 	public ChateauModel()
 	{
-		super("C");
-		super.setIdElement(compteur);
+
+		idChateau = compteur;
 		compteur++;
+	}
+
+	public int getIdChateau()
+	{
+		return idChateau;
 	}
 
 	//    public int getX() {

@@ -29,7 +29,7 @@ public class PaysageModel
 	}
 
 	public String toString() {
-		return "PaysageModel [terrainType=" + terrainType + ", nbCouronne=" + nbCouronne + "]";
+		return "Paysage[Terrain=" + terrainType + ", nbCouronne=" + nbCouronne + "]";
 	}
 
 

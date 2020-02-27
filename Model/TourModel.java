@@ -17,6 +17,10 @@ public class TourModel
 	{
 		partieEnCours = partie;
 		idTour = numTour;
+		if(partie.getListeJoueur().size() == 2 && nbTourRestant == 11)
+		{
+			nbTourRestant = 5;
+		}
 		TourRestant = nbTourRestant;
 		numTour++;
 		nbTourRestant--;
@@ -42,20 +46,38 @@ public class TourModel
 			}
 			pioche.afficheTirageRetournee();
 		}
-		pioche.affichePioche();
+		//		pioche.affichePioche();
 		dominoDispo.addAll(partieEnCours.getPioche().getTirageRetourne());
 
 		for(int i = 0; i < partieEnCours.getListeJoueur().size(); i++)
 		{
-			if(idTour > 1)
-			{
-				placementDominoAleatoire(i+1);
-				partieEnCours.getJoueur(i+1).getListeDomino().remove(0);
+			if(partieEnCours.getListeJoueur().size() == 2) {
+				if (idTour > 1) {
+					placerDominoAleatoire(i + 1);
+					//					placerDomino(i + 1);
+					partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
+					placerDominoAleatoire(i + 1);
+					//					placerDomino(i + 1);
+					partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
+				}
+				if (TourRestant > 0) {
+					//					selectionDomino(i);
+					selectionDominoAleatoire(i);
+					//					selectionDomino(i);
+					selectionDominoAleatoire(i);
+				}
 			}
-			if(TourRestant > 0)
+			else
 			{
-				//                selectionDomino(i);
-				selectionDominoAleatoire(i);
+				if (idTour > 1) {
+					placerDominoAleatoire(i + 1);
+					//					placerDomino(i + 1);
+					partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
+				}
+				if (TourRestant > 0) {
+					//					selectionDomino(i);
+					selectionDominoAleatoire(i);
+				}
 			}
 		}
 	}
@@ -65,15 +87,50 @@ public class TourModel
 		System.out.println("tour : " + idTour + " et tour restant : " + TourRestant);
 	}
 
-	public void selectionDomino(int i)
+	public void selectionDomino(int idJ)
 	{
 		Scanner s = new Scanner(System.in);
-		System.out.println("JOUEUR " + (i+1) + " choisissez");
+		System.out.println("JOUEUR " + (idJ + 1) + " choisissez votre domino : ");
 		int numDominoChoisi = s.nextInt();
-		partieEnCours.getJoueur(i+1).choixDomino(partieEnCours.getPioche().getTirageRetourne().get(numDominoChoisi-1));
+		partieEnCours.getJoueur(idJ+1).choixDomino(partieEnCours.getPioche().getTirageRetourne().get(numDominoChoisi-1));
 	}
 
-	public void placementDominoAleatoire(int idJoueur)
+	public void placerDomino(int idJoueur)
+	{
+		boolean placementValide = false;
+		Scanner s = new Scanner(System.in);
+
+		while(!placementValide)
+		{
+			System.out.println("JOUEUR " + (idJoueur) + " entrer le numéro de la ligne : ");
+			int ligne = s.nextInt();
+			System.out.println("JOUEUR " + (idJoueur) + " entrer le numéro de la colonne : ");
+			int colonne = s.nextInt();
+			System.out.println("JOUEUR " + (idJoueur) + " entrer le numéro de le sens : ");
+			String scs = s.next();
+			String sens = null;
+			if(scs.equalsIgnoreCase("D"))
+			{
+				sens = "D";
+			}
+			else if(scs.equalsIgnoreCase("H"))
+			{
+				sens = "H";
+			}
+			else if(scs.equalsIgnoreCase("B"))
+			{
+				sens = "B";
+			}
+			else if(scs.equalsIgnoreCase("G"))
+			{
+				sens = "G";
+			}
+
+			placementValide = partieEnCours.getJoueur(idJoueur).getPlateau().ajouteDomino(partieEnCours.getJoueur(idJoueur).getListeDomino().get(0), ligne, colonne, sens);
+		}
+	}
+
+	public void placerDominoAleatoire(int idJoueur)
 	{
 		Random r = new Random();
 		int max = 8;    // taille max d'une ligne et colonne

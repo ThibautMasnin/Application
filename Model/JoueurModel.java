@@ -1,7 +1,5 @@
 package Application.Model;
 
-import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 
 public class JoueurModel {
@@ -28,14 +26,6 @@ public class JoueurModel {
 
 	public ArrayList<DominoModel> getListeDomino() {
 		return listeDomino;
-	}
-
-	public void afficheListeDomino()
-	{
-		for(int i = 0; i < listeDomino.size(); i++)
-		{
-			System.out.println("domino " + (i+1) + " : " + listeDomino.get(i).getIdElement());
-		}
 	}
 
 	public PlateauModel getPlateau()

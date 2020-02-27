@@ -7,20 +7,20 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class StatistiqueController<T extends ActionEvent> implements EventHandler<T> {
-	
+
 	private Stage s;	
 
-    public StatistiqueController(Stage s) {
+	public StatistiqueController(Stage s) {
 		super();
 		this.s=s;
-    }
+	}
 
-    @Override
+	@Override
 	public void handle(T event) {
 		if (event.getSource() instanceof Button) {
-        	if (((Button) event.getSource()).getId() == "Retour") {
-        		JeuView ppv = new JeuView(s);
-        	}
-        }
+			if (((Button) event.getSource()).getId() == "Retour") {
+				JeuView ppv = new JeuView(s);
+			}
+		}
 	}
 }

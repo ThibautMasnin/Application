@@ -1,6 +1,5 @@
 package Application.Model;
 
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -28,7 +27,7 @@ public class PartieModel
 		}
 		//On crée la pioche vide pour l'instant avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioche
 		pioche = new PiocheModel();
-		pioche.getPioche();
+		pioche.getPioche(this);
 		//On crée les dominos et les ajoute dans la meme pioche
 		pioche.creerPioche();
 		//On crée les joueur et les ajoute dans la liste qu'on utilisera
@@ -46,8 +45,13 @@ public class PartieModel
 
 	public void jouer()
 	{
+		int nbTour = 12;
+		if(listeJoueur.size() == 2)
+		{
+			nbTour = 6;
+		}
 		//On crée les tours, 12 tours d'après les règles du jeu donc 12 boucles
-		for(int i = 0; i < 12; i++)
+		for(int i = 0; i < nbTour; i++)
 		{
 			//On crée le tour concerné de cette partie et on la fait jouer
 			TourModel tour = new TourModel(this);
@@ -57,6 +61,7 @@ public class PartieModel
 			{
 				System.out.println("||||||||||||||||||||||| JOUEUR " + (j+1) + " : |||||||||||||||||||||||");
 				listeJoueur.get(j).getPlateau().affichePlateau();
+				System.out.println();
 			}
 
 			//            System.out.println("joueur 1 :");

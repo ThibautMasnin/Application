@@ -1,7 +1,6 @@
 package Application.Controller;
 
 import Application.View.JeuView;
-import Application.View.PartieView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -11,23 +10,22 @@ public class ParametreController<T extends ActionEvent> implements EventHandler<
 
 	private Stage s;	
 
-    public ParametreController(Stage s) {
+	public ParametreController(Stage s) {
 		super();
 		this.s=s;
-    }
+	}
 
-    @Override
+	@Override
 	public void handle(T event) {
 		if (event.getSource() instanceof Button) {
-        	if (((Button) event.getSource()).getId() == "Retour") {
-        		JeuView ppv = new JeuView(s);
-        	}
-        	/*
+			if (((Button) event.getSource()).getId() == "Retour") {
+				JeuView ppv = new JeuView(s);
+			}
+			/*
         	else if (((Button) event.getSource()).getId() == "Valider") {
         		PartieView ppv = new PartieView(s);
         	}
-        	 */
-        }
+			 */
+		}
 	}
 }
-	
