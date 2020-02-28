@@ -53,30 +53,30 @@ public class TourModel
 		{
 			if(partieEnCours.getListeJoueur().size() == 2) {
 				if (idTour > 1) {
-					placerDominoAleatoire(i + 1);
-					//					placerDomino(i + 1);
+//					placerDominoAleatoire(i + 1);
+										placerDomino(i + 1);
 					partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
-					placerDominoAleatoire(i + 1);
-					//					placerDomino(i + 1);
+//					placerDominoAleatoire(i + 1);
+										placerDomino(i + 1);
 					partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
 				}
 				if (TourRestant > 0) {
-					//					selectionDomino(i);
-					selectionDominoAleatoire(i);
-					//					selectionDomino(i);
-					selectionDominoAleatoire(i);
+										selectionDomino(i);
+//					selectionDominoAleatoire(i);
+										selectionDomino(i);
+//					selectionDominoAleatoire(i);
 				}
 			}
 			else
 			{
 				if (idTour > 1) {
-					placerDominoAleatoire(i + 1);
-					//					placerDomino(i + 1);
+//					placerDominoAleatoire(i + 1);
+										placerDomino(i + 1);
 					partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
 				}
 				if (TourRestant > 0) {
-					//					selectionDomino(i);
-					selectionDominoAleatoire(i);
+										selectionDomino(i);
+//					selectionDominoAleatoire(i);
 				}
 			}
 		}
@@ -106,7 +106,7 @@ public class TourModel
 			int ligne = s.nextInt();
 			System.out.println("JOUEUR " + (idJoueur) + " entrer le numéro de la colonne : ");
 			int colonne = s.nextInt();
-			System.out.println("JOUEUR " + (idJoueur) + " entrer le numéro de le sens : ");
+			System.out.println("JOUEUR " + (idJoueur) + " entrer la lettre du sens (h, d, g, b) : ");
 			String scs = s.next();
 			String sens = null;
 			if(scs.equalsIgnoreCase("D"))
@@ -127,6 +127,10 @@ public class TourModel
 			}
 
 			placementValide = partieEnCours.getJoueur(idJoueur).getPlateau().ajouteDomino(partieEnCours.getJoueur(idJoueur).getListeDomino().get(0), ligne, colonne, sens);
+			if(!placementValide)
+			{
+				System.out.println("Placement invalide, veuillez réessayer : ");
+			}
 		}
 	}
 

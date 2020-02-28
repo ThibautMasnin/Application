@@ -33,7 +33,7 @@ public class PlateauModel
 	{
 		if (plateau[x][y] == null)
 		{
-			if(sens == "H" && plateau[x-1][y] == null)
+			if(sens == "H" && plateau[x-1][y] == null && emplacementValide(e, x, y, sens))
 			{
 				e.setX1(x);
 				e.setY1(y);
@@ -47,7 +47,7 @@ public class PlateauModel
 				listeDomino.add(e);
 				return true;
 			}
-			else if(sens == "G" && plateau[x][y-1] == null)
+			else if(sens == "G" && plateau[x][y-1] == null && emplacementValide(e, x, y, sens))
 			{
 				e.setX1(x);
 				e.setY1(y);
@@ -61,7 +61,7 @@ public class PlateauModel
 				listeDomino.add(e);
 				return true;
 			}
-			else if(sens == "B" && plateau[x+1][y] == null)
+			else if(sens == "B" && plateau[x+1][y] == null && emplacementValide(e, x, y, sens))
 			{
 				e.setX1(x);
 				e.setY1(y);
@@ -75,7 +75,7 @@ public class PlateauModel
 				listeDomino.add(e);
 				return true;
 			}
-			else if(sens == "D" && plateau[x][y+1] == null)
+			else if(sens == "D" && plateau[x][y+1] == null && emplacementValide(e, x, y, sens))
 			{
 				e.setX1(x);
 				e.setY1(y);
@@ -118,14 +118,24 @@ public class PlateauModel
 					if (getElement(i,j) instanceof PaysageModel)
 					{
 						DominoModel d = getDomino(i, j);
-						if((getElement(i,j) == d.getPaysage2()) && (d.getPaysage2().getNbCouronne() != 0))
+//						if((getElement(i,j) == d.getPaysage2()) && (d.getPaysage2().getNbCouronne() != 0))
+//						{
+//							System.out.print("D" + d.getNumDomino() + (((PaysageModel) getElement(i,j)).getNomTerrain()) +
+//									d.getPaysage2().getNbCouronne() + " | ");
+//						}
+//						else if((getElement(i,j) == d.getPaysage2()) && (d.getPaysage2().getNbCouronne() == 0))
+//						{
+//							System.out.print("D" + d.getNumDomino() + (((PaysageModel) getElement(i,j)).getNomTerrain()) + " | ");
+//						}
+						if(getElement(i,j) == d.getPaysage1())
+						{
+							System.out.print("D" + d.getNumDomino() + (((PaysageModel) getElement(i,j)).getNomTerrain()) +
+									d.getPaysage1().getNbCouronne() + " | ");
+						}
+						else if(getElement(i,j) == d.getPaysage2())
 						{
 							System.out.print("D" + d.getNumDomino() + (((PaysageModel) getElement(i,j)).getNomTerrain()) +
 									d.getPaysage2().getNbCouronne() + " | ");
-						}
-						else if((getElement(i,j) == d.getPaysage2()) && (d.getPaysage2().getNbCouronne() == 0))
-						{
-							System.out.print("D" + d.getNumDomino() + (((PaysageModel) getElement(i,j)).getNomTerrain()) + " | ");
 						}
 						else
 						{
@@ -175,31 +185,87 @@ public class PlateauModel
 		nbCasePrise++;
 	}
 
-	public boolean caseDisponible(int x, int y, String s)
+	public boolean emplacementValide(DominoModel d, int x, int y, String sens)
 	{
-		if(plateau[x][y] == null)
+		boolean bool = false;
+		if(sens == "H") // Domino vers le haut
 		{
-			if(s == "G" && plateau[x][y-1] == null)
+//			on regarde si un chateau est présent autour de l'endroit où l'on veut le placer
+			if((plateau[x][y-1] instanceof ChateauModel)
+					|| (plateau[x+1][y] instanceof ChateauModel)
+					|| (plateau[x][y+1] instanceof ChateauModel)
+					|| (plateau[x-1][y+1] instanceof ChateauModel)
+					|| (plateau[x-2][y] instanceof ChateauModel)
+					|| (plateau[x-1][y-1] instanceof ChateauModel))
 			{
+				System.out.println("CHATEAAUUUU");
+				bool = true;
+			}
+//			on regarde si un autre domino est présent autour de l'endroit où l'on veut le placer
+			else if((plateau[x][y-1] instanceof PaysageModel)
+					|| (plateau[x+1][y] instanceof PaysageModel)
+					|| (plateau[x][y+1] instanceof PaysageModel)
+					|| (plateau[x-1][y+1] instanceof PaysageModel)
+					|| (plateau[x-2][y] instanceof PaysageModel)
+					|| (plateau[x-1][y-1] instanceof PaysageModel))
+			{
+//			on regarde si un paysage est en commun
+//				if(((PaysageModel) plateau[x][y-1]).getNomTerrain()==d.getPaysage1().getNomTerrain()
+//						|| ((PaysageModel) plateau[x+1][y]).getNomTerrain()==d.getPaysage1().getNomTerrain()
+//						|| ((PaysageModel) plateau[x][y+1]).getNomTerrain()==d.getPaysage1().getNomTerrain()
+//						|| (plateau[x+1][y] instanceof PaysageModel) || (plateau[x][y+1] instanceof PaysageModel))
+//				System.out.println("DOMINOOOOO");
 				return true;
 			}
-			else if(s == "D" && plateau[x][y+1] == null)
-			{
-				return true;
-			}
-			else if(s == "H" && plateau[x-1][y] == null)
-			{
-				return true;
-			}
-			else if(s == "B" && plateau[x+1][y] == null)
-			{
-				return true;
-			}
-			else return false;
+//
+//
+//			if((plateau[x][y-1]==d.getPaysage1()) || (plateau[x][y-1] instanceof ChateauModel)
+//				|| (plateau[x+1][y]==d.getPaysage1()) || (plateau[x+1][y] instanceof ChateauModel)
+//					|| (plateau[x][y+1]==d.getPaysage1()) || (plateau[x][y+1] instanceof ChateauModel))
+//			{
+//				System.out.println("BAHHHHHH OUIII MON GAAAARS");
+//				return true;
+//			}
 		}
-		else
+		else if(sens == "G")
 		{
-			return false;
+			if((plateau[x-1][y] instanceof ChateauModel)
+					|| (plateau[x][y+1] instanceof ChateauModel)
+					|| (plateau[x+1][y] instanceof ChateauModel)
+					|| (plateau[x+1][y-1] instanceof ChateauModel)
+					|| (plateau[x][y-2] instanceof ChateauModel)
+					|| (plateau[x-1][y-1] instanceof ChateauModel))
+			{
+				System.out.println("CHATEAAUUUU");
+				bool = true;
+			}
 		}
+		else if(sens == "D")
+		{
+			if((plateau[x-1][y] instanceof ChateauModel)
+					|| (plateau[x][y-1] instanceof ChateauModel)
+					|| (plateau[x+1][y] instanceof ChateauModel)
+					|| (plateau[x+1][y+1] instanceof ChateauModel)
+					|| (plateau[x][y+2] instanceof ChateauModel)
+					|| (plateau[x+1][y-1] instanceof ChateauModel))
+			{
+				System.out.println("CHATEAAUUUU");
+				bool = true;
+			}
+		}
+		else if(sens == "B")
+		{
+			if((plateau[x][y-1] instanceof ChateauModel)
+					|| (plateau[x-1][y] instanceof ChateauModel)
+					|| (plateau[x][y+1] instanceof ChateauModel)
+					|| (plateau[x+1][y+1] instanceof ChateauModel)
+					|| (plateau[x+2][y] instanceof ChateauModel)
+					|| (plateau[x+1][y-1] instanceof ChateauModel))
+			{
+				System.out.println("CHATEAAUUUU");
+				bool = true;
+			}
+		}
+		return bool;
 	}
 }
