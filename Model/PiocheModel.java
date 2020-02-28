@@ -290,6 +290,7 @@ public class PiocheModel
 	public ArrayList<DominoModel> triDomino(ArrayList<DominoModel> ld){
 		ArrayList<DominoModel> listT = ld;
 		boolean good = false;
+		int size = ld.size();
 		while(good==false){
 			for(int i = 0 ; i<listT.size();i++) {
 				DominoModel tmp;
@@ -326,12 +327,20 @@ public class PiocheModel
 				}
 
 			}
+			if (size ==4) {
 			if (listT.get(0).getNumDomino() < listT.get(1).getNumDomino() && listT.get(1).getNumDomino() < listT.get(2).getNumDomino() && listT.get(2).getNumDomino() < listT.get(3).getNumDomino() && listT.get(0).getNumDomino() < listT.get(3).getNumDomino() ){
 				good = true;
+			}
+			}
+			else {
+				if(listT.get(0).getNumDomino() < listT.get(1).getNumDomino() && listT.get(1).getNumDomino() < listT.get(2).getNumDomino() &&  listT.get(0).getNumDomino() < listT.get(2).getNumDomino()) {
+					good = true;
+				}
 			}
 		}
 		return listT;
 	}
+	
 	public void melangerPioche()
 	{
 		Random r = new Random();
