@@ -3,6 +3,7 @@ package Application.View;
 import Application.Controller.PartieController;
 import Application.Model.DominoModel;
 import Application.Model.Grille;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,23 +21,25 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel dominoTMP;
+	private Deck deck;
+	private DominoModel d1;
+	private DominoModel d2;
+	private DominoModel d3;
+	private DominoModel d4;
+	private DominoModel d5;
+	private DominoModel d6;
+	private DominoModel d7;
+	private DominoModel d8;
+	private Group zoneJeu;
+	private Grille grille;
 	private int cpt;
 
 
 	public PartieView(Stage partieStage) {
-
-		//dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
-		DominoModel d1 = new DominoModel(-50, 125, 50, 100, "Application/Ressources/Dominos/D1.jpg");
-		DominoModel d2 = new DominoModel(-150, 125, 50, 100, "Application/Ressources/Dominos/D2.jpg");
-		DominoModel d3 = new DominoModel(-250, 125, 50, 100, "Application/Ressources/Dominos/D3.jpg");
-		DominoModel d4 = new DominoModel(-350, 125, 50, 100, "Application/Ressources/Dominos/D4.jpg");
-		DominoModel d5 = new DominoModel(-50, 275, 50, 100, "Application/Ressources/Dominos/D5.jpg");
-		DominoModel d6 = new DominoModel(-150, 275, 50, 100, "Application/Ressources/Dominos/D6.jpg");
-		DominoModel d7 = new DominoModel(-250, 275, 50, 100, "Application/Ressources/Dominos/D7.jpg");
-		DominoModel d8 = new DominoModel(-350, 275, 50, 100, "Application/Ressources/Dominos/D8.jpg");
 
 		cpt = 0;
 
@@ -81,6 +84,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 		lJoueur.setFont(new Font("Viner Hand ITC", 24));
 		lTempsTour.setTextFill(Color.web("#ffffff"));
 		lTempsTour.setFont(new Font("Viner Hand ITC", 24));
+
+//		Timeline timeline = new Timeline(new KeyFrame(
+//				Duration.millis(2500),
+//				ae -> doSomething()));
+//		timeline.play();
+
 		hbox2.getChildren().addAll(lJoueur, lTempsTour);
 		hbox2.setAlignment(Pos.CENTER);
 		hbox2.setMinWidth(650);	
@@ -161,9 +170,15 @@ public class PartieView implements EventHandler<ActionEvent> {
 		bRetourner.setMaxSize(110,20);
 
 		Button bDemarrer = new Button("Demarrer");
-		bRetourner.setMaxSize(110,20);
+		bDemarrer.setMaxSize(110,20);
 
-		vActionDomino.getChildren().addAll(bRotateDroit, bRotateGauche, bAnnulerCoup, bFinirTour, bRetourner, bDemarrer);
+		Button bTrier = new Button("Trier");
+		bTrier.setMaxSize(110,20);
+
+		Button bReset= new Button("Reset");
+		bReset.setMaxSize(110,20);
+
+		vActionDomino.getChildren().addAll(bRotateDroit, bRotateGauche, bAnnulerCoup, bFinirTour, bRetourner, bDemarrer, bTrier, bReset);
 		vActionDomino.setAlignment(Pos.CENTER);
 		vActionDomino.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);-fx-border-color: #000000; -fx-border-width: 0 1 0 0;");
 
@@ -174,10 +189,35 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		/** PLATEAU DES JOUEURS **/
 		// JOUEUR 1
-		Grille grille = new Grille(50, 25, 10, 10);
+		grille = new Grille(50, 25, 10, 10, Color.RED, "Application/Ressources/Dominos/C1.jpg");
 		grille.dessinerGrille();
+
+		// JOUEUR 2
+		Grille grille2 = new Grille(50, 25, 10, 10, Color.BLUE, "Application/Ressources/Dominos/C2.jpg");
+		grille2.dessinerGrille();
+
+		// JOUEUR 3
+		Grille grille3 = new Grille(50, 25, 10, 10, Color.YELLOW, "Application/Ressources/Dominos/C3.jpg");
+		grille3.dessinerGrille();
+
+		// JOUEUR 4
+		Grille grille4 = new Grille(50, 25, 10, 10, Color.GREEN, "Application/Ressources/Dominos/C4.jpg");
+		grille4.dessinerGrille();
+
+		deck = new Deck();
+		//dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
+		d1 = new DominoModel(500, 300, 100, 50);
+		d2 = new DominoModel(500, 400, 100, 50);
+		d3 = new DominoModel(500, 500, 100, 50);
+		d4 = new DominoModel(500, 600, 100, 50);
+		d5 = new DominoModel(650, 300, 100, 50);
+		d6 = new DominoModel(650, 400, 100, 50);
+		d7 = new DominoModel(650, 500, 100, 50);
+		d8 = new DominoModel(650, 600, 100, 50);
+		dominoTMP = d1;
+
 		//dominoTMP.setOnMouseClicked(grille);
-		d1.setOnMouseClicked(grille);
+		//d1.setOnMouseClicked(grille);
 		d2.setOnMouseClicked(grille);
 		d3.setOnMouseClicked(grille);
 		d4.setOnMouseClicked(grille);
@@ -187,24 +227,19 @@ public class PartieView implements EventHandler<ActionEvent> {
 		d8.setOnMouseClicked(grille);
 
 
-		// JOUEUR 2
+		zoneJeu = new Group();
+		zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), deck, d1, d2, d3, d4, d5, d6, d7, d8);
+		grille2.getPane().setLayoutX(800);
+		grille3.getPane().setLayoutY(500);
+		grille4.getPane().setLayoutX(800);
+		grille4.getPane().setLayoutY(500);
+		deck.setLayoutX(470);
 
-		// JOUEUR 3
 
-		// JOUEUR 4
 
-		Group zoneJeu = new Group();
-		grille.setPane(d1);
-		grille.setPane(d2);
-		grille.setPane(d3);
-		grille.setPane(d4);
-		grille.setPane(d5);
-		grille.setPane(d6);
-		grille.setPane(d7);
-		grille.setPane(d8);
-		zoneJeu.getChildren().add(grille.getPane());
 
-		dominoTMP = d1;
+
+
 
 
 		/** EVENT DOMINO **/
@@ -214,6 +249,14 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		bRetourner.setOnAction(this);
 
+		bDemarrer.setOnAction(this);
+
+		bTrier.setOnAction(this);
+
+		bReset.setOnAction(e->{
+			partieStage.close();
+			PartieView pv = new PartieView(partieStage);
+		});
 
 		/** AJOUT AU BORDERPANE PRINCIPALE **/
 		bp.setTop(bpMenu);
@@ -224,6 +267,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 
 		partieStage.setScene(scene);
+		partieStage.setResizable(false);
 		partieStage.setFullScreen(true);
 		partieStage.show();
 
@@ -242,18 +286,15 @@ public class PartieView implements EventHandler<ActionEvent> {
 	}
 
 
-
 	@Override
 	public void handle(ActionEvent actionEvent) {
 		if (actionEvent.getSource() instanceof Button) {
-
 			// EVENT ROTATION A DROITE
 			if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
 				Rotate rotate = new Rotate(90,dominoTMP.getPivotX(), dominoTMP.getPivotY());
 				dominoTMP.getTransforms().add(rotate);
 				cpt += 1;
 				dominoTMP.setCptRotation(cpt);
-
 
 
 				if (cpt == 1){
@@ -307,6 +348,78 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			// EVENT RETOURNER DOMINO
 			if (((Button) actionEvent.getSource()).getText() == "Retourner") {
+			}
+
+			// EVENT TRIER DOMINO
+			if (((Button) actionEvent.getSource()).getText() == "Trier") {
+				deck.melangerDeck();
+			}
+
+			// EVENT JOUER DOMINO
+			if (((Button) actionEvent.getSource()).getText() == "Demarrer") {
+
+				DominoModel d1_ = new DominoModel(500, 300, 100, 50, deck.getFirstDomino());
+				d1_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.setFill(deck.getFirstDominoD());
+				zoneJeu.getChildren().add(d1_);
+				dominoTMP = d1_;
+
+
+				DominoModel d2_ = new DominoModel(500, 400, 100, 50, deck.getFirstDomino());
+				d2_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.setFill(deck.getFirstDominoD());
+				zoneJeu.getChildren().add(d2_);
+
+
+				DominoModel d3_ = new DominoModel(500, 500, 100, 50, deck.getFirstDomino());
+				d3_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.setFill(deck.getFirstDominoD());
+				zoneJeu.getChildren().add(d3_);
+
+
+				DominoModel d4_ = new DominoModel(500, 600, 100, 50, deck.getFirstDomino());
+				d4_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.setFill(deck.getFirstDominoD());
+				zoneJeu.getChildren().add(d4_);
+
+
+				DominoModel d5_ = new DominoModel(650, 300, 100, 50, deck.getFirstDominoD());
+				d5_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.setFill(deck.getFirstDominoD());
+				zoneJeu.getChildren().add(d5_);
+
+
+				DominoModel d6_ = new DominoModel(650, 400, 100, 50, deck.getFirstDominoD());
+				d6_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.setFill(deck.getFirstDominoD());
+				zoneJeu.getChildren().add(d6_);
+
+
+				DominoModel d7_ = new DominoModel(650, 500, 100, 50, deck.getFirstDominoD());
+				d7_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.setFill(deck.getFirstDominoD());
+				zoneJeu.getChildren().add(d7_);
+
+
+				DominoModel d8_ = new DominoModel(650, 600, 100, 50, deck.getFirstDominoD());
+				d8_.setOnMouseClicked(grille);
+				deck.getListeDominos().remove(deck.getSize()-1);
+				System.out.println("###" + deck.getSize());
+				if (deck.getSize() > 0)
+				{
+					deck.setFill(deck.getFirstDominoD());
+				} else {
+					deck.setFill("Application/Ressources/Dominos/ekekan.jpg");
+				}
+
+				zoneJeu.getChildren().add(d8_);
 			}
 
 		}

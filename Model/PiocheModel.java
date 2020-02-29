@@ -35,7 +35,7 @@ public class PiocheModel
 		return pioche;
 	}
 
-	//Méthode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
+	//Mï¿½thode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
 	public String getPwd() {
 		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
 		String password = "";
@@ -253,14 +253,14 @@ public class PiocheModel
 	public void afficheTirageRetournee()
 	{
 		triDomino(tirageRetourne);
-		System.out.println("|||||Les retournés|||||");
+		System.out.println("|||||Les retournï¿½s|||||");
 		for(int i=0; i < tirageRetourne.size(); i++)
 		{
 			if(tirageRetourne.get(i).getNumDomino()<10) {
-				System.out.println("[Domino n°0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino nï¿½0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 			else {
-				System.out.println("[Domino n°" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino nï¿½" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 		}
 		System.out.println("\n\n");
@@ -269,10 +269,10 @@ public class PiocheModel
 	public void afficheTirageCachee()
 	{
 		triDomino(tirageCache);
-		System.out.println("|||||Les cachés|||||");
+		System.out.println("|||||Les cachï¿½s|||||");
 		for(int i=0; i < tirageCache.size(); i++)
 		{
-			System.out.println("[Domino n°" + tirageCache.get(i).getNumDomino()+ "]") ;
+			System.out.println("[Domino nï¿½" + tirageCache.get(i).getNumDomino()+ "]") ;
 		}
 		System.out.println("\n\n");
 	}
@@ -296,7 +296,7 @@ public class PiocheModel
 				DominoModel tmp;
 				DominoModel tmp2;
 				if (i<listT.size()-1) {
-					if(listT.get(i).getNumDomino()>listT.get(i+1).getNumDomino()) {
+					if(listT.get(i).getNumDomino() > listT.get(i+1).getNumDomino()) {
 						tmp = listT.get(i);
 						tmp2 = listT.get(i+1);
 						listT.remove(i);
@@ -340,7 +340,7 @@ public class PiocheModel
 		}
 		return listT;
 	}
-	
+
 	public void melangerPioche()
 	{
 		Random r = new Random();
