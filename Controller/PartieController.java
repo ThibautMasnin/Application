@@ -1,6 +1,9 @@
 package Application.Controller;
 
 import Application.Model.DominoModel;
+import Application.View.PartieView;
+import Application.View.ReglageView;
+import Application.View.ReglementView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -52,9 +55,19 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 			 if (((Button) event.getSource()).getText() == "Finir tour") {
 			 }
 
-
 			 // EVENT RETOURNER DOMINO
 			 if (((Button) event.getSource()).getText() == "Retourner") {
+			 }
+
+			 if (((Button) event.getSource()).getText() == "Sauvegarder") {
+			 }
+
+			 if (((Button) event.getSource()).getText() == "Réglement") {
+				 ReglementView rv = new ReglementView(stage);
+			 }
+
+			 if (((Button) event.getSource()).getText() == "Réglages") {
+				 ReglageView rv = new ReglageView(stage);
 			 }
 
 			 if (((Button) event.getSource()).getText() == "Quitter") {

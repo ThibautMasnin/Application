@@ -13,7 +13,7 @@ public class Kingdomino extends Application {
 	public void start(Stage primaryStage) throws SQLException {
 
 //		// Valentin
-//		PartieView partieView = new PartieView(primaryStage);
+		PartieView partieView = new PartieView(primaryStage);
 
 //        // Thibaut
 //        primaryStage.setTitle("KingDomino");

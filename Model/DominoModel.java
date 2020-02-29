@@ -67,6 +67,31 @@ public class DominoModel extends Rectangle
 
 	}
 
+	public DominoModel(double centerX, double centerY, double width, double height) {
+		super(centerX, centerY, width, height);
+		isSelected = false;
+
+		url = "Application/Ressources/Dominos/ekekan.jpg";
+		img = new ImagePattern(new Image(getUrl()));
+		setFill(img);
+
+
+		effectSelected = new DropShadow();
+		effectSelected.setBlurType(BlurType.GAUSSIAN);
+		effectSelected.setSpread(10);
+		effectSelected.setColor(Color.RED);
+		effectSelected.setRadius(2);
+
+		pivotX = this.getX() + (this.getWidth()/2);
+		pivotY = this.getY() + (this.getHeight()/4);
+
+		pivotTX = this.getX();
+		pivotTY = this.getY();
+
+		cptRotation = 0;
+
+	}
+
 	public int getNumDomino()
 	{
 		return numero;
@@ -75,6 +100,7 @@ public class DominoModel extends Rectangle
 	public String getUrl() {
 		return this.url;
 	}
+
 
 	public void setUrl(String u){
 		url = u;

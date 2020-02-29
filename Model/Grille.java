@@ -1,13 +1,16 @@
 package Application.Model;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -22,25 +25,32 @@ public class Grille implements EventHandler<MouseEvent> {
 	private Rectangle caseGrille;
 	private Group groupe;
 	private Pane pane;
+	private Paint colorLine;
+	private String chateau;
 
 
-	public Grille(int tc, int d, int l, int c) {
+	public Grille(int tc, int d, int l, int c, Paint cl, String ch) {
 		tailleCase = tc;
 		decalage = d;
 		nbLignes = l;
 		nbColonnes = c;
 		dominoSelectionne = null;
+		colorLine = cl;
+		chateau = ch;
 
-		ligne = new Line();
-		ligne.setStrokeWidth(1);
-		ligne.setStroke(Color.DARKGREY);
+//		ligne = new Line();
+//		ligne.setStrokeWidth(1);
+//		ligne.setStroke(Color.DARKGREY);
 
-		caseGrille = new Rectangle();
-		caseGrille.setFill(Color.RED);
-		caseGrille.setStroke(Color.TRANSPARENT);
+//		caseGrille = new Rectangle();
+//		caseGrille.setFill(Color.RED);
+//		caseGrille.setStroke(Color.TRANSPARENT);
 
 		groupe = new Group();
 		pane = new Pane();
+		pane.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
+				"-fx-background-position: center center;" +
+				"-fx-background-size: cover;");
 		//pane.setPrefSize(1000,1000);
 	}
 
@@ -53,19 +63,19 @@ public class Grille implements EventHandler<MouseEvent> {
 			for (int j = 0; j <= nbColonnes-1; j++) {
 
 				// LIGNES VERTICALES
-				Line ligne = new Line((decalage + tailleCase * j), decalage, (decalage + tailleCase * j), (decalage + 9 * tailleCase));
-				ligne.setStrokeWidth(1);
-				ligne.setStroke(Color.BLACK);
+				Line ligne = new Line((tailleCase * j), 0, (tailleCase * j), (9 * tailleCase));
+				ligne.setStrokeWidth(1.5);
+				ligne.setStroke(colorLine);
 				pane.getChildren().add(ligne);
 
 				if (i < nbLignes-1 && j < nbColonnes-1) {
 					if (i == 4 && j == 4){
-						Rectangle caseGrille = new Rectangle((decalage + tailleCase * i), (decalage + tailleCase * j), tailleCase, tailleCase);
-						caseGrille.setFill(new ImagePattern(new Image("Application/Ressources/Dominos/C1.jpg")));
+						Rectangle caseGrille = new Rectangle((tailleCase * i), (tailleCase * j), tailleCase, tailleCase);
+						caseGrille.setFill(new ImagePattern(new Image(chateau)));
 						pane.getChildren().add(caseGrille);
 					}
 					else {
-						Rectangle caseGrille = new Rectangle((decalage + tailleCase * i), (decalage + tailleCase * j), tailleCase, tailleCase);
+						Rectangle caseGrille = new Rectangle((tailleCase * i), (tailleCase * j), tailleCase, tailleCase);
 						caseGrille.setFill(Color.TRANSPARENT);
 						caseGrille.setStroke(Color.TRANSPARENT);
 						caseGrille.setOnMouseClicked(this);
@@ -73,10 +83,11 @@ public class Grille implements EventHandler<MouseEvent> {
 					}
 				}
 			}
+
 			// LIGNES HORIZONTALES
-			Line ligne = new Line(decalage, (decalage + tailleCase * i), (decalage + 9 * tailleCase), (decalage + tailleCase * i));
-			ligne.setStrokeWidth(1);
-			ligne.setStroke(Color.BLACK);
+			Line ligne = new Line(0, (tailleCase * i), (9 * tailleCase), (tailleCase * i));
+			ligne.setStrokeWidth(1.5);
+			ligne.setStroke(colorLine);
 			pane.getChildren().add(ligne);
 		}
 	}
@@ -214,7 +225,7 @@ public class Grille implements EventHandler<MouseEvent> {
 			Circle circle5 = new Circle(dominoSelectionne.getPivotTX(), dominoSelectionne.getPivotTY(), 5);
 			circle5.setFill(Color.YELLOW);
 
-			pane.getChildren().addAll(circle1, circle2, circle3, circle4, circle5);
+			//pane.getChildren().addAll(circle1, circle2, circle3, circle4, circle5);
 			dominoSelectionne = null;
 		}
 

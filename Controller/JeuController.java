@@ -29,16 +29,16 @@ public class JeuController<T extends ActionEvent> implements EventHandler<T> {
 			else if (((Button) event.getSource()).getId() == "Reprendre partie") {
 				ReprendrePartieView pv = new ReprendrePartieView(s);
 			}
-			else if (((Button) event.getSource()).getId() == "R�glement") {
+			else if (((Button) event.getSource()).getId() == "Réglement") {
 				ReglementView rv = new ReglementView(s);
 			}        	
-			else if (((Button) event.getSource()).getId() == "Cr�dits") {
+			else if (((Button) event.getSource()).getId() == "Crédits") {
 				CreditView rv = new CreditView(s);
 			}	
 			else if (((Button) event.getSource()).getId() == "Statistiques") {
 				StatistiqueView rv = new StatistiqueView(s);
 			}        	
-			else if (((Button) event.getSource()).getId() == "R�glages") {
+			else if (((Button) event.getSource()).getId() == "Réglages") {
 				ReglageView rv = new ReglageView(s);
 			}
 			else if (((Button) event.getSource()).getId() == "Quitter") {
