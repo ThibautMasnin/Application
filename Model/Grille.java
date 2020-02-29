@@ -48,9 +48,9 @@ public class Grille implements EventHandler<MouseEvent> {
 
 		groupe = new Group();
 		pane = new Pane();
-		pane.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
-				"-fx-background-position: center center;" +
-				"-fx-background-size: cover;");
+//		pane.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
+//				"-fx-background-position: center center;" +
+//				"-fx-background-size: cover;");
 		//pane.setPrefSize(1000,1000);
 	}
 

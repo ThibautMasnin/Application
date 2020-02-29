@@ -228,6 +228,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 
 		zoneJeu = new Group();
+		zoneJeu.setStyle("-fx-background-color: #336699;");
 		zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), deck, d1, d2, d3, d4, d5, d6, d7, d8);
 		grille2.getPane().setLayoutX(800);
 		grille3.getPane().setLayoutY(500);
