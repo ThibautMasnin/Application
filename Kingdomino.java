@@ -1,7 +1,6 @@
 package Application;
 
 import Application.Model.PartieModel;
-import Application.View.JeuView;
 import Application.View.PartieView;
 import javafx.application.Application;
 import javafx.stage.Stage;

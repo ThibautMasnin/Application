@@ -1,6 +1,7 @@
 package Application.View;
 
 import Application.Controller.PartieController;
+import Application.Model.Deck;
 import Application.Model.DominoModel;
 import Application.Model.Grille;
 import javafx.animation.Timeline;
