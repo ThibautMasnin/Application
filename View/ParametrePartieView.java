@@ -69,14 +69,14 @@ public class ParametrePartieView implements Observer {
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnRetour.setMinWidth(140);
         btnRetour.setMinHeight(54);
-        btnRetour.setOnAction(new ReglageController<ActionEvent>(stage));
+        btnRetour.setOnAction(new ParametreController<ActionEvent>(stage));
         Button btnValider = new Button();
         btnValider.setId("Valider");
         btnValider.setStyle("-fx-background-image: url('Application/Ressources/Images/valider.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnValider.setMinWidth(140);
         btnValider.setMinHeight(54);
-        btnValider.setOnAction(new ReglageController<ActionEvent>(stage));
+        btnValider.setOnAction(new ParametreController<ActionEvent>(stage));
         
         vb1.getChildren().addAll(nbJ, nbI, temps);
         vb1.setSpacing(50);

@@ -1,6 +1,9 @@
 package Application.Controller;
 
 import Application.Model.DominoModel;
+import Application.View.JeuView;
+import Application.View.ReglageView;
+import Application.View.ReglementView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -60,6 +63,19 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 			 if (((Button) event.getSource()).getText() == "Quitter") {
 				 stage.close();
 			 }
+			 
+			if (((Button) event.getSource()).getId() == "Réglement") {
+				ReglementView rv = new ReglementView(stage);
+			}       
+			else if (((Button) event.getSource()).getId() == "Réglages") {
+				ReglageView rv = new ReglageView(stage);
+			}			
+			else if (((Button) event.getSource()).getId() == "Quitter") {
+				JeuView primaryScreen = new JeuView(stage);
+			}			
+			else if (((Button) event.getSource()).getId() == "Sauvegarder") {
+				
+			}
 		 }
 	 }
 }

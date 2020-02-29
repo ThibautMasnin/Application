@@ -12,14 +12,11 @@ public class Kingdomino extends Application {
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
 
-//		// Valentin
-//		PartieView partieView = new PartieView(primaryStage);
-
-//        // Thibaut
-//        primaryStage.setTitle("KingDomino");
-//        JeuView primaryScreen = new JeuView(primaryStage);
+// Thibaut, Valentin
+      primaryStage.setTitle("KingDomino");
+	  PartieView partieView = new PartieView(primaryStage);
 		 
-//		// Efekan, Kevin, Aymeric
+// Efekan, Kevin, Aymeric
 //		PartieModel partieModel = new PartieModel();
 //		partieModel.jouer();
 

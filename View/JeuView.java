@@ -60,7 +60,7 @@ public class JeuView implements Observer {
 
 		/** BOUTON REGLEMENT **/
 		Button btnReglement = new Button();
-		btnReglement.setId("R�glement");
+		btnReglement.setId("Réglement");
 		btnReglement.setStyle("-fx-background-image: url('Application/Ressources/Images/reglement.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
 		btnReglement.setMinWidth(266);
@@ -79,7 +79,7 @@ public class JeuView implements Observer {
 
 		/** BOUTON CREDITS **/
 		Button btnCredits = new Button();
-		btnCredits.setId("Cr�dits");
+		btnCredits.setId("Crédits");
 		btnCredits.setStyle("-fx-background-image: url('Application/Ressources/Images/credits2.png');" +
 				"-fx-background-color: rgba(0, 0, 0, 0);");
 		btnCredits.setMinWidth(140);
@@ -88,7 +88,7 @@ public class JeuView implements Observer {
 
 		/** BOUTON REGLAGES **/
 		Button btnReglages = new Button();
-		btnReglages.setId("R�glages");
+		btnReglages.setId("Réglages");
 		btnReglages.setStyle("-fx-background-image: url('Application/Ressources/Images/reglages.png');" +
 				"-fx-background-color: rgba(0, 0, 0, 0);");
 		btnReglages.setMinWidth(140);

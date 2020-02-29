@@ -1,19 +1,24 @@
 package Application.View;
 
+import Application.Controller.PartieController;
 import Application.Model.DominoModel;
 import Application.Model.Grille;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class PartieView implements EventHandler<ActionEvent> {
@@ -22,7 +27,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 
 	public PartieView(Stage partieStage) {
-		partieStage.setTitle("Partie en cours");
 
 		//dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
 		DominoModel d1 = new DominoModel(-50, 125, 50, 100, "Application/Ressources/Dominos/D1.jpg");
@@ -37,57 +41,103 @@ public class PartieView implements EventHandler<ActionEvent> {
 		cpt = 0;
 
 		/** BORDERPANE PRINCIPAL **/
-		BorderPane borderPane = new BorderPane();
-		Scene root = new Scene(borderPane, 1250, 700);
+		BorderPane bp = new BorderPane();
+		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
+				"-fx-background-position: center center;" +
+				"-fx-background-size: cover;");
+		Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+		Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80); 
 
 
 		/** MENU EN HAUT **/
 		BorderPane bpMenu = new BorderPane();
+		
 
 		HBox hbox1 = new HBox();
-		hbox1.setPadding(new Insets(10));
-		hbox1.setSpacing(25);
+		hbox1.setSpacing(50);
 		hbox1.setMinWidth(600);
 
-		HBox hbox11 = new HBox();
-		hbox11.setSpacing(5);
-		Label lTempsPartie = new Label("Temps restants :");
-		Label lTempsPartie2 = new Label("27:42");
-		hbox11.getChildren().addAll(lTempsPartie, lTempsPartie2);
-		hbox11.setAlignment(Pos.CENTER);
+		String lastTime = new String("27:42");
+		Label lTempsPartie = new Label("Temps restants : " + lastTime);
+		String nbTour = new String("8");
+		Label lNbTour = new Label("Tours restants : " + nbTour);
+		
 
-		HBox hbox12 = new HBox();
-		hbox12.setSpacing(5);
-		Label lNbTour = new Label("Nombre de tours restants :");
-		Label lNbTour2 = new Label("8");
-		hbox12.getChildren().addAll(lNbTour, lNbTour2);
-		hbox12.setAlignment(Pos.CENTER);
+		lTempsPartie.setTextFill(Color.web("#ffffff"));
+		lTempsPartie.setFont(new Font("Viner Hand ITC", 24));
+		lNbTour.setTextFill(Color.web("#ffffff"));
+		lNbTour.setFont(new Font("Viner Hand ITC", 24));
 
-		hbox1.getChildren().addAll(hbox11, hbox12);
+		hbox1.getChildren().addAll(lTempsPartie, lNbTour);
+		hbox1.setAlignment(Pos.CENTER);
 		bpMenu.setLeft(hbox1);
-		bpMenu.getLeft().setStyle("-fx-background-color: #80543a;");
 
 		HBox hbox2 = new HBox();
-		hbox2.setPadding(new Insets(10));
-		hbox2.setSpacing(5);
+		hbox2.setPadding(new Insets(-40, 0, 0, 0));
+		hbox2.setSpacing(25);
 		Label lJoueur = new Label("Joueur 1 :");
 		Label lTempsTour = new Label("01:29");
+		lJoueur.setTextFill(Color.web("#ffffff"));
+		lJoueur.setFont(new Font("Viner Hand ITC", 24));
+		lTempsTour.setTextFill(Color.web("#ffffff"));
+		lTempsTour.setFont(new Font("Viner Hand ITC", 24));
 		hbox2.getChildren().addAll(lJoueur, lTempsTour);
 		hbox2.setAlignment(Pos.CENTER);
+		hbox2.setMinWidth(650);	
+		hbox2.setMaxWidth(650);	
+		hbox2.setMinHeight(90);		
+		hbox2.setStyle("-fx-background-image: url('Application/Ressources/Images/planche.png');" +
+				"-fx-background-position: center center;");
 		bpMenu.setCenter(hbox2);
 
 		HBox hbox3 = new HBox();
-		hbox3.setPadding(new Insets(10));
-		hbox3.setSpacing(25);
-		hbox3.setMinWidth(600);
-		Button bSauvegarder = new Button("Sauvegarder");
-		Button bReglement = new Button("Réglement");
-		Button bReglage = new Button("Réglages");
-		Button bQuitter = new Button("Quitter");
-		hbox3.getChildren().addAll(bSauvegarder, bReglement, bReglage, bQuitter);
+		hbox3.setSpacing(20);
+		hbox3.setMinWidth(600);		
+		
+		/** BOUTON SAUVEGARDER **/
+		Button btnSauvegarder = new Button();
+		btnSauvegarder.setId("Sauvegarder");
+		btnSauvegarder.setStyle("-fx-background-image: url('Application/Ressources/Images/sauvegarder.png');" +
+				"-fx-background-color: rgba(0, 0, 0, 0);" +
+				"-fx-background-size: 100%");
+		btnSauvegarder.setMinWidth(282/2);
+		btnSauvegarder.setMinHeight(51/2);
+		btnSauvegarder.setOnAction(new PartieController<ActionEvent>(partieStage));
+
+		/** BOUTON REGLEMENT **/
+		Button btnReglement = new Button();
+		btnReglement.setId("Réglement");
+		btnReglement.setStyle("-fx-background-image: url('Application/Ressources/Images/reglement.png');" +
+				"-fx-background-color: rgba(0, 0, 0, 0);" +
+				"-fx-background-size: 100%");
+		btnReglement.setMinWidth(266/2);
+		btnReglement.setMinHeight(54/2);
+        btnReglement.setOnAction(new PartieController<ActionEvent>(partieStage));
+
+		/** BOUTON REGLAGES **/
+		Button btnReglages = new Button();
+		btnReglages.setId("Réglages");
+		btnReglages.setStyle("-fx-background-image: url('Application/Ressources/Images/reglages2.png');" +
+				"-fx-background-color: rgba(0, 0, 0, 0);" +
+				"-fx-background-size: 100%");
+		btnReglages.setMinWidth(245/2);
+		btnReglages.setMinHeight(54/2);
+		btnReglages.setOnAction(new PartieController<ActionEvent>(partieStage));
+
+		/** BOUTON QUITTER **/
+		Button btnQuitter = new Button();
+		btnQuitter.setId("Quitter");
+		btnQuitter.setStyle("-fx-background-image: url('Application/Ressources/Images/quitter.png');" +
+				"-fx-background-color: rgba(0, 0, 0, 0);" +
+				"-fx-background-size: 100%");
+		btnQuitter.setMinWidth(245/2);
+		btnQuitter.setMinHeight(56/2);
+		btnQuitter.setOnAction(new PartieController<ActionEvent>(partieStage));
+		
+		hbox3.getChildren().addAll(btnSauvegarder, btnReglement, btnReglages, btnQuitter);
 		hbox3.setAlignment(Pos.CENTER);
 		bpMenu.setRight(hbox3);
-		bpMenu.getRight().setStyle("-fx-background-color: #80543a;");
+		bpMenu.setStyle("-fx-background-color: rgba(0, 0, 0, 0.75);-fx-border-color: #000000; -fx-border-width: 0 0 1 0;");
 
 
 		/** MENU A GAUCHE **/
@@ -115,9 +165,11 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		vActionDomino.getChildren().addAll(bRotateDroit, bRotateGauche, bAnnulerCoup, bFinirTour, bRetourner, bDemarrer);
 		vActionDomino.setAlignment(Pos.CENTER);
+		vActionDomino.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);-fx-border-color: #000000; -fx-border-width: 0 1 0 0;");
 
 		VBox vDetailPartie = new VBox();
 		vDetailPartie.setMinWidth(210);
+		vDetailPartie.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);-fx-border-color: #000000; -fx-border-width: 0 0 0 1;");
 
 
 		/** PLATEAU DES JOUEURS **/
@@ -162,24 +214,16 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		bRetourner.setOnAction(this);
 
-		bQuitter.setOnAction(e->{
-			partieStage.close();
-		});
-
 
 		/** AJOUT AU BORDERPANE PRINCIPALE **/
-		borderPane.setTop(bpMenu);
-		borderPane.setLeft(vActionDomino);
-		borderPane.getLeft().setStyle("-fx-background-color: #336699;");
-		borderPane.setRight(vDetailPartie);
-		borderPane.getRight().setStyle("-fx-background-color: #336699;");
+		bp.setTop(bpMenu);
+		bp.setLeft(vActionDomino);
+		bp.setRight(vDetailPartie);
 		//BorderPane.setAlignment(dominoTMP, Pos.CENTER_RIGHT);
-		borderPane.setCenter(zoneJeu);
+		bp.setCenter(zoneJeu);
 
-		partieStage.setScene(root);
-		//partieStage.sizeToScene();
-		partieStage.setResizable(false);
-		//partieStage.setMaximized(true);
+
+		partieStage.setScene(scene);
 		partieStage.setFullScreen(true);
 		partieStage.show();
 
