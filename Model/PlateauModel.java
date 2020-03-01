@@ -214,7 +214,7 @@ public class PlateauModel
 //						|| ((PaysageModel) plateau[x+1][y]).getNomTerrain()==d.getPaysage1().getNomTerrain()
 //						|| ((PaysageModel) plateau[x][y+1]).getNomTerrain()==d.getPaysage1().getNomTerrain()
 //						|| (plateau[x+1][y] instanceof PaysageModel) || (plateau[x][y+1] instanceof PaysageModel))
-//				System.out.println("DOMINOOOOO");
+				System.out.println("DOMINOOOOO");
 				return true;
 			}
 //
@@ -239,6 +239,16 @@ public class PlateauModel
 				System.out.println("CHATEAAUUUU");
 				bool = true;
 			}
+            else if((plateau[x-1][y] instanceof PaysageModel)
+                    || (plateau[x][y+1] instanceof PaysageModel)
+                    || (plateau[x+1][y] instanceof PaysageModel)
+                    || (plateau[x+1][y-1] instanceof PaysageModel)
+                    || (plateau[x][y-2] instanceof PaysageModel)
+                    || (plateau[x-1][y-1] instanceof PaysageModel))
+            {
+                System.out.println("DOMINOOOOO");
+                return true;
+            }
 		}
 		else if(sens == "D")
 		{
@@ -252,6 +262,16 @@ public class PlateauModel
 				System.out.println("CHATEAAUUUU");
 				bool = true;
 			}
+			else if((plateau[x-1][y] instanceof PaysageModel)
+                    || (plateau[x][y-1] instanceof PaysageModel)
+                    || (plateau[x+1][y] instanceof PaysageModel)
+                    || (plateau[x+1][y+1] instanceof PaysageModel)
+                    || (plateau[x][y+2] instanceof PaysageModel)
+                    || (plateau[x+1][y-1] instanceof PaysageModel))
+            {
+                System.out.println("DOMINOOOOO");
+                return true;
+            }
 		}
 		else if(sens == "B")
 		{
@@ -265,6 +285,16 @@ public class PlateauModel
 				System.out.println("CHATEAAUUUU");
 				bool = true;
 			}
+			else if((plateau[x][y-1] instanceof PaysageModel)
+                    || (plateau[x-1][y] instanceof PaysageModel)
+                    || (plateau[x][y+1] instanceof PaysageModel)
+                    || (plateau[x+1][y+1] instanceof PaysageModel)
+                    || (plateau[x+2][y] instanceof PaysageModel)
+                    || (plateau[x+1][y-1] instanceof PaysageModel))
+            {
+                System.out.println("DOMINOOOOO");
+                return true;
+            }
 		}
 		return bool;
 	}
