@@ -25,11 +25,11 @@ public class Grille implements EventHandler<MouseEvent> {
 	private Rectangle caseGrille;
 	private Group groupe;
 	private Pane pane;
-	private Paint colorLine;
+	private String colorLine;
 	private String chateau;
 
 
-	public Grille(int tc, int d, int l, int c, Paint cl, String ch) {
+	public Grille(int tc, int d, int l, int c, String cl, String ch) {
 		tailleCase = tc;
 		decalage = d;
 		nbLignes = l;
@@ -65,7 +65,7 @@ public class Grille implements EventHandler<MouseEvent> {
 				// LIGNES VERTICALES
 				Line ligne = new Line((tailleCase * j), 0, (tailleCase * j), (9 * tailleCase));
 				ligne.setStrokeWidth(1.5);
-				ligne.setStroke(colorLine);
+				ligne.setStroke(Color.BLACK);
 				pane.getChildren().add(ligne);
 
 				if (i < nbLignes-1 && j < nbColonnes-1) {
@@ -77,7 +77,8 @@ public class Grille implements EventHandler<MouseEvent> {
 					else {
 						Rectangle caseGrille = new Rectangle((tailleCase * i), (tailleCase * j), tailleCase, tailleCase);
 						caseGrille.setFill(Color.TRANSPARENT);
-						caseGrille.setStroke(Color.TRANSPARENT);
+						caseGrille.setStroke(Color.BLACK);
+						pane.setStyle(colorLine);
 						caseGrille.setOnMouseClicked(this);
 						pane.getChildren().add(caseGrille);
 					}
@@ -87,7 +88,7 @@ public class Grille implements EventHandler<MouseEvent> {
 			// LIGNES HORIZONTALES
 			Line ligne = new Line(0, (tailleCase * i), (9 * tailleCase), (tailleCase * i));
 			ligne.setStrokeWidth(1.5);
-			ligne.setStroke(colorLine);
+			ligne.setStroke(Color.BLACK);
 			pane.getChildren().add(ligne);
 		}
 	}

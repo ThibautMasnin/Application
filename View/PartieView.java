@@ -4,6 +4,8 @@ import Application.Controller.PartieController;
 import Application.Model.Deck;
 import Application.Model.DominoModel;
 import Application.Model.Grille;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,6 +43,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 
 	public PartieView(Stage partieStage) {
+		
+
+		int nbJoueurs = 4;
+		int minChrono=0;
+		int secChrono=35;
+		int nbTour=7;
 
 		cpt = 0;
 
@@ -61,9 +69,35 @@ public class PartieView implements EventHandler<ActionEvent> {
 		hbox1.setSpacing(50);
 		hbox1.setMinWidth(600);
 
-		String lastTime = new String("27:42");
-		Label lTempsPartie = new Label("Temps restants : " + lastTime);
-		String nbTour = new String("8");
+		Label lTempsPartie = new Label();
+		Timeline timelinePartie = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+			int minutes = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
+			int secondes = secChrono*nbJoueurs*nbTour%60;
+			@Override
+			public void handle(ActionEvent event) {
+				if(secondes>0) {
+					secondes--;					
+				}
+				else if(secondes==0) {
+					if(minutes>0) {
+						minutes--;	
+						secondes=59;				
+					}
+					else if(minutes==0) {
+					}
+					else {
+						System.out.println("Erreur dans les minutes du chrono");
+					}
+				}
+				else {
+					System.out.println("Erreur dans les secondes du chrono");
+				}
+				lTempsPartie.setText("Temps restants  :  " + minutes + ":" + secondes);
+			}
+		}));
+		timelinePartie.setCycleCount(Animation.INDEFINITE);
+		timelinePartie.play();
+		
 		Label lNbTour = new Label("Tours restants : " + nbTour);
 		
 
@@ -79,19 +113,43 @@ public class PartieView implements EventHandler<ActionEvent> {
 		HBox hbox2 = new HBox();
 		hbox2.setPadding(new Insets(-40, 0, 0, 0));
 		hbox2.setSpacing(25);
-		Label lJoueur = new Label("Joueur 1 :");
-		Label lTempsTour = new Label("01:29");
-		lJoueur.setTextFill(Color.web("#ffffff"));
-		lJoueur.setFont(new Font("Viner Hand ITC", 24));
-		lTempsTour.setTextFill(Color.web("#ffffff"));
-		lTempsTour.setFont(new Font("Viner Hand ITC", 24));
+		Label lTempsJoueur = new Label();
+		Timeline timelineJoueur = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+			int minutes = minChrono;
+			int secondes = secChrono;
+			@Override
+			public void handle(ActionEvent event) {
+				if(secondes>0) {
+					secondes--;					
+				}
+				else if(secondes==0) {
+					if(minutes>0) {
+						minutes--;	
+						secondes=59;				
+					}
+					else if(minutes==0) {
+					}
+					else {
+						System.out.println("Erreur dans les minutes du chrono");
+					}
+				}
+				else {
+					System.out.println("Erreur dans les secondes du chrono");
+				}
+				lTempsJoueur.setText("Joueur 1  :  " + minutes + ":" + secondes);
+			}
+		}));
+		timelineJoueur.setCycleCount(Animation.INDEFINITE);
+		timelineJoueur.play();
+		lTempsJoueur.setTextFill(Color.web("#ffffff"));
+		lTempsJoueur.setFont(new Font("Viner Hand ITC", 24));
 
 //		Timeline timeline = new Timeline(new KeyFrame(
 //				Duration.millis(2500),
 //				ae -> doSomething()));
 //		timeline.play();
 
-		hbox2.getChildren().addAll(lJoueur, lTempsTour);
+		hbox2.getChildren().addAll(lTempsJoueur);
 		hbox2.setAlignment(Pos.CENTER);
 		hbox2.setMinWidth(650);	
 		hbox2.setMaxWidth(650);	
@@ -190,19 +248,19 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		/** PLATEAU DES JOUEURS **/
 		// JOUEUR 1
-		grille = new Grille(50, 25, 10, 10, Color.RED, "Application/Ressources/Dominos/C1.jpg");
+		grille = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
 		grille.dessinerGrille();
 
 		// JOUEUR 2
-		Grille grille2 = new Grille(50, 25, 10, 10, Color.BLUE, "Application/Ressources/Dominos/C2.jpg");
+		Grille grille2 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
 		grille2.dessinerGrille();
 
 		// JOUEUR 3
-		Grille grille3 = new Grille(50, 25, 10, 10, Color.YELLOW, "Application/Ressources/Dominos/C3.jpg");
+		Grille grille3 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
 		grille3.dessinerGrille();
 
 		// JOUEUR 4
-		Grille grille4 = new Grille(50, 25, 10, 10, Color.GREEN, "Application/Ressources/Dominos/C4.jpg");
+		Grille grille4 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
 		grille4.dessinerGrille();
 
 		deck = new Deck();
