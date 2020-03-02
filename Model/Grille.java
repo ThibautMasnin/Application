@@ -92,7 +92,7 @@ public class Grille implements EventHandler<MouseEvent> {
 			pane.getChildren().add(ligne);
 		}
 	}
-
+ 
 
 	public Group getGroupe() {
 		return groupe;
