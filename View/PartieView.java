@@ -26,6 +26,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel dominoTMP;
 	private Deck deck;
@@ -40,6 +42,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private Group zoneJeu;
 	private Grille grille;
 	private int cpt;
+	private ArrayList<DominoModel> l1;
+	private ArrayList<DominoModel> l2;
 
 
 	public PartieView(Stage partieStage) {
@@ -228,16 +232,21 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Button bRetourner = new Button("Retourner");
 		bRetourner.setMaxSize(110,20);
 
+		Button bMelanger = new Button("Melanger");
+		bMelanger.setMaxSize(110,20);
+
 		Button bDemarrer = new Button("Demarrer");
 		bDemarrer.setMaxSize(110,20);
 
+		/*
 		Button bTrier = new Button("Trier");
 		bTrier.setMaxSize(110,20);
+		*/
 
 		Button bReset= new Button("Reset");
 		bReset.setMaxSize(110,20);
 
-		vActionDomino.getChildren().addAll(bRotateDroit, bRotateGauche, bAnnulerCoup, bFinirTour, bRetourner, bDemarrer, bTrier, bReset);
+		vActionDomino.getChildren().addAll(bRotateDroit, bRotateGauche, bAnnulerCoup, bFinirTour, bRetourner, bMelanger, bDemarrer/*, bTrier*/, bReset);
 		vActionDomino.setAlignment(Pos.CENTER);
 		vActionDomino.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);-fx-border-color: #000000; -fx-border-width: 0 1 0 0;");
 
@@ -299,19 +308,22 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 
 
-
-
-
 		/** EVENT DOMINO **/
 		bRotateDroit.setOnAction(this);
 
 		bRotateGauche.setOnAction(this);
 
+		bAnnulerCoup.setOnAction(this);
+
+		bFinirTour.setOnAction(this);
+
 		bRetourner.setOnAction(this);
+
+		bMelanger.setOnAction(this);
 
 		bDemarrer.setOnAction(this);
 
-		bTrier.setOnAction(this);
+		//bTrier.setOnAction(this);
 
 		bReset.setOnAction(e->{
 			partieStage.close();
@@ -410,15 +422,16 @@ public class PartieView implements EventHandler<ActionEvent> {
 			if (((Button) actionEvent.getSource()).getText() == "Retourner") {
 			}
 
-			// EVENT TRIER DOMINO
-			if (((Button) actionEvent.getSource()).getText() == "Trier") {
+			// EVENT MELANGER DOMINO
+			if (((Button) actionEvent.getSource()).getText() == "Melanger") {
 				deck.melangerDeck();
 			}
+
 
 			// EVENT JOUER DOMINO
 			if (((Button) actionEvent.getSource()).getText() == "Demarrer") {
 
-				DominoModel d1_ = new DominoModel(500, 300, 100, 50, deck.getFirstDomino());
+				DominoModel d1_ = new DominoModel(500, 300, 100, 50, l1.get(0).getUrl(), deck.getNumFirstDomino());
 				d1_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				deck.setFill(deck.getFirstDominoD());
@@ -426,49 +439,49 @@ public class PartieView implements EventHandler<ActionEvent> {
 				dominoTMP = d1_;
 
 
-				DominoModel d2_ = new DominoModel(500, 400, 100, 50, deck.getFirstDomino());
+				DominoModel d2_ = new DominoModel(500, 400, 100, 50, l1.get(1).getUrl(), deck.getNumFirstDomino());
 				d2_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d2_);
 
 
-				DominoModel d3_ = new DominoModel(500, 500, 100, 50, deck.getFirstDomino());
+				DominoModel d3_ = new DominoModel(500, 500, 100, 50, l1.get(2).getUrl(), deck.getNumFirstDomino());
 				d3_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d3_);
 
 
-				DominoModel d4_ = new DominoModel(500, 600, 100, 50, deck.getFirstDomino());
+				DominoModel d4_ = new DominoModel(500, 600, 100, 50, l1.get(3).getUrl(), deck.getNumFirstDomino());
 				d4_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d4_);
 
 
-				DominoModel d5_ = new DominoModel(650, 300, 100, 50, deck.getFirstDominoD());
+				DominoModel d5_ = new DominoModel(650, 300, 100, 50, l2.get(0).getUrl(), deck.getNumFirstDomino());
 				d5_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d5_);
 
 
-				DominoModel d6_ = new DominoModel(650, 400, 100, 50, deck.getFirstDominoD());
+				DominoModel d6_ = new DominoModel(650, 400, 100, 50, l2.get(1).getUrl(), deck.getNumFirstDomino());
 				d6_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d6_);
 
 
-				DominoModel d7_ = new DominoModel(650, 500, 100, 50, deck.getFirstDominoD());
+				DominoModel d7_ = new DominoModel(650, 500, 100, 50, l2.get(2).getUrl(), deck.getNumFirstDomino());
 				d7_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d7_);
 
 
-				DominoModel d8_ = new DominoModel(650, 600, 100, 50, deck.getFirstDominoD());
+				DominoModel d8_ = new DominoModel(650, 600, 100, 50, l2.get(3).getUrl(), deck.getNumFirstDomino());
 				d8_.setOnMouseClicked(grille);
 				deck.getListeDominos().remove(deck.getSize()-1);
 				System.out.println("###" + deck.getSize());
@@ -480,6 +493,28 @@ public class PartieView implements EventHandler<ActionEvent> {
 				}
 
 				zoneJeu.getChildren().add(d8_);
+
+				l1 = null;
+				l2 = null;
+			}
+
+			// EVENT TRIER DOMINO
+			if (((Button) actionEvent.getSource()).getText() == "Trier") {
+				l1 = new ArrayList<DominoModel>();
+				l2 = new ArrayList<DominoModel>();
+
+				for (int i = 0 ; i < 4 ; i++){
+					l1.add(i, deck.getLastDomino());
+					deck.getListeDominos().remove(deck.getLastDomino());
+				}
+
+				for (int j = 0 ; j < 4 ; j++){
+					l2.add(j, deck.getLastDomino());
+					deck.getListeDominos().remove(deck.getLastDomino());
+				}
+
+				deck.triDomino(l1);
+				deck.triDomino(l2);
 			}
 
 		}

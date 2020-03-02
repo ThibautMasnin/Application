@@ -32,6 +32,10 @@ public class DominoModel extends Rectangle
 	private double pivotTY;
 	private int cptRotation;
 
+	public DominoModel(){
+
+	}
+
 	public DominoModel(PaysageModel p1, PaysageModel p2)
 	{
 		//		super("D");
@@ -42,7 +46,7 @@ public class DominoModel extends Rectangle
 		paysage2 = p2;
 	}
 
-	public DominoModel(double centerX, double centerY, double width, double height, String u) {
+	public DominoModel(double centerX, double centerY, double width, double height, String u, int num) {
 		super(centerX, centerY, width, height);
 		isSelected = false;
 
@@ -50,6 +54,7 @@ public class DominoModel extends Rectangle
 		img = new ImagePattern(new Image(getUrl()));
 		setFill(img);
 
+		numero = num;
 
 		effectSelected = new DropShadow();
 		effectSelected.setBlurType(BlurType.GAUSSIAN);
@@ -71,9 +76,11 @@ public class DominoModel extends Rectangle
 		super(centerX, centerY, width, height);
 		isSelected = false;
 
-		url = "Application/Ressources/Dominos/ekekan.jpg";
+		/*url = null;
 		img = new ImagePattern(new Image(getUrl()));
-		setFill(img);
+		setFill(img);*/
+		setFill(Color.TRANSPARENT);
+		setStroke(Color.BLACK);
 
 
 		effectSelected = new DropShadow();
@@ -100,7 +107,6 @@ public class DominoModel extends Rectangle
 	public String getUrl() {
 		return this.url;
 	}
-
 
 	public void setUrl(String u){
 		url = u;

@@ -17,54 +17,54 @@ public class Deck extends Rectangle {
 		nbDominos = 48;
 		listeDominos = new ArrayList<DominoModel>();
 
-		DominoModel d1 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D01d.jpg");
-		DominoModel d2 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D02d.jpg");
-		DominoModel d3 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D03d.jpg");
-		DominoModel d4 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D04d.jpg");
-		DominoModel d5 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D05d.jpg");
-		DominoModel d6 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D06d.jpg");
-		DominoModel d7 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D07d.jpg");
-		DominoModel d8 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D08d.jpg");
-		DominoModel d9 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D09d.jpg");
-		DominoModel d10 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D10d.jpg");
-		DominoModel d11 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D11d.jpg");
-		DominoModel d12 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D12d.jpg");
-		DominoModel d13 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D13d.jpg");
-		DominoModel d14 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D14d.jpg");
-		DominoModel d15 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D15d.jpg");
-		DominoModel d16 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D16d.jpg");
-		DominoModel d17 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D17d.jpg");
-		DominoModel d18 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D18d.jpg");
-		DominoModel d19 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D19d.jpg");
-		DominoModel d20 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D20d.jpg");
-		DominoModel d21 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D21d.jpg");
-		DominoModel d22 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D22d.jpg");
-		DominoModel d23 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D23d.jpg");
-		DominoModel d24 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D24d.jpg");
-		DominoModel d25 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D25d.jpg");
-		DominoModel d26 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D26d.jpg");
-		DominoModel d27 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D27d.jpg");
-		DominoModel d28 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D28d.jpg");
-		DominoModel d29 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D29d.jpg");
-		DominoModel d30 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D30d.jpg");
-		DominoModel d31 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D31d.jpg");
-		DominoModel d32 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D32d.jpg");
-		DominoModel d33 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D33d.jpg");
-		DominoModel d34 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D34d.jpg");
-		DominoModel d35 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D35d.jpg");
-		DominoModel d36 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D36d.jpg");
-		DominoModel d37 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D37d.jpg");
-		DominoModel d38 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D38d.jpg");
-		DominoModel d39 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D39d.jpg");
-		DominoModel d40 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D40d.jpg");
-		DominoModel d41 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D41d.jpg");
-		DominoModel d42 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D42d.jpg");
-		DominoModel d43 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D43d.jpg");
-		DominoModel d44 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D44d.jpg");
-		DominoModel d45 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D45d.jpg");
-		DominoModel d46 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D46d.jpg");
-		DominoModel d47 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D47d.jpg");
-		DominoModel d48 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D48d.jpg");
+		DominoModel d1 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D01d.jpg", 1);
+		DominoModel d2 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D02d.jpg", 2);
+		DominoModel d3 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D03d.jpg", 3);
+		DominoModel d4 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D04d.jpg", 4);
+		DominoModel d5 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D05d.jpg", 5);
+		DominoModel d6 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D06d.jpg", 6);
+		DominoModel d7 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D07d.jpg", 7);
+		DominoModel d8 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D08d.jpg", 8);
+		DominoModel d9 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D09d.jpg", 9);
+		DominoModel d10 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D10d.jpg", 10);
+		DominoModel d11 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D11d.jpg", 11);
+		DominoModel d12 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D12d.jpg", 12);
+		DominoModel d13 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D13d.jpg", 13);
+		DominoModel d14 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D14d.jpg", 14);
+		DominoModel d15 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D15d.jpg", 15);
+		DominoModel d16 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D16d.jpg", 16);
+		DominoModel d17 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D17d.jpg", 17);
+		DominoModel d18 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D18d.jpg", 18);
+		DominoModel d19 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D19d.jpg", 19);
+		DominoModel d20 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D20d.jpg", 20);
+		DominoModel d21 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D21d.jpg", 21);
+		DominoModel d22 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D22d.jpg", 22);
+		DominoModel d23 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D23d.jpg", 23);
+		DominoModel d24 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D24d.jpg", 24);
+		DominoModel d25 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D25d.jpg", 25);
+		DominoModel d26 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D26d.jpg", 26);
+		DominoModel d27 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D27d.jpg", 27);
+		DominoModel d28 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D28d.jpg", 28);
+		DominoModel d29 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D29d.jpg", 29);
+		DominoModel d30 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D30d.jpg", 30);
+		DominoModel d31 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D31d.jpg", 31);
+		DominoModel d32 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D32d.jpg", 32);
+		DominoModel d33 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D33d.jpg", 33);
+		DominoModel d34 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D34d.jpg", 34);
+		DominoModel d35 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D35d.jpg", 35);
+		DominoModel d36 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D36d.jpg", 36);
+		DominoModel d37 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D37d.jpg", 37);
+		DominoModel d38 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D38d.jpg", 38);
+		DominoModel d39 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D39d.jpg", 39);
+		DominoModel d40 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D40d.jpg", 40);
+		DominoModel d41 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D41d.jpg", 41);
+		DominoModel d42 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D42d.jpg", 42);
+		DominoModel d43 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D43d.jpg", 43);
+		DominoModel d44 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D44d.jpg", 44);
+		DominoModel d45 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D45d.jpg", 45);
+		DominoModel d46 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D46d.jpg", 46);
+		DominoModel d47 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D47d.jpg", 47);
+		DominoModel d48 = new DominoModel(0, 0, 100, 50, "Application/Ressources/Dominos/D48d.jpg", 48);
 
 		listeDominos.add(d1);
 		listeDominos.add(d2);
@@ -142,11 +142,17 @@ public class Deck extends Rectangle {
 		return listeDominos.get(i);
 	}
 
+	public DominoModel getLastDomino(){
+		return listeDominos.get(listeDominos.size()-1);
+	}
+
 
 	public String getFirstDomino(){
 		return modifURL(listeDominos.get(listeDominos.size()-1).getUrl());
 	}
 
+	public int getNumFirstDomino() {
+		return listeDominos.get(listeDominos.size()-1).getNumDomino();}
 
 	public String getFirstDominoD(){
 		return listeDominos.get(listeDominos.size()-1).getUrl();
@@ -178,50 +184,31 @@ public class Deck extends Rectangle {
 	}
 
 
-	public ArrayList<DominoModel> triDomino(ArrayList<DominoModel> ld){
-		ArrayList<DominoModel> listT = ld;
-		boolean good = false;
-		while(good==false){
-			for(int i = 0 ; i<listT.size();i++) {
-				DominoModel tmp;
-				DominoModel tmp2;
-				if (i<listT.size()-1) {
-					if(listT.get(i).getNumDomino() > listT.get(i+1).getNumDomino()) {
-						tmp = listT.get(i);
-						tmp2 = listT.get(i+1);
-						listT.remove(i);
-						listT.add(i, tmp2);
+	public void triDomino(ArrayList<DominoModel> ld){
+		ArrayList<DominoModel> listeTemp = new ArrayList<DominoModel>();
 
-						listT.remove(i+1);
-						listT.add(i+1, tmp);
-					}
-					/*for (int j = 0 ; j<listT.size();j++) {
-						System.out.println(listT.get(j).getNumDomino());
-					}*/
-				}
+		DominoModel dominoTemp = new DominoModel();
+		DominoModel dominoTemp2 = new DominoModel();
 
-				else if (i == listT.size()-1) {
-					if (listT.get(i).getNumDomino()<listT.get(0).getNumDomino()) {
-						tmp = listT.get(i);
-						tmp2 = listT.get(0);
+		int numTemp;
+		int j;
 
-						listT.remove(i);
-						listT.add(i,tmp2);
 
-						listT.remove(0);
-						listT.add(0, tmp);
-						/*for (int j = 0 ; j<listT.size();j++) {
-							System.out.println(listT.get(j).getNumDomino());
-						}*/
-					}
-				}
+		for (int i = 0 ; i < 4 ; i++){
+			numTemp = ld.get(i).getNumDomino();
+			dominoTemp = ld.get(i);
+			j = i;
 
+			while (j > 0 && ld.get(j-1).getNumDomino() > numTemp){
+				dominoTemp2 = ld.get(j-1);
+				j--;
 			}
-			if (listT.get(0).getNumDomino() < listT.get(1).getNumDomino() && listT.get(1).getNumDomino() < listT.get(2).getNumDomino() && listT.get(2).getNumDomino() < listT.get(3).getNumDomino() && listT.get(0).getNumDomino() < listT.get(3).getNumDomino() ){
-				good = true;
-			}
+
+			listeTemp.add(dominoTemp2);
 		}
-		return listT;
+
+		ld = listeTemp;
+
 	}
 
 
