@@ -42,6 +42,16 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private Group zoneJeu;
 	private Grille grille;
 	private int cpt;
+	
+	private int minChrono;
+	private int secChrono;
+	private int minTemps;
+	private int secTemps;
+	private int minChronoParametre=1;
+	private int secChronoParametre=15;
+	private int joueur=1;
+	private int nbJoueurs = 4;
+	private int nbTour=2;
 	private ArrayList<DominoModel> l1;
 	private ArrayList<DominoModel> l2;
 
@@ -49,10 +59,11 @@ public class PartieView implements EventHandler<ActionEvent> {
 	public PartieView(Stage partieStage) {
 		
 
-		int nbJoueurs = 4;
-		int minChrono=0;
-		int secChrono=35;
-		int nbTour=7;
+
+		minChrono=minChronoParametre;
+		secChrono=secChronoParametre;
+		minTemps = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
+		secTemps = secChrono*nbJoueurs*nbTour%60;
 
 		cpt = 0;
 
@@ -74,20 +85,19 @@ public class PartieView implements EventHandler<ActionEvent> {
 		hbox1.setMinWidth(600);
 
 		Label lTempsPartie = new Label();
+		Label lNbTour = new Label();
 		Timeline timelinePartie = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-			int minutes = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
-			int secondes = secChrono*nbJoueurs*nbTour%60;
 			@Override
 			public void handle(ActionEvent event) {
-				if(secondes>0) {
-					secondes--;					
+				if(secTemps>0) {
+					secTemps--;					
 				}
-				else if(secondes==0) {
-					if(minutes>0) {
-						minutes--;	
-						secondes=59;				
+				else if(secTemps==0) {
+					if(minTemps>0) {
+						minTemps--;	
+						secTemps=59;				
 					}
-					else if(minutes==0) {
+					else if(minTemps==0) {
 					}
 					else {
 						System.out.println("Erreur dans les minutes du chrono");
@@ -96,13 +106,13 @@ public class PartieView implements EventHandler<ActionEvent> {
 				else {
 					System.out.println("Erreur dans les secondes du chrono");
 				}
-				lTempsPartie.setText("Temps restants  :  " + minutes + ":" + secondes);
+				lTempsPartie.setText("Temps restants  :  " + minTemps + ":" + secTemps);
+				lNbTour.setText("Tours restants : " + nbTour);
 			}
 		}));
 		timelinePartie.setCycleCount(Animation.INDEFINITE);
 		timelinePartie.play();
 		
-		Label lNbTour = new Label("Tours restants : " + nbTour);
 		
 
 		lTempsPartie.setTextFill(Color.web("#ffffff"));
@@ -119,28 +129,57 @@ public class PartieView implements EventHandler<ActionEvent> {
 		hbox2.setSpacing(25);
 		Label lTempsJoueur = new Label();
 		Timeline timelineJoueur = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-			int minutes = minChrono;
-			int secondes = secChrono;
 			@Override
 			public void handle(ActionEvent event) {
-				if(secondes>0) {
-					secondes--;					
-				}
-				else if(secondes==0) {
-					if(minutes>0) {
-						minutes--;	
-						secondes=59;				
+				if(nbTour>0) {	
+					if(secChrono>0) {
+						secChrono--;					
 					}
-					else if(minutes==0) {
+					else if(secChrono==0) {
+						if(minChrono>0) {
+							minChrono--;	
+							secChrono=59;				
+						}
+						else if(minChrono==0) {
+							if(nbTour!=0) {
+								if(secTemps-secChrono<0) {
+									secTemps=60+secTemps-secChrono;
+									minTemps--;
+								}
+								else {
+									secTemps-=secChrono;					
+								}
+								minTemps-=minChrono;
+								secTemps=59;		
+								if(joueur==nbJoueurs) {
+									joueur=1;
+									nbTour--;
+								}
+								else {
+									joueur++;
+								}
+								if(nbTour!=0) {
+									minChrono=minChronoParametre;	
+									secChrono=secChronoParametre;					
+								}			
+							}
+						}
+						else {
+							System.out.println("Erreur dans les minutes du chrono");
+						}
 					}
 					else {
-						System.out.println("Erreur dans les minutes du chrono");
+						System.out.println("Erreur dans les secondes du chrono");
 					}
 				}
 				else {
-					System.out.println("Erreur dans les secondes du chrono");
+					System.out.println("0");
+					minChrono=0;
+					secChrono=0;
+					minTemps=0;
+					secTemps=0;
 				}
-				lTempsJoueur.setText("Joueur 1  :  " + minutes + ":" + secondes);
+				lTempsJoueur.setText("Joueur " + joueur + "  :  " + minChrono + ":" + secChrono);
 			}
 		}));
 		timelineJoueur.setCycleCount(Animation.INDEFINITE);
@@ -329,6 +368,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 			partieStage.close();
 			PartieView pv = new PartieView(partieStage);
 		});
+		
+		bFinirTour.setOnAction(this);
 
 		/** AJOUT AU BORDERPANE PRINCIPALE **/
 		bp.setTop(bpMenu);
@@ -403,7 +444,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 			}
 
 			// EVENT ROTATION A GAUCHE
-			if (((Button) actionEvent.getSource()).getText() == "Rotation gauche" && dominoTMP.isSelected()) {
+			else if (((Button) actionEvent.getSource()).getText() == "Rotation gauche" && dominoTMP.isSelected()) {
 				Rotate rotate = new Rotate(-90,dominoTMP.getPivotX(), dominoTMP.getPivotY());
 				dominoTMP.getTransforms().add(rotate);
 				cpt += 1;
@@ -411,17 +452,40 @@ public class PartieView implements EventHandler<ActionEvent> {
 			}
 
 			// EVENT ANNULER SON COUP
-			if (((Button) actionEvent.getSource()).getText() == "Annuler coup") {
+			else if (((Button) actionEvent.getSource()).getText() == "Annuler coup") {
 			}
 
 			// EVENT FINIR SON TOUR
-			if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
+			else if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
+				if(nbTour>0) {
+					if(secTemps-secChrono<0) {
+						secTemps=60+secTemps-secChrono;
+						minTemps--;
+					}
+					else {
+						secTemps-=secChrono;					
+					}
+					minTemps-=minChrono;
+					if(joueur==nbJoueurs) {
+						joueur=1;
+						nbTour--;
+					}
+					else {
+						joueur++;
+					}
+					if(nbTour!=0) {
+						minChrono=minChronoParametre;	
+						secChrono=secChronoParametre;					
+					}			
+				}
 			}
 
 			// EVENT RETOURNER DOMINO
-			if (((Button) actionEvent.getSource()).getText() == "Retourner") {
+			else if (((Button) actionEvent.getSource()).getText() == "Retourner") {
 			}
 
+			// EVENT TRIER DOMINO
+			else if (((Button) actionEvent.getSource()).getText() == "Trier") {
 			// EVENT MELANGER DOMINO
 			if (((Button) actionEvent.getSource()).getText() == "Melanger") {
 				deck.melangerDeck();
@@ -429,7 +493,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 
 			// EVENT JOUER DOMINO
-			if (((Button) actionEvent.getSource()).getText() == "Demarrer") {
+			else if (((Button) actionEvent.getSource()).getText() == "Demarrer") {
 
 				DominoModel d1_ = new DominoModel(500, 300, 100, 50, l1.get(0).getUrl(), deck.getNumFirstDomino());
 				d1_.setOnMouseClicked(grille);
