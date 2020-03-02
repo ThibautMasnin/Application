@@ -127,29 +127,53 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Timeline timelineJoueur = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(secChrono>0) {
-					secChrono--;					
-				}
-				else if(secChrono==0) {
-					if(minChrono>0) {
-						minChrono--;	
-						secChrono=59;				
+				if(nbTour>0) {	
+					if(secChrono>0) {
+						secChrono--;					
 					}
-					else if(minChrono==0) {
-						if(joueur==nbJoueurs) {
-							joueur=1;
-							nbTour--;
+					else if(secChrono==0) {
+						if(minChrono>0) {
+							minChrono--;	
+							secChrono=59;				
+						}
+						else if(minChrono==0) {
+							if(nbTour!=0) {
+								if(secTemps-secChrono<0) {
+									secTemps=60+secTemps-secChrono;
+									minTemps--;
+								}
+								else {
+									secTemps-=secChrono;					
+								}
+								minTemps-=minChrono;
+								secTemps=59;		
+								if(joueur==nbJoueurs) {
+									joueur=1;
+									nbTour--;
+								}
+								else {
+									joueur++;
+								}
+								if(nbTour!=0) {
+									minChrono=minChronoParametre;	
+									secChrono=secChronoParametre;					
+								}			
+							}
 						}
 						else {
-							joueur++;
+							System.out.println("Erreur dans les minutes du chrono");
 						}
 					}
 					else {
-						System.out.println("Erreur dans les minutes du chrono");
+						System.out.println("Erreur dans les secondes du chrono");
 					}
 				}
 				else {
-					System.out.println("Erreur dans les secondes du chrono");
+					System.out.println("0");
+					minChrono=0;
+					secChrono=0;
+					minTemps=0;
+					secTemps=0;
 				}
 				lTempsJoueur.setText("Joueur " + joueur + "  :  " + minChrono + ":" + secChrono);
 			}
@@ -421,7 +445,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			// EVENT FINIR SON TOUR
 			else if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
-				if(nbTour!=0) {
+				if(nbTour>0) {
 					if(secTemps-secChrono<0) {
 						secTemps=60+secTemps-secChrono;
 						minTemps--;
@@ -430,7 +454,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 						secTemps-=secChrono;					
 					}
 					minTemps-=minChrono;
-					secTemps=59;		
 					if(joueur==nbJoueurs) {
 						joueur=1;
 						nbTour--;
@@ -443,7 +466,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 						secChrono=secChronoParametre;					
 					}			
 				}
-
 			}
 
 			// EVENT RETOURNER DOMINO
