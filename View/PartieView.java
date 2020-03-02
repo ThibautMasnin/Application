@@ -325,13 +325,13 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		//dominoTMP.setOnMouseClicked(grille);
 		//d1.setOnMouseClicked(grille);
-		d2.setOnMouseClicked(grille);
-		d3.setOnMouseClicked(grille);
-		d4.setOnMouseClicked(grille);
-		d5.setOnMouseClicked(grille);
-		d6.setOnMouseClicked(grille);
-		d7.setOnMouseClicked(grille);
-		d8.setOnMouseClicked(grille);
+		//d2.setOnMouseClicked(grille);
+		//d3.setOnMouseClicked(grille);
+		//d4.setOnMouseClicked(grille);
+		//d5.setOnMouseClicked(grille);
+		//d6.setOnMouseClicked(grille);
+		//d7.setOnMouseClicked(grille);
+		//d8.setOnMouseClicked(grille);
 
 
 		zoneJeu = new Group();
@@ -342,7 +342,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 		grille4.getPane().setLayoutX(800);
 		grille4.getPane().setLayoutY(500);
 		deck.setLayoutX(470);
-
 
 
 
@@ -404,34 +403,31 @@ public class PartieView implements EventHandler<ActionEvent> {
 		if (actionEvent.getSource() instanceof Button) {
 			// EVENT ROTATION A DROITE
 			if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
-				Rotate rotate = new Rotate(90,dominoTMP.getPivotX(), dominoTMP.getPivotY());
+				Rotate rotate = new Rotate(90, dominoTMP.getPivotX(), dominoTMP.getPivotY());
 				dominoTMP.getTransforms().add(rotate);
 				cpt += 1;
 				dominoTMP.setCptRotation(cpt);
 
 
-				if (cpt == 1){
+				if (cpt == 1) {
 					dominoTMP.setPivotTX(dominoTMP.getX() + 50);
 					dominoTMP.setPivotTY(dominoTMP.getY());
 					System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
 					System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
 					System.out.println();
-				}
-				else if (cpt == 2){
+				} else if (cpt == 2) {
 					//dominoTMP.setPivotTX(dominoTMP.getX());
 					dominoTMP.setPivotTY(dominoTMP.getY() + 50);
 					//System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
 					System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
 					System.out.println();
-				}
-				else if (cpt == 3){
+				} else if (cpt == 3) {
 					dominoTMP.setPivotTX(dominoTMP.getPivotTX() - 50);
 					//dominoTMP.setPivotTY(dominoTMP.getY());
 					//System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
 					System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
 					System.out.println();
-				}
-				else if (cpt == 4){
+				} else if (cpt == 4) {
 					//dominoTMP.setPivotTX(dominoTMP.getX());
 					dominoTMP.setPivotTY(dominoTMP.getPivotTY() - 50);
 					//System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
@@ -445,7 +441,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			// EVENT ROTATION A GAUCHE
 			else if (((Button) actionEvent.getSource()).getText() == "Rotation gauche" && dominoTMP.isSelected()) {
-				Rotate rotate = new Rotate(-90,dominoTMP.getPivotX(), dominoTMP.getPivotY());
+				Rotate rotate = new Rotate(-90, dominoTMP.getPivotX(), dominoTMP.getPivotY());
 				dominoTMP.getTransforms().add(rotate);
 				cpt += 1;
 				dominoTMP.setCptRotation(cpt);
@@ -457,26 +453,24 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			// EVENT FINIR SON TOUR
 			else if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
-				if(nbTour>0) {
-					if(secTemps-secChrono<0) {
-						secTemps=60+secTemps-secChrono;
+				if (nbTour > 0) {
+					if (secTemps - secChrono < 0) {
+						secTemps = 60 + secTemps - secChrono;
 						minTemps--;
+					} else {
+						secTemps -= secChrono;
 					}
-					else {
-						secTemps-=secChrono;					
-					}
-					minTemps-=minChrono;
-					if(joueur==nbJoueurs) {
-						joueur=1;
+					minTemps -= minChrono;
+					if (joueur == nbJoueurs) {
+						joueur = 1;
 						nbTour--;
-					}
-					else {
+					} else {
 						joueur++;
 					}
-					if(nbTour!=0) {
-						minChrono=minChronoParametre;	
-						secChrono=secChronoParametre;					
-					}			
+					if (nbTour != 0) {
+						minChrono = minChronoParametre;
+						secChrono = secChronoParametre;
+					}
 				}
 			}
 
@@ -484,73 +478,69 @@ public class PartieView implements EventHandler<ActionEvent> {
 			else if (((Button) actionEvent.getSource()).getText() == "Retourner") {
 			}
 
-			// EVENT TRIER DOMINO
-			else if (((Button) actionEvent.getSource()).getText() == "Trier") {
 			// EVENT MELANGER DOMINO
-			if (((Button) actionEvent.getSource()).getText() == "Melanger") {
+			else if (((Button) actionEvent.getSource()).getText() == "Melanger") {
 				deck.melangerDeck();
 			}
-
 
 			// EVENT JOUER DOMINO
 			else if (((Button) actionEvent.getSource()).getText() == "Demarrer") {
 
-				DominoModel d1_ = new DominoModel(500, 300, 100, 50, l1.get(0).getUrl(), deck.getNumFirstDomino());
+				DominoModel d1_ = new DominoModel(500, 300, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
 				d1_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d1_);
 				dominoTMP = d1_;
 
 
-				DominoModel d2_ = new DominoModel(500, 400, 100, 50, l1.get(1).getUrl(), deck.getNumFirstDomino());
+				DominoModel d2_ = new DominoModel(500, 400, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
 				d2_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d2_);
 
 
-				DominoModel d3_ = new DominoModel(500, 500, 100, 50, l1.get(2).getUrl(), deck.getNumFirstDomino());
+				DominoModel d3_ = new DominoModel(500, 500, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
 				d3_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d3_);
 
 
-				DominoModel d4_ = new DominoModel(500, 600, 100, 50, l1.get(3).getUrl(), deck.getNumFirstDomino());
+				DominoModel d4_ = new DominoModel(500, 600, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
 				d4_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d4_);
 
 
-				DominoModel d5_ = new DominoModel(650, 300, 100, 50, l2.get(0).getUrl(), deck.getNumFirstDomino());
+				DominoModel d5_ = new DominoModel(650, 300, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
 				d5_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d5_);
 
 
-				DominoModel d6_ = new DominoModel(650, 400, 100, 50, l2.get(1).getUrl(), deck.getNumFirstDomino());
+				DominoModel d6_ = new DominoModel(650, 400, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
 				d6_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d6_);
 
 
-				DominoModel d7_ = new DominoModel(650, 500, 100, 50, l2.get(2).getUrl(), deck.getNumFirstDomino());
+				DominoModel d7_ = new DominoModel(650, 500, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
 				d7_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				deck.setFill(deck.getFirstDominoD());
 				zoneJeu.getChildren().add(d7_);
 
 
-				DominoModel d8_ = new DominoModel(650, 600, 100, 50, l2.get(3).getUrl(), deck.getNumFirstDomino());
+				DominoModel d8_ = new DominoModel(650, 600, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
 				d8_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize()-1);
+				deck.getListeDominos().remove(deck.getSize() - 1);
 				System.out.println("###" + deck.getSize());
-				if (deck.getSize() > 0)
-				{
+				if (deck.getSize() > 0) {
 					deck.setFill(deck.getFirstDominoD());
 				} else {
 					deck.setFill("Application/Ressources/Dominos/ekekan.jpg");
@@ -558,21 +548,22 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 				zoneJeu.getChildren().add(d8_);
 
-				l1 = null;
-				l2 = null;
+				//l1 = null;
+				//l2 = null;
 			}
 
+
 			// EVENT TRIER DOMINO
-			if (((Button) actionEvent.getSource()).getText() == "Trier") {
+			else if (((Button) actionEvent.getSource()).getText() == "Trier") {
 				l1 = new ArrayList<DominoModel>();
 				l2 = new ArrayList<DominoModel>();
 
-				for (int i = 0 ; i < 4 ; i++){
+				for (int i = 0; i < 4; i++) {
 					l1.add(i, deck.getLastDomino());
 					deck.getListeDominos().remove(deck.getLastDomino());
 				}
 
-				for (int j = 0 ; j < 4 ; j++){
+				for (int j = 0; j < 4; j++) {
 					l2.add(j, deck.getLastDomino());
 					deck.getListeDominos().remove(deck.getLastDomino());
 				}
@@ -580,7 +571,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 				deck.triDomino(l1);
 				deck.triDomino(l2);
 			}
-
 		}
 	}
 }
