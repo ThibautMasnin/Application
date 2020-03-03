@@ -16,6 +16,26 @@ public class JoueurModel {
 		idJoueur = id;
 		listeDomino = new ArrayList<>();
 		plateau = new PlateauModel();
+		
+		/*try {	
+			PGSimpleDataSource ds = new PGSimpleDataSource();
+
+			ds.setServerName("localhost");
+			ds.setDatabaseName("m4106");
+			ds.setUser("postgres");
+			ds.setPassword("postgres");//VOTRE MDP!!!
+			Connection con = ds.getConnection();
+		
+			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,?,?,?);")){
+				stmt.setInt(1, this.idJoueur);
+				stmt.setString(2, this.couleur);
+				stmt.setBoolean(3, false);
+				stmt.setInt(4, this.point);
+			}
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}*/
 	}
 
 	public boolean choixDomino(DominoModel domino)

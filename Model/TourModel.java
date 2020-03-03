@@ -80,6 +80,24 @@ public class TourModel
 				}
 			}
 		}
+
+		/*try {
+			PGSimpleDataSource ds = new PGSimpleDataSource();
+
+			ds.setServerName("localhost");
+			ds.setDatabaseName("m4106");
+			ds.setUser("postgres");
+			ds.setPassword("******");//VOTRE MDP!!!
+			Connection con = ds.getConnection();
+
+			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Tour VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
+				stmt.setInt(1, this.idTour);
+				//stmt.setInt(2, this.partieEnCours.getId());
+				stmt.setInt(2, this.nbTourRestant);
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}*/
 	}
 
 	public void afficheTour()
