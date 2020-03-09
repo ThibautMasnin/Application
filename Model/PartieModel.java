@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import org.postgresql.ds.*;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -33,7 +34,7 @@ public class PartieModel
 		pioche = new PiocheModel();
 		pioche.getPioche(this);
 		//On crée les dominos et les ajoute dans la meme pioche
-		pioche.creerPioche();
+//		pioche.creerPioche();
 		//On crée les joueur et les ajoute dans la liste qu'on utilisera
 		listeJoueur = new ArrayList<>();
 		for(int i = 0; i < NbJoueur; i++)

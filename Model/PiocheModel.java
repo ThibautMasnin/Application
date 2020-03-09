@@ -26,22 +26,24 @@ public class PiocheModel extends Rectangle
 		pioche = new ArrayList<DominoModel>();
 		creerPioche();
 		this.setFill(new ImagePattern(new Image(getFirstDominoD())));
+		tirageCache = new ArrayList<>();
+		tirageRetourne = new ArrayList<>();
 	}
 	
 	//On cr√©e la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
 	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
 	{
-		if(pioche == null)
-		{
+//		if(pioche == null)
+//		{
 			partieEnCours = partieModel;
-			pioche = new ArrayList<>();
-			tirageCache = new ArrayList<>();
-			tirageRetourne = new ArrayList<>();
-		}
-		else
-		{
-			System.out.println("deja une pioche");
-		}
+//			pioche = new ArrayList<>();
+//			tirageCache = new ArrayList<>();
+//			tirageRetourne = new ArrayList<>();
+//		}
+//		else
+//		{
+//			System.out.println("deja une pioche");
+//		}
 		return pioche;
 	}
 
@@ -278,10 +280,10 @@ public class PiocheModel extends Rectangle
 		for(int i=0; i < tirageRetourne.size(); i++)
 		{
 			if(tirageRetourne.get(i).getNumDomino()<10) {
-				System.out.println("[Domino n∞0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino nÔøΩ0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 			else {
-				System.out.println("[Domino n∞" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino nÔøΩ" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 		}
 		System.out.println("\n\n");
@@ -293,7 +295,7 @@ public class PiocheModel extends Rectangle
 		System.out.println("|||||Les caches|||||");
 		for(int i=0; i < tirageCache.size(); i++)
 		{
-			System.out.println("[Domino n∞" + tirageCache.get(i).getNumDomino()+ "]") ;
+			System.out.println("[Domino nÔøΩ" + tirageCache.get(i).getNumDomino()+ "]") ;
 		}
 		System.out.println("\n\n");
 	}

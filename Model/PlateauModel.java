@@ -263,89 +263,121 @@ public class PlateauModel
 		String nomPaysage2 = null;
 
 		boolean bool = false;
+//		COMPARAIIIISON PAYSAAAAGEEE
 		if(sens == "H") // Domino vers le haut
 		{
 			nomPaysage1 = d.getPaysage1().getNomTerrain();
 			nomPaysage2 = d.getPaysage2().getNomTerrain();
 
-//			if((plateau[x][y-1] instanceof PaysageModel)
-//					|| (plateau[x+1][y] instanceof PaysageModel)
-//					|| (plateau[x][y+1] instanceof PaysageModel)
-//					|| (plateau[x-1][y+1] instanceof PaysageModel)
-//					|| (plateau[x-2][y] instanceof PaysageModel)
-//					|| (plateau[x-1][y-1] instanceof PaysageModel))
-//			{
-//				System.out.println("DOMINOOOO");
-//				bool = true;
-//			}
-
-
-							//		COMPARAIIIISON PAYSAAAAGEEE
-										if(plateau[x][y-1] instanceof PaysageModel)
-										{
-											if(getPaysage(x, y-1).getNomTerrain() == nomPaysage1) bool = true;
-										}
-										else if (plateau[x+1][y] instanceof PaysageModel)
-										{
-											if(getPaysage(x+1, y).getNomTerrain() == nomPaysage1) bool = true;
-										}
-										else if (plateau[x][y+1] instanceof PaysageModel)
-										{
-											if(getPaysage(x, y+1).getNomTerrain() == nomPaysage1) bool = true;
-										}
-										else if (plateau[x-1][y+1] instanceof PaysageModel)
-										{
-											if(getPaysage(x-1, y+1).getNomTerrain() == nomPaysage2) bool = true;
-										}
-										else if (plateau[x-2][y] instanceof PaysageModel)
-										{
-											if(getPaysage(x-2, y).getNomTerrain() == nomPaysage2) bool = true;
-										}
-										else if (plateau[x-1][y-1] instanceof PaysageModel)
-										{
-											if(getPaysage(x-1, y-1).getNomTerrain() == nomPaysage2) bool = true;
-										}
+            if(plateau[x][y-1] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y-1).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x+1][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x+1, y).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x][y+1] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y+1).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x-1][y+1] instanceof PaysageModel)
+            {
+                if(getPaysage(x-1, y+1).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x-2][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x-2, y).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x-1][y-1] instanceof PaysageModel)
+            {
+                if(getPaysage(x-1, y-1).getNomTerrain() == nomPaysage2) bool = true;
+            }
 		}
 		else if(sens == "G")
 		{
-			if((plateau[x-1][y] instanceof PaysageModel)
-					|| (plateau[x][y+1] instanceof PaysageModel)
-					|| (plateau[x+1][y] instanceof PaysageModel)
-					|| (plateau[x+1][y-1] instanceof PaysageModel)
-					|| (plateau[x][y-2] instanceof PaysageModel)
-					|| (plateau[x-1][y-1] instanceof PaysageModel))
-			{
-				System.out.println("DOMINOOOO");
-				bool = true;
-			}
+            if(plateau[x-1][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x-1, y).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x][y+1] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y+1).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x+1][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x+1, y).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x+1][y-1] instanceof PaysageModel)
+            {
+                if(getPaysage(x+1, y-1).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x][y-2] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y-2).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x-1][y-1] instanceof PaysageModel)
+            {
+                if(getPaysage(x-1, y-1).getNomTerrain() == nomPaysage2) bool = true;
+            }
 		}
 		else if(sens == "D")
 		{
-			if((plateau[x-1][y] instanceof PaysageModel)
-					|| (plateau[x][y-1] instanceof PaysageModel)
-					|| (plateau[x+1][y] instanceof PaysageModel)
-					|| (plateau[x+1][y+1] instanceof PaysageModel)
-					|| (plateau[x][y+2] instanceof PaysageModel)
-					|| (plateau[x+1][y-1] instanceof PaysageModel))
-			{
-				System.out.println("DOMINOOOO");
-				bool = true;
-			}
+            if(plateau[x-1][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x-1, y).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x][y-1] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y-1).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x+1][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x+1, y).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x+1][y+1] instanceof PaysageModel)
+            {
+                if(getPaysage(x+1, y+1).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x][y+2] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y+2).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x-1][y+1] instanceof PaysageModel)
+            {
+                if(getPaysage(x-1, y+1).getNomTerrain() == nomPaysage2) bool = true;
+            }
 		}
 		else if(sens == "B")
 		{
-			if((plateau[x][y-1] instanceof PaysageModel)
-					|| (plateau[x-1][y] instanceof PaysageModel)
-					|| (plateau[x][y+1] instanceof PaysageModel)
-					|| (plateau[x+1][y+1] instanceof PaysageModel)
-					|| (plateau[x+2][y] instanceof PaysageModel)
-					|| (plateau[x+1][y-1] instanceof PaysageModel))
-			{
-				System.out.println("DOMINOOOO");
-				bool = true;
-			}
+            if(plateau[x][y-1] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y-1).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x-1][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x-1, y).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x][y+1] instanceof PaysageModel)
+            {
+                if(getPaysage(x, y+1).getNomTerrain() == nomPaysage1) bool = true;
+            }
+            else if (plateau[x+1][y+1] instanceof PaysageModel)
+            {
+                if(getPaysage(x+1, y+1).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x+2][y] instanceof PaysageModel)
+            {
+                if(getPaysage(x+2, y).getNomTerrain() == nomPaysage2) bool = true;
+            }
+            else if (plateau[x+1][y-1] instanceof PaysageModel)
+            {
+                if(getPaysage(x+1, y-1).getNomTerrain() == nomPaysage2) bool = true;
+            }
+
 		}
-		return bool;
+		if (bool == true) System.out.println("PAYSAAAGE");
+            return bool;
 	}
 
 //	public ArrayList<DominoModel> dominoAutour(int x, int y, String sens)

@@ -11,7 +11,7 @@ public class TourModel
 	private int TourRestant;
 	private static int numTour = 1;
 	private static int nbTourRestant = 11;
-	ArrayList<DominoModel> dominoDispo = new ArrayList<>();
+	ArrayList<DominoModel> dominoDispo;
 
 	public TourModel(PartieModel partie)
 	{
@@ -38,6 +38,8 @@ public class TourModel
 		//On tire les dominos et les place dans tirageCachee (ces dominos sont cach�s et seront envoy� � tirageRetournee le tour suivant)
 		// et ensuite dans tirageRetournee (le joueur doit choisir parmis ces dominos)
 		pioche.tirage();
+//		dominoDispo.addAll(partieEnCours.getPioche().getTirageRetourne());
+//		System.out.println("DOMINO DISPO : " + dominoDispo.size());
 		if(TourRestant > 0)
 		{
 			if(TourRestant > 1)
@@ -61,9 +63,9 @@ public class TourModel
 					partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
 				}
 				if (TourRestant > 0) {
-										selectionDomino(i);
+						selectionDomino(i);
 //					selectionDominoAleatoire(i);
-										selectionDomino(i);
+						selectionDomino(i);
 //					selectionDominoAleatoire(i);
 				}
 			}
@@ -120,12 +122,17 @@ public class TourModel
 
 		while(!placementValide)
 		{
-			System.out.println("JOUEUR " + (idJoueur) + " entrer le numéro de la ligne : ");
+			System.out.println("JOUEUR "  + (idJoueur) + " placez le domino : " + "[Domino n"
+					+ partieEnCours.getJoueur(idJoueur).getListeDomino().get(0).getNumDomino()
+					+"] ------ "+ partieEnCours.getJoueur(idJoueur).getListeDomino().get(0).toStringPaysage());
+			System.out.println("JOUEUR " + (idJoueur) + " entrez le numéro de la ligne (entre 0 et 8): ");
 			int ligne = s.nextInt();
-			System.out.println("JOUEUR " + (idJoueur) + " entrer le numéro de la colonne : ");
+			System.out.println("JOUEUR " + (idJoueur) + " entrez le numéro de la colonne (entre 0 et 8) : ");
 			int colonne = s.nextInt();
-			System.out.println("JOUEUR " + (idJoueur) + " entrer la lettre du sens (h, d, g, b) : ");
-			String scs = s.next();
+
+			String scs = null; //le sens d'orientation du domino
+			System.out.println("JOUEUR " + (idJoueur) + " entrez la lettre du sens (h, d, g, b) : ");
+			scs = s.next();
 			String sens = null;
 			if(scs.equalsIgnoreCase("D"))
 			{
