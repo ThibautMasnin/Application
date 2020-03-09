@@ -1,9 +1,9 @@
 package Application.View;
 
 import Application.Controller.PartieController;
-import Application.Model.Deck;
 import Application.Model.DominoModel;
 import Application.Model.Grille;
+import Application.Model.PiocheModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,12 +25,14 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import java.sql.*;
+import org.postgresql.ds.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel dominoTMP;
-	private Deck deck;
+	private PiocheModel deck;
 	private DominoModel d1;
 	private DominoModel d2;
 	private DominoModel d3;
@@ -56,7 +58,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private ArrayList<DominoModel> l2;
 
 
-	public PartieView(Stage partieStage) {
+	public PartieView(Stage partieStage) throws SQLException{
 		
 
 
@@ -217,7 +219,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		/** BOUTON REGLEMENT **/
 		Button btnReglement = new Button();
-		btnReglement.setId("Réglement");
+		btnReglement.setId("Reglement");
 		btnReglement.setStyle("-fx-background-image: url('Application/Ressources/Images/reglement.png');" +
 				"-fx-background-color: rgba(0, 0, 0, 0);" +
 				"-fx-background-size: 100%");
@@ -227,7 +229,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		/** BOUTON REGLAGES **/
 		Button btnReglages = new Button();
-		btnReglages.setId("Réglages");
+		btnReglages.setId("Reglages");
 		btnReglages.setStyle("-fx-background-image: url('Application/Ressources/Images/reglages2.png');" +
 				"-fx-background-color: rgba(0, 0, 0, 0);" +
 				"-fx-background-size: 100%");
@@ -311,7 +313,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Grille grille4 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
 		grille4.dessinerGrille();
 
-		deck = new Deck();
+		deck = new PiocheModel();
 		//dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
 		d1 = new DominoModel(500, 300, 100, 50);
 		d2 = new DominoModel(500, 400, 100, 50);
@@ -365,7 +367,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		bReset.setOnAction(e->{
 			partieStage.close();
-			PartieView pv = new PartieView(partieStage);
+			try {
+				PartieView pv = new PartieView(partieStage);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		
 		bFinirTour.setOnAction(this);
@@ -381,6 +388,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 		partieStage.setScene(scene);
 		partieStage.setResizable(false);
 		partieStage.setFullScreen(true);
+		partieStage.setFullScreenExitHint("");
 		partieStage.show();
 
 
@@ -480,7 +488,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			// EVENT MELANGER DOMINO
 			else if (((Button) actionEvent.getSource()).getText() == "Melanger") {
-				deck.melangerDeck();
+				deck.triDomino(deck.getListeDominos());
 			}
 
 			// EVENT JOUER DOMINO

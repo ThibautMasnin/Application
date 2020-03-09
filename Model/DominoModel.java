@@ -36,6 +36,33 @@ public class DominoModel extends Rectangle
 
 	}
 
+	public DominoModel(PaysageModel p1, PaysageModel p2,double centerX, double centerY, double width, double height, String u, int num) {
+		super(centerX, centerY, width, height);
+		numero = compteurNumero;
+		compteurNumero++;
+		paysage1 = p1;
+		paysage2 = p2;
+		url = u;
+		img = new ImagePattern(new Image(getUrl()));
+		setFill(img);
+
+		numero = num;
+
+		effectSelected = new DropShadow();
+		effectSelected.setBlurType(BlurType.GAUSSIAN);
+		effectSelected.setSpread(10);
+		effectSelected.setColor(Color.RED);
+		effectSelected.setRadius(2);
+
+		pivotX = this.getX() + (this.getWidth()/2);
+		pivotY = this.getY() + (this.getHeight()/4);
+
+		pivotTX = this.getX();
+		pivotTY = this.getY();
+
+		cptRotation = 0;
+	}
+
 	public DominoModel(PaysageModel p1, PaysageModel p2)
 	{
 		//		super("D");

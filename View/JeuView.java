@@ -60,7 +60,7 @@ public class JeuView implements Observer {
 
 		/** BOUTON REGLEMENT **/
 		Button btnReglement = new Button();
-		btnReglement.setId("Réglement");
+		btnReglement.setId("Reglement");
 		btnReglement.setStyle("-fx-background-image: url('Application/Ressources/Images/reglement.png');" +
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
 		btnReglement.setMinWidth(266);
@@ -88,7 +88,7 @@ public class JeuView implements Observer {
 
 		/** BOUTON REGLAGES **/
 		Button btnReglages = new Button();
-		btnReglages.setId("Réglages");
+		btnReglages.setId("Reglages");
 		btnReglages.setStyle("-fx-background-image: url('Application/Ressources/Images/reglages.png');" +
 				"-fx-background-color: rgba(0, 0, 0, 0);");
 		btnReglages.setMinWidth(140);

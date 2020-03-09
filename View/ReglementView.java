@@ -36,7 +36,7 @@ public class ReglementView implements Observer {
 				"-fx-background-position: center center;" +
 				"-fx-background-size: cover;");
 
-		Label title = new Label("Réglement");
+		Label title = new Label("Reglement");
 		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 

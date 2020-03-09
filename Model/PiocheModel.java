@@ -1,7 +1,6 @@
 package Application.Model;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Random;
 import java.io.BufferedInputStream;
@@ -10,14 +9,25 @@ import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.sql.*;
 import org.postgresql.ds.*;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
-public class PiocheModel
+public class PiocheModel extends Rectangle
 {
 	private PartieModel partieEnCours;
 	private ArrayList<DominoModel> pioche = null;
 	private ArrayList<DominoModel> tirageCache;     //Les dominos pour le tour d'apres, on les enverra dans tirageRetournee
 	private ArrayList<DominoModel> tirageRetourne;      //Le joueur chosit un domino parmis celle propose ici
 
+
+	public PiocheModel() throws SQLException{
+		super(100, 100, 100, 50);
+		pioche = new ArrayList<DominoModel>();
+		creerPioche();
+		this.setFill(new ImagePattern(new Image(getFirstDominoD())));
+	}
+	
 	//On cr√©e la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
 	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
 	{
@@ -184,7 +194,18 @@ public class PiocheModel
 			System.out.print("Paysage 1 : " + paysage1.toString());
 			System.out.println("\t Paysage 2 : " + paysage2.toString() + "\n");
 			 */
-			pioche.add(new DominoModel(paysage1,paysage2));
+			
+			int indice = (i/4)+1;
+			String indice2;
+			if (indice<10) {
+				indice2 = "0"+String.valueOf(indice);
+			}
+			else {
+				indice2 = String.valueOf(indice);			
+				}
+//			System.out.println(indice2);
+			String url = "Application/Ressources/Dominos/D"+indice2+"d.jpg";
+			pioche.add(new DominoModel(paysage1,paysage2,0, 0, 100, 50, url,(i/4)));
 		}
 		System.out.println("\n");
 		melangerPioche();
@@ -253,14 +274,14 @@ public class PiocheModel
 	public void afficheTirageRetournee()
 	{
 		triDomino(tirageRetourne);
-		System.out.println("|||||Les retournÔøΩs|||||");
+		System.out.println("|||||Les retournes|||||");
 		for(int i=0; i < tirageRetourne.size(); i++)
 		{
 			if(tirageRetourne.get(i).getNumDomino()<10) {
-				System.out.println("[Domino nÔøΩ0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino n∞0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 			else {
-				System.out.println("[Domino nÔøΩ" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino n∞" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 		}
 		System.out.println("\n\n");
@@ -269,10 +290,10 @@ public class PiocheModel
 	public void afficheTirageCachee()
 	{
 		triDomino(tirageCache);
-		System.out.println("|||||Les cachÔøΩs|||||");
+		System.out.println("|||||Les caches|||||");
 		for(int i=0; i < tirageCache.size(); i++)
 		{
-			System.out.println("[Domino nÔøΩ" + tirageCache.get(i).getNumDomino()+ "]") ;
+			System.out.println("[Domino n∞" + tirageCache.get(i).getNumDomino()+ "]") ;
 		}
 		System.out.println("\n\n");
 	}
@@ -355,4 +376,46 @@ public class PiocheModel
 		pioche = piocheTmp;
 	}
 
+	public ArrayList<DominoModel> getListeDominos() {
+		return pioche;
+	}
+	public int getSize(){
+		return pioche.size();
+	}
+
+
+	public PiocheModel setFill(String f){
+		this.setFill(new ImagePattern(new Image(f)));
+
+		return this;
+	}
+
+
+	public DominoModel getDomino(int i){
+		return pioche.get(i);
+	}
+
+	public DominoModel getLastDomino(){
+		return pioche.get(pioche.size()-1);
+	}
+
+
+	public String getFirstDomino(){
+		return modifURL(pioche.get(pioche.size()-1).getUrl());
+	}
+
+	public int getNumFirstDomino() {
+		return pioche.get(pioche.size()-1).getNumDomino();}
+
+	public String getFirstDominoD(){
+		return pioche.get(pioche.size()-1).getUrl();
+	}
+
+
+	public String modifURL(String s){
+		String tmp2 = s.substring(0, 34);
+		String tmp3 = s.substring(35,39);
+
+		return tmp2 + tmp3;
+	}
 }

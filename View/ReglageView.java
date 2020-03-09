@@ -44,7 +44,7 @@ public class ReglageView implements Observer {
 		espace1.setMinHeight(ht*0.025);
 		Label espace2 = new Label();
 		espace2.setMinHeight(ht*0.025);
-		Label title = new Label("Réglages du jeu");
+		Label title = new Label("Reglages du jeu");
 		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 

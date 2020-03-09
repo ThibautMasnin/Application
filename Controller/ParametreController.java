@@ -1,5 +1,7 @@
 package Application.Controller;
 
+import java.sql.SQLException;
+
 import Application.View.JeuView;
 import Application.View.PartieView;
 import javafx.event.ActionEvent;
@@ -23,7 +25,12 @@ public class ParametreController<T extends ActionEvent> implements EventHandler<
 				JeuView ppv = new JeuView(s);
 			}
         	else if (((Button) event.getSource()).getId() == "Valider") {
-				PartieView partieView = new PartieView(s);
+				try {
+					PartieView partieView = new PartieView(s);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         	}
 		}
 	}

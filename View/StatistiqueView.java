@@ -44,8 +44,8 @@ public class StatistiqueView implements Observer {
 		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 
-		Text parties = new Text("Parties jouées : " + "");
-		Text joueurs = new Text("Joueurs créés : " + "");
+		Text parties = new Text("Parties jouees : " + "");
+		Text joueurs = new Text("Joueurs crees : " + "");
 		Text temps = new Text("Temps joué : " + "" + " heures");
 		parties.setFont(Font.font(36));
 		joueurs.setFont(Font.font(36));

@@ -63,11 +63,11 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 			 if (((Button) event.getSource()).getText() == "Sauvegarder") {
 			 }
 
-			 if (((Button) event.getSource()).getText() == "Réglement") {
+			 if (((Button) event.getSource()).getText() == "Reglement") {
 				 ReglementView rv = new ReglementView(stage);
 			 }
 
-			 if (((Button) event.getSource()).getText() == "Réglages") {
+			 if (((Button) event.getSource()).getText() == "Reglages") {
 				 ReglageView rv = new ReglageView(stage);
 			 }
 
@@ -75,10 +75,10 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 				 stage.close();
 			 }
 			 
-			if (((Button) event.getSource()).getId() == "Réglement") {
+			if (((Button) event.getSource()).getId() == "Reglement") {
 				ReglementView rv = new ReglementView(stage);
 			}       
-			else if (((Button) event.getSource()).getId() == "Réglages") {
+			else if (((Button) event.getSource()).getId() == "Reglages") {
 				ReglageView rv = new ReglageView(stage);
 			}			
 			else if (((Button) event.getSource()).getId() == "Quitter") {
