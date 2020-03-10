@@ -13,7 +13,7 @@ public class PartieModel
 {
 	//    private int idPartie;
 	//    private int nbJoueur;
-	//    private int nbIA;
+	    private int nbIA;
 	//    private int minuteurPartie;
 	//    private int minuteurTour;
 	//    private int nbDominos;
@@ -24,22 +24,30 @@ public class PartieModel
 	public PartieModel() throws SQLException
 	{
 		Scanner s = new Scanner(System.in);
-		int NbJoueur = 0;
-		while(!(NbJoueur >= 2 && NbJoueur <= 4))
+		int nbJoueur = 0;
+		nbIA = 5;
+		while(!(nbJoueur >= 2 && nbJoueur <= 4))
 		{
-			System.out.println("Veuillez entrer le nombre de joueur (entre 2 et 4) : ");
-			NbJoueur = s.nextInt();
+			System.out.println("Veuillez entrer le nombre de joueur total (entre 2 et 4) : ");
+			nbJoueur = s.nextInt();
 		}
-		//On crée la pioche vide pour l'instant avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioche
+		while(!(nbIA >= 0 && nbIA <= nbJoueur))
+		{
+			System.out.println("Veuillez entrer le nombre de joueur IA (entre 0 et " + nbJoueur + ") : ");
+			nbIA = s.nextInt();
+		}
+								//On crée la pioche vide pour l'instant avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioche
 		pioche = new PiocheModel();
 		pioche.getPioche(this);
-		//On crée les dominos et les ajoute dans la meme pioche
-//		pioche.creerPioche();
-		//On crée les joueur et les ajoute dans la liste qu'on utilisera
+								//On crée les joueur et les ajoute dans la liste qu'on utilisera
 		listeJoueur = new ArrayList<>();
-		for(int i = 0; i < NbJoueur; i++)
+		for(int i = 0; i < nbJoueur; i++)
 		{
 			listeJoueur.add(new JoueurModel(i+1));
+		}
+		for(int i = 0; i < nbIA; i++)
+		{
+			listeJoueur.get(i).setJoueurIA(true);
 		}
 	}
 

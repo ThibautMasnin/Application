@@ -2,10 +2,11 @@ package Application.Model;
 
 import java.util.ArrayList;
 
-public class JoueurModel {
+public class JoueurModel
+{
 	//    private Color couleur;
 	//    private String pseudo;
-	//    private boolean ia = false;
+	    private boolean joueurIA;
 	//    private int point;
 	private int idJoueur;
 	private ArrayList<DominoModel> listeDomino;
@@ -16,6 +17,7 @@ public class JoueurModel {
 		idJoueur = id;
 		listeDomino = new ArrayList<>();
 		plateau = new PlateauModel();
+		joueurIA = false;
 		
 		/*try {	
 			PGSimpleDataSource ds = new PGSimpleDataSource();
@@ -52,6 +54,14 @@ public class JoueurModel {
 	{
 
 		return plateau;
+	}
+
+	public boolean isJoueurIA() {
+		return joueurIA;
+	}
+
+	public void setJoueurIA(boolean joueurIA) {
+		this.joueurIA = joueurIA;
 	}
 
 	public void choixCouleur() {

@@ -391,6 +391,7 @@ public class PiocheModel extends Rectangle
 			pioche.remove(var);
 		}
 		pioche = piocheTmp;
+		this.setFill(getFirstDominoD());
 	}
 
 	public ArrayList<DominoModel> getListeDominos() {
