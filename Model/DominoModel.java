@@ -46,8 +46,6 @@ public class DominoModel extends Rectangle
 		img = new ImagePattern(new Image(getUrl()));
 		setFill(img);
 
-		numero = num;
-
 		effectSelected = new DropShadow();
 		effectSelected.setBlurType(BlurType.GAUSSIAN);
 		effectSelected.setSpread(10);

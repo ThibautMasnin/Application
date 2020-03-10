@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel dominoTMP;
-	private PiocheModel deck;
+	private PiocheModel pioche;
 	private DominoModel d1;
 	private DominoModel d2;
 	private DominoModel d3;
@@ -313,7 +313,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Grille grille4 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
 		grille4.dessinerGrille();
 
-		deck = new PiocheModel();
+		pioche = new PiocheModel();
 		//dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
 		d1 = new DominoModel(500, 300, 100, 50);
 		d2 = new DominoModel(500, 400, 100, 50);
@@ -338,12 +338,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		zoneJeu = new Group();
 		zoneJeu.setStyle("-fx-background-color: #336699;");
-		zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), deck, d1, d2, d3, d4, d5, d6, d7, d8);
+		zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
 		grille2.getPane().setLayoutX(800);
 		grille3.getPane().setLayoutY(500);
 		grille4.getPane().setLayoutX(800);
 		grille4.getPane().setLayoutY(500);
-		deck.setLayoutX(470);
+		pioche.setLayoutX(470);
 
 
 
@@ -488,70 +488,70 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			// EVENT MELANGER DOMINO
 			else if (((Button) actionEvent.getSource()).getText() == "Melanger") {
-				deck.triDomino(deck.getListeDominos());
+				pioche.melangerPioche();
 			}
 
 			// EVENT JOUER DOMINO
 			else if (((Button) actionEvent.getSource()).getText() == "Demarrer") {
 
-				DominoModel d1_ = new DominoModel(500, 300, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
+				DominoModel d1_ = new DominoModel(500, 300, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
 				d1_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				pioche.setFill(pioche.getFirstDominoD());
 				zoneJeu.getChildren().add(d1_);
 				dominoTMP = d1_;
 
 
-				DominoModel d2_ = new DominoModel(500, 400, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
+				DominoModel d2_ = new DominoModel(500, 400, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
 				d2_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				pioche.setFill(pioche.getFirstDominoD());
 				zoneJeu.getChildren().add(d2_);
 
 
-				DominoModel d3_ = new DominoModel(500, 500, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
+				DominoModel d3_ = new DominoModel(500, 500, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
 				d3_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				pioche.setFill(pioche.getFirstDominoD());
 				zoneJeu.getChildren().add(d3_);
 
 
-				DominoModel d4_ = new DominoModel(500, 600, 100, 50, deck.getFirstDomino(), deck.getNumFirstDomino());
+				DominoModel d4_ = new DominoModel(500, 600, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
 				d4_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				pioche.setFill(pioche.getFirstDominoD());
 				zoneJeu.getChildren().add(d4_);
 
 
-				DominoModel d5_ = new DominoModel(650, 300, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
+				DominoModel d5_ = new DominoModel(650, 300, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
 				d5_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				pioche.setFill(pioche.getFirstDominoD());
 				zoneJeu.getChildren().add(d5_);
 
 
-				DominoModel d6_ = new DominoModel(650, 400, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
+				DominoModel d6_ = new DominoModel(650, 400, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
 				d6_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				pioche.setFill(pioche.getFirstDominoD());
 				zoneJeu.getChildren().add(d6_);
 
 
-				DominoModel d7_ = new DominoModel(650, 500, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
+				DominoModel d7_ = new DominoModel(650, 500, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
 				d7_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				pioche.setFill(pioche.getFirstDominoD());
 				zoneJeu.getChildren().add(d7_);
 
 
-				DominoModel d8_ = new DominoModel(650, 600, 100, 50, deck.getFirstDominoD(), deck.getNumFirstDomino());
+				DominoModel d8_ = new DominoModel(650, 600, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
 				d8_.setOnMouseClicked(grille);
-				deck.getListeDominos().remove(deck.getSize() - 1);
-				System.out.println("###" + deck.getSize());
-				if (deck.getSize() > 0) {
-					deck.setFill(deck.getFirstDominoD());
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				System.out.println("###" + pioche.getSize());
+				if (pioche.getSize() > 0) {
+					pioche.setFill(pioche.getFirstDominoD());
 				} else {
-					deck.setFill("Application/Ressources/Dominos/ekekan.jpg");
+					pioche.setFill("Application/Ressources/Dominos/ekekan.jpg");
 				}
 
 				zoneJeu.getChildren().add(d8_);
@@ -567,17 +567,17 @@ public class PartieView implements EventHandler<ActionEvent> {
 				l2 = new ArrayList<DominoModel>();
 
 				for (int i = 0; i < 4; i++) {
-					l1.add(i, deck.getLastDomino());
-					deck.getListeDominos().remove(deck.getLastDomino());
+					l1.add(i, pioche.getLastDomino());
+					pioche.getListeDominos().remove(pioche.getLastDomino());
 				}
 
 				for (int j = 0; j < 4; j++) {
-					l2.add(j, deck.getLastDomino());
-					deck.getListeDominos().remove(deck.getLastDomino());
+					l2.add(j, pioche.getLastDomino());
+					pioche.getListeDominos().remove(pioche.getLastDomino());
 				}
 
-				deck.triDomino(l1);
-				deck.triDomino(l2);
+				pioche.triDomino(l1);
+				pioche.triDomino(l2);
 			}
 		}
 	}

@@ -114,23 +114,23 @@ public class PartieModel
 	}
 
 	public void sauvegarderPartie() {
-		try {
-			PGSimpleDataSource ds = new PGSimpleDataSource();
-
-			ds.setServerName("localhost");
-			ds.setDatabaseName("m4106");
-			ds.setUser("postgres");
-			ds.setPassword("postgres");//VOTRE MDP!!!
-			Connection con = ds.getConnection();
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(?,?,?,?,?,?);")){
-				stmt.setInt(1, /*this.idPartie*/1);
-				stmt.setInt(2, /*this.nbJoueur*/4);
-				stmt.setInt(3, /*this.nbIA*/0);
-				stmt.setInt(4, /*this.minuteurPartie*/1200);
-				stmt.setInt(5, /*this.minuteurTour*/30);
-				stmt.setInt(6, /*this.nbDominos*/48);
-			}
+//		try {
+//			PGSimpleDataSource ds = new PGSimpleDataSource();
+//
+//			ds.setServerName("localhost");
+//			ds.setDatabaseName("m4106");
+//			ds.setUser("postgres");
+//			ds.setPassword("postgres");//VOTRE MDP!!!
+//			Connection con = ds.getConnection();
+//
+//			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(?,?,?,?,?,?);")){
+//				stmt.setInt(1, /*this.idPartie*/1);
+//				stmt.setInt(2, /*this.nbJoueur*/4);
+//				stmt.setInt(3, /*this.nbIA*/0);
+//				stmt.setInt(4, /*this.minuteurPartie*/1200);
+//				stmt.setInt(5, /*this.minuteurTour*/30);
+//				stmt.setInt(6, /*this.nbDominos*/48);
+//			}
 
 			/*try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
 				stmt.setInt(1, this.idTour);
@@ -161,10 +161,10 @@ public class PartieModel
 				//stmt.setInt(2, this.partieEnCours.getId());
 				stmt.setInt(2, this.nbTourRestant);
 			}*/
-
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
+//
+//		} catch(Exception e) {
+//			System.out.println(e.getMessage());
+//		}
 	}
 
 	public void rejouerPartie() {

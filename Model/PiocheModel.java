@@ -24,6 +24,8 @@ public class PiocheModel extends Rectangle
 	public PiocheModel() throws SQLException{
 		super(100, 100, 100, 50);
 		pioche = new ArrayList<DominoModel>();
+		tirageCache = new ArrayList<>();
+		tirageRetourne = new ArrayList<>();
 		creerPioche();
 		this.setFill(new ImagePattern(new Image(getFirstDominoD())));
 		tirageCache = new ArrayList<>();
@@ -47,7 +49,24 @@ public class PiocheModel extends Rectangle
 		return pioche;
 	}
 
-	//M�thode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
+	//On crée la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
+	//	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
+	//	{
+	//		if(pioche == null)
+	//		{
+	//			partieEnCours = partieModel;
+	//			pioche = new ArrayList<>();
+	//			tirageCache = new ArrayList<>();
+	//			tirageRetourne = new ArrayList<>();
+	//		}
+	//		else
+	//		{
+	//			System.out.println("deja une pioche");
+	//		}
+	//		return pioche;
+	//	}
+
+	//Méthode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
 	public String getPwd() {
 		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
 		String password = "";
@@ -92,7 +111,7 @@ public class PiocheModel extends Rectangle
 			ds.setPassword(password);
 			Connection con = ds.getConnection();
 
-			//Requ�te pour r�cup�rer ce que contient la table Domino
+			//Requète pour récupérer ce que contient la table Domino
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM Domino;")){
 				try (ResultSet rs = stmt.executeQuery()){
 					while (rs.next()) { // R�cup�ration pour tout les dominos dans la BDD
@@ -189,27 +208,23 @@ public class PiocheModel extends Rectangle
 				paysage2 = new PaysageModel(TerrainType.PRAIRIE,id_CouPaysages.get(i+3));
 			}
 
-			/*if(i % 4 == 0) {
-				System.out.println("Domino " + ((i/4) + 1) + " : ");
-			}
-
-			System.out.print("Paysage 1 : " + paysage1.toString());
-			System.out.println("\t Paysage 2 : " + paysage2.toString() + "\n");
-			 */
-			
-			int indice = (i/4)+1;
-			String indice2;
-			if (indice<10) {
-				indice2 = "0"+String.valueOf(indice);
-			}
-			else {
-				indice2 = String.valueOf(indice);			
+				int indice = (i/4)+1;
+				String indice2;
+				if (indice<10) {
+					indice2 = "0"+String.valueOf(indice);
 				}
-//			System.out.println(indice2);
-			String url = "Application/Ressources/Dominos/D"+indice2+"d.jpg";
-			pioche.add(new DominoModel(paysage1,paysage2,0, 0, 100, 50, url,(i/4)));
+				else {
+					indice2 = String.valueOf(indice);			
+				}
+				//				System.out.println(indice2);
+				String url = "Application/Ressources/Dominos/D"+indice2+"d.jpg";
+				pioche.add(new DominoModel(paysage1,paysage2,0, 0, 100, 50, url,Integer.parseInt(indice2)));
 		}
+//		for(int i = 0; i< pioche.size();i++) {
+//			System.out.println(pioche.get(i).getNumDomino());
+//		}
 		System.out.println("\n");
+		affichePioche();
 		melangerPioche();
 	}
 
@@ -280,10 +295,10 @@ public class PiocheModel extends Rectangle
 		for(int i=0; i < tirageRetourne.size(); i++)
 		{
 			if(tirageRetourne.get(i).getNumDomino()<10) {
-				System.out.println("[Domino n�0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino n°0" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 			else {
-				System.out.println("[Domino n�" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
+				System.out.println("[Domino n°" + tirageRetourne.get(i).getNumDomino() +"] ------ "+ tirageRetourne.get(i).toStringPaysage());
 			}
 		}
 		System.out.println("\n\n");
@@ -295,7 +310,7 @@ public class PiocheModel extends Rectangle
 		System.out.println("|||||Les caches|||||");
 		for(int i=0; i < tirageCache.size(); i++)
 		{
-			System.out.println("[Domino n�" + tirageCache.get(i).getNumDomino()+ "]") ;
+			System.out.println("[Domino n°" + tirageCache.get(i).getNumDomino()+ "]") ;
 		}
 		System.out.println("\n\n");
 	}
@@ -351,9 +366,9 @@ public class PiocheModel extends Rectangle
 
 			}
 			if (size ==4) {
-			if (listT.get(0).getNumDomino() < listT.get(1).getNumDomino() && listT.get(1).getNumDomino() < listT.get(2).getNumDomino() && listT.get(2).getNumDomino() < listT.get(3).getNumDomino() && listT.get(0).getNumDomino() < listT.get(3).getNumDomino() ){
-				good = true;
-			}
+				if (listT.get(0).getNumDomino() < listT.get(1).getNumDomino() && listT.get(1).getNumDomino() < listT.get(2).getNumDomino() && listT.get(2).getNumDomino() < listT.get(3).getNumDomino() && listT.get(0).getNumDomino() < listT.get(3).getNumDomino() ){
+					good = true;
+				}
 			}
 			else {
 				if(listT.get(0).getNumDomino() < listT.get(1).getNumDomino() && listT.get(1).getNumDomino() < listT.get(2).getNumDomino() &&  listT.get(0).getNumDomino() < listT.get(2).getNumDomino()) {
