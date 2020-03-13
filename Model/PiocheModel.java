@@ -224,7 +224,7 @@ public class PiocheModel extends Rectangle
 //			System.out.println(pioche.get(i).getNumDomino());
 //		}
 		System.out.println("\n");
-		affichePioche();
+//		affichePioche();
 		melangerPioche();
 	}
 
@@ -381,6 +381,7 @@ public class PiocheModel extends Rectangle
 
 	public void melangerPioche()
 	{
+		this.setFill(getFirstDominoD());
 		Random r = new Random();
 		int var = 0;
 		ArrayList<DominoModel> piocheTmp = new ArrayList<>();

@@ -1,5 +1,9 @@
 package Application.Model;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -109,7 +113,26 @@ public class PartieModel
 	public PiocheModel getPioche() {
 		return pioche;
 	}
-
+	
+	public String getPwd() {
+		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
+		String password = "";
+		try {
+			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
+			StringWriter out = new StringWriter();
+			int b;
+			while ((b=in.read()) != -1)
+				out.write(b);
+			out.flush();
+			password = out.toString();
+			out.close();
+			in.close();
+		} catch (Exception ex){
+			System.err.println("Error. "+ex.getMessage());
+		}
+		return password;
+	}
+	
 	public ArrayList<JoueurModel> getListeJoueur()
 	{
 		return listeJoueur;
@@ -122,57 +145,58 @@ public class PartieModel
 	}
 
 	public void sauvegarderPartie() {
-//		try {
-//			PGSimpleDataSource ds = new PGSimpleDataSource();
-//
-//			ds.setServerName("localhost");
-//			ds.setDatabaseName("m4106");
-//			ds.setUser("postgres");
-//			ds.setPassword("postgres");//VOTRE MDP!!!
-//			Connection con = ds.getConnection();
-//
-//			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(?,?,?,?,?,?);")){
-//				stmt.setInt(1, /*this.idPartie*/1);
-//				stmt.setInt(2, /*this.nbJoueur*/4);
-//				stmt.setInt(3, /*this.nbIA*/0);
-//				stmt.setInt(4, /*this.minuteurPartie*/1200);
-//				stmt.setInt(5, /*this.minuteurTour*/30);
-//				stmt.setInt(6, /*this.nbDominos*/48);
-//			}
+		String pw = getPwd();
+		try {
+			PGSimpleDataSource ds = new PGSimpleDataSource();
 
-			/*try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
+			ds.setServerName("localhost");
+			ds.setDatabaseName("m4106");
+			ds.setUser("postgres");
+			ds.setPassword(pw);
+			Connection con = ds.getConnection();
+
+			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(?,?,?,?,?,?);")){
+				stmt.setInt(1, /*this.idPartie*/1);
+				stmt.setInt(2, /*this.nbJoueur*/4);
+				stmt.setInt(3, /*this.nbIA*/0);
+				stmt.setInt(4, /*this.minuteurPartie*/1200);
+				stmt.setInt(5, /*this.minuteurTour*/30);
+				stmt.setInt(6, /*this.nbDominos*/48);
+			}
+
+			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
 				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
+				stmt.setInt(2, this.partieEnCours.getId());
 				stmt.setInt(2, this.nbTourRestant);
 			}
 
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Tour VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
 				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
+				stmt.setInt(2, this.partieEnCours.getId());
 				stmt.setInt(2, this.nbTourRestant);
 			}
 
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO StatJeu VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
 				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
+				stmt.setInt(2, this.partieEnCours.getId());
 				stmt.setInt(2, this.nbTourRestant);
 			}
 
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO TerrainType VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
 				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
+				stmt.setInt(2, this.partieEnCours.getId());
 				stmt.setInt(2, this.nbTourRestant);
 			}
 
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Paysage VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
 				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
+				stmt.setInt(2, this.partieEnCours.getId());
 				stmt.setInt(2, this.nbTourRestant);
-			}*/
-//
-//		} catch(Exception e) {
-//			System.out.println(e.getMessage());
-//		}
+			}
+
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void rejouerPartie() {

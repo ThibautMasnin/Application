@@ -18,12 +18,12 @@ public class Kingdomino extends Application {
 	public void start(Stage primaryStage) throws SQLException {
 
 // Thibaut, Valentin
-      primaryStage.setTitle("KingDomino");
-	  PartieView partieView = new PartieView(primaryStage);
+//      primaryStage.setTitle("KingDomino");
+//	  PartieView partieView = new PartieView(primaryStage);
 	 		 
 // Efekan, Kevin, Aymeric
-//		PartieModel partieModel = new PartieModel();
-//		partieModel.jouer();
+		PartieModel partieModel = new PartieModel();
+		partieModel.jouer();
 
 	}
 

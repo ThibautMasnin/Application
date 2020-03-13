@@ -1,17 +1,25 @@
 package Application.Model;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.StringWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import org.postgresql.ds.PGSimpleDataSource;
+
 public class TourModel
 {
-    private PartieModel partieEnCours;
-    private int idTour;
-    private int TourRestant;
-    private static int numTour = 1;
-    private static int nbTourRestant = 11;
-    ArrayList<DominoModel> dominoDispo;
+	private PartieModel partieEnCours;
+	private int idTour;
+	private int TourRestant;
+	private int numTour = 1;
+	private int nbTourRestant = 11;
+	ArrayList<DominoModel> dominoDispo;
 
     public TourModel(PartieModel partie)
     {
@@ -125,13 +133,14 @@ public class TourModel
             }
         }
 
-		/*try {
+		String pw = getPwd();
+		try {
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
 			ds.setServerName("localhost");
 			ds.setDatabaseName("m4106");
 			ds.setUser("postgres");
-			ds.setPassword("******");//VOTRE MDP!!!
+			ds.setPassword(pw);
 			Connection con = ds.getConnection();
 
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Tour VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
@@ -141,13 +150,32 @@ public class TourModel
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
-		}*/
-    }
+		}
+	}
 
-    public void afficheTour()
-    {
-        System.out.println("tour : " + idTour + " et tour restant : " + TourRestant);
-    }
+	public String getPwd() {
+		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
+		String password = "";
+		try {
+			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
+			StringWriter out = new StringWriter();
+			int b;
+			while ((b=in.read()) != -1)
+				out.write(b);
+			out.flush();
+			password = out.toString();
+			out.close();
+			in.close();
+		} catch (Exception ex){
+			System.err.println("Error. "+ex.getMessage());
+		}
+		return password;
+	}
+	
+	public void afficheTour()
+	{
+		System.out.println("tour : " + idTour + " et tour restant : " + TourRestant);
+	}
 
     public void selectionDomino(int idJ)
     {
