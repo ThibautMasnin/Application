@@ -381,7 +381,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 		bp.setTop(bpMenu);
 		bp.setLeft(vActionDomino);
 		bp.setRight(vDetailPartie);
-		//BorderPane.setAlignment(dominoTMP, Pos.CENTER_RIGHT);
 		bp.setCenter(zoneJeu);
 
 
