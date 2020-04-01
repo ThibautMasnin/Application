@@ -21,13 +21,14 @@ public class Kingdomino extends Application {
 	public void start(Stage primaryStage) throws SQLException {
 
 // Thibaut, Valentin
-		primaryStage.setTitle("KingDomino");
-		PartieView partieView = new PartieView(primaryStage);
-    	File file = new File("Application/Ressources/Images/musique.mp3");  
+    	File file = new File("src/Application/Ressources/Sons/musique.mp3");  
     	Media media = new Media(file.toURI().toString());
     	MediaPlayer mediaPlayer = new MediaPlayer(media); 
     	mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play(); 
+		primaryStage.setTitle("KingDomino");
+		PartieView partieView = new PartieView(primaryStage);
+
 	 		 
 // Efekan, Kevin, Aymeric
 //		PartieModel partieModel = new PartieModel();

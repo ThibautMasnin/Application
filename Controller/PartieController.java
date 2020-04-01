@@ -37,7 +37,7 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 	 public void handle(T event) {
 
 		 if (event.getSource() instanceof Button) {
-		    	File file = new File("Application/Ressources/Images/clic.wav");  
+		    	File file = new File("src/Application/Ressources/Sons/clic.wav");  
 		    	Media media = new Media(file.toURI().toString());
 		    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
 		        mediaPlayer.play(); 

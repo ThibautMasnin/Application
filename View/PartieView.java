@@ -18,6 +18,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -25,6 +27,8 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
 import java.sql.*;
 import org.postgresql.ds.*;
 import java.sql.SQLException;
@@ -408,6 +412,10 @@ public class PartieView implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent actionEvent) {
 		if (actionEvent.getSource() instanceof Button) {
+			File file = new File("src/Application/Ressources/Sons/clic.wav");  
+	    	Media media = new Media(file.toURI().toString());
+	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
+	        mediaPlayer.play(); 
 			// EVENT ROTATION A DROITE
 			if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
 				Rotate rotate = new Rotate(90, dominoTMP.getPivotX(), dominoTMP.getPivotY());
