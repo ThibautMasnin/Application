@@ -1,5 +1,7 @@
 package Application.Controller;
 
+import java.io.File;
+
 import Application.Model.DominoModel;
 import Application.View.JeuView;
 import Application.View.ReglageView;
@@ -8,6 +10,8 @@ import Application.View.PartieView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
@@ -33,7 +37,10 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 	 public void handle(T event) {
 
 		 if (event.getSource() instanceof Button) {
-
+		    	File file = new File("Application/Ressources/Images/clic.wav");  
+		    	Media media = new Media(file.toURI().toString());
+		    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
+		        mediaPlayer.play(); 
 			 // EVENT ROTATION A DROITE
 			 if (((Button) event.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
 
