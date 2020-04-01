@@ -2,8 +2,8 @@ package Application.View;
 
 import Application.Controller.PartieController;
 import Application.Model.DominoModel;
-import Application.Model.Grille;
 import Application.Model.PiocheModel;
+import Application.Model.PlateauModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -42,7 +42,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel d7;
 	private DominoModel d8;
 	private Group zoneJeu;
-	private Grille grille;
+	private PlateauModel grille;
 	private int cpt;
 	
 	private int minChrono;
@@ -298,19 +298,19 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		/** PLATEAU DES JOUEURS **/
 		// JOUEUR 1
-		grille = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
+		grille = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
 		grille.dessinerGrille();
 
 		// JOUEUR 2
-		Grille grille2 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
+		PlateauModel grille2 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
 		grille2.dessinerGrille();
 
 		// JOUEUR 3
-		Grille grille3 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
+		PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
 		grille3.dessinerGrille();
 
 		// JOUEUR 4
-		Grille grille4 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
+		PlateauModel grille4 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
 		grille4.dessinerGrille();
 
 		pioche = new PiocheModel();
