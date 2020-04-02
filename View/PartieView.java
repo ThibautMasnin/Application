@@ -299,23 +299,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 		vDetailPartie.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);-fx-border-color: #000000; -fx-border-width: 0 0 0 1;");
 
 
-		/** PLATEAU DES JOUEURS **/
-		// JOUEUR 1
-		grille = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
-		grille.dessinerGrille();
-
-		// JOUEUR 2
-		PlateauModel grille2 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
-		grille2.dessinerGrille();
-
-		// JOUEUR 3
-		PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
-		grille3.dessinerGrille();
-
-		// JOUEUR 4
-		PlateauModel grille4 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
-		grille4.dessinerGrille();
-
 		pioche = new PiocheModel();
 		//dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
 		d1 = new DominoModel(500, 300, 100, 50);
@@ -338,14 +321,42 @@ public class PartieView implements EventHandler<ActionEvent> {
 		//d7.setOnMouseClicked(grille);
 		//d8.setOnMouseClicked(grille);
 
-
+		
+		/** PLATEAU DES JOUEURS **/
 		zoneJeu = new Group();
 		zoneJeu.setStyle("-fx-background-color: #336699;");
-		zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
-		grille2.getPane().setLayoutX(800);
-		grille3.getPane().setLayoutY(500);
-		grille4.getPane().setLayoutX(800);
-		grille4.getPane().setLayoutY(500);
+		
+		// JOUEUR 1
+		grille = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
+		grille.dessinerGrille();
+
+		// JOUEUR 2
+		PlateauModel grille2 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
+		grille2.dessinerGrille();
+
+		if(nbJoueurs==2) {
+			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
+			grille2.getPane().setLayoutX(800);
+		}
+		if(nbJoueurs==3) {
+			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
+			grille3.dessinerGrille();
+			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
+			grille2.getPane().setLayoutX(800);
+			grille3.getPane().setLayoutY(500);
+		}
+		else if(nbJoueurs==4) {
+			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
+			grille3.dessinerGrille();
+			PlateauModel grille4 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
+			grille4.dessinerGrille();	
+			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
+			grille2.getPane().setLayoutX(800);
+			grille3.getPane().setLayoutY(500);
+			grille4.getPane().setLayoutX(800);
+			grille4.getPane().setLayoutY(500);
+		}
+
 		pioche.setLayoutX(470);
 
 

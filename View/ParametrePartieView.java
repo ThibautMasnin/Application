@@ -52,7 +52,7 @@ public class ParametrePartieView implements Observer {
 		min.setFont(Font.font(36));
 		sec.setFont(Font.font(36));
 
-		Spinner<Integer> nbJoueur = new Spinner<>(4,4,0);
+		Spinner<Integer> nbJoueur = new Spinner<>(0,4,4);
 		nbJoueur.setMaxWidth(100);
 		nbJoueur.setEditable(true);		
 		Spinner<Integer> nbIA = new Spinner<>(0,4,0);
@@ -61,7 +61,7 @@ public class ParametrePartieView implements Observer {
 		Spinner<Integer> minChrono = new Spinner<>(0,10,0);
 		minChrono.setMaxWidth(100);
 		minChrono.setEditable(true);
-		Spinner<Integer> secChrono = new Spinner<>(30,59,0);
+		Spinner<Integer> secChrono = new Spinner<>(0,59,30);
 		secChrono.setMaxWidth(100);
 		secChrono.setEditable(true);
 
