@@ -32,6 +32,10 @@ public class DominoModel extends Rectangle
 	private double pivotTY;
 	private int cptRotation;
 
+	public DominoModel(){
+
+	}
+
 	public DominoModel(PaysageModel p1, PaysageModel p2,double centerX, double centerY, double width, double height, String u, int num) {
 		super(centerX, centerY, width, height);
 		numero = compteurNumero;
