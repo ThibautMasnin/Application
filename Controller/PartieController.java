@@ -3,6 +3,7 @@ package Application.Controller;
 import java.io.File;
 
 import Application.Model.DominoModel;
+import Application.Model.PartieModel;
 import Application.View.JeuView;
 import Application.View.ReglageView;
 import Application.View.ReglementView;
@@ -19,9 +20,17 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 	private Stage stage;
 	private DominoModel dominoTMP;
 
+	private int joueur;
+	private int nbTour;
+
 
 	public PartieController(Stage s) {
 		stage = s;
+	}
+
+	public PartieController(int joueur, int nbTour) {
+		this.joueur = joueur;
+		this.nbTour = nbTour;
 	}
 
 	public PartieController(Stage s, DominoModel d) {
@@ -93,7 +102,7 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 				stage.close();
 			}			
 			else if (((Button) event.getSource()).getId() == "Sauvegarder") {
-				
+				PartieModel sauvegarde = new PartieModel(this.joueur, this.nbTour);
 			}
 		 }
 	 }

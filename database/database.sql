@@ -1,11 +1,11 @@
-/*DROP TABLE IF EXISTS Partie, Joueur, Tour, StatJeu, TerrainType, Paysage,Domino CASCADE;*/
+DROP TABLE IF EXISTS Partie, Joueur, Tour, StatJeu, TerrainType, Paysage, Domino CASCADE;
 
 CREATE TABLE Partie (
     idPartie serial PRIMARY KEY,
     nbJoueurs int DEFAULT 0,
     nbIAs int DEFAULT 0,
-    minuteurPartie int, /*en secondes*/
-    minuteurTour int, /*en secondes*/
+    dernierJoueur int REFERENCES Joueur (idJoueur) NOT NULL,
+    nbTour int NOT NULL,
     nbDominos int DEFAULT 0
 );
 
@@ -28,6 +28,14 @@ CREATE TABLE StatJeu (
     tempsJoue int DEFAULT 0, /*en secondes*/
     dernierLancement timestamp NOT NULL,
     nbJoueursCrees int DEFAULT 0
+);
+
+CREATE TABLE Coup (
+    idCoup serial PRIMARY KEY,
+    nbPartie int REFERENCES Partie NOT NULL,
+    idJoueur int REFERENCES Joueur NOT NULL,
+    date timestamp DEFAULT current_timestamp,
+    action text NOT NULL
 );
 
 CREATE TABLE TerrainType (
@@ -125,3 +133,7 @@ INSERT INTO Domino VALUES (45,15,1);
 INSERT INTO Domino VALUES (46,10,15);
 INSERT INTO Domino VALUES (47,10,15);
 INSERT INTO Domino VALUES (48,1,16);
+
+
+
+SELECT * FROM Partie;

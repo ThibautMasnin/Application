@@ -20,6 +20,7 @@ public class PiocheModel extends Rectangle
 	private ArrayList<DominoModel> tirageCache;     //Les dominos pour le tour d'apres, on les enverra dans tirageRetournee
 	private ArrayList<DominoModel> tirageRetourne;      //Le joueur chosit un domino parmis celle propose ici
 
+	Connexion CBDD = new Connexion();
 
 	public PiocheModel() throws SQLException{
 		super(100, 100, 100, 50);
@@ -66,29 +67,8 @@ public class PiocheModel extends Rectangle
 	//		return pioche;
 	//	}
 
-	//Méthode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
-	public String getPwd() {
-		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
-		String password = "";
-		try {
-			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
-			StringWriter out = new StringWriter();
-			int b;
-			while ((b=in.read()) != -1)
-				out.write(b);
-			out.flush();
-			password = out.toString();
-			out.close();
-			in.close();
-		} catch (Exception ex){
-			System.err.println("Error. "+ex.getMessage());
-		}
-		return password;
-	}
-
 	public void creerPioche() throws SQLException
 	{
-		String password = getPwd(); // regarder la methode getPwd, sinon mettre directement en clair le mdp pour se co a la bdd (pour les flemmards :p)
 		//Variables n�cessaires pour r�cup�rer les donn�es des requ�tes
 		List<Integer> idPaysage = new ArrayList<>(); // Liste avec tous les ID des paysages
 		int idPaysage1;
@@ -105,10 +85,10 @@ public class PiocheModel extends Rectangle
 		try {	
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
-			ds.setServerName("localhost");
-			ds.setDatabaseName("m4106");
-			ds.setUser("postgres");
-			ds.setPassword(password);
+			ds.setServerName(CBDD.getServerName());
+			ds.setDatabaseName(CBDD.getDatabaseName());
+			ds.setUser(CBDD.getUser());
+			ds.setPassword(CBDD.getPassword());
 			Connection con = ds.getConnection();
 
 			//Requète pour récupérer ce que contient la table Domino
