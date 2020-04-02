@@ -29,12 +29,12 @@ public class Kingdomino extends Application {
     	mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play(); 
 		primaryStage.setTitle("KingDomino");
-		JeuView jv = new JeuView(primaryStage);
+		PartieView partieView = new PartieView(primaryStage);
 
 	 		 
 // Efekan, Kevin, Aymeric		VOIR Connexion.java
- 		//PartieModel partieModel = new PartieModel();
-		//partieModel.jouer();
+ 		PartieModel partieModel = new PartieModel();
+		partieModel.jouer();
 	}
 
 	public static void main(String[] args) {
