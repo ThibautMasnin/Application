@@ -9,8 +9,8 @@ public class TourModel
 	private PartieModel partieEnCours;
 	private int idTour;
 	private int TourRestant;
-	private int numTour = 1;
-	private int nbTourRestant = 11;
+	private static int numTour = 1;
+	private static int nbTourRestant = 11;
 	ArrayList<DominoModel> dominoDispo;
 
     public TourModel(PartieModel partie)
