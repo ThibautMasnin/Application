@@ -53,19 +53,19 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private int secChrono;
 	private int minTemps;
 	private int secTemps;
-	private int minChronoParametre=1;
-	private int secChronoParametre=15;
 	private int joueur=1;
-	private int nbJoueurs = 4;
-	private int nbTour=2;
+	private int nbTour;
 	private ArrayList<DominoModel> l1;
 	private ArrayList<DominoModel> l2;
 
 
-	public PartieView(Stage partieStage) throws SQLException{
-		
-
-
+	public PartieView(Stage partieStage, int nbJoueurs, int minChronoParametre, int secChronoParametre) throws SQLException{
+		if(nbJoueurs==2) {
+			nbTour=6;
+		}
+		else {
+			nbTour=12;
+		}
 		minChrono=minChronoParametre;
 		secChrono=secChronoParametre;
 		minTemps = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
@@ -179,7 +179,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 					}
 				}
 				else {
-					System.out.println("0");
 					minChrono=0;
 					secChrono=0;
 					minTemps=0;
@@ -359,7 +358,27 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		bAnnulerCoup.setOnAction(this);
 
-		bFinirTour.setOnAction(this);
+		bFinirTour.setOnAction(e -> {
+			if (nbTour > 0) {
+				if (secTemps - secChrono < 0) {
+					secTemps = 60 + secTemps - secChrono;
+					minTemps--;
+				} else {
+					secTemps -= secChrono;
+				}
+				minTemps -= minChrono;
+				if (joueur == nbJoueurs) {
+					joueur = 1;
+					nbTour--;
+				} else {
+					joueur++;
+				}
+				if (nbTour != 0) {
+					minChrono = minChronoParametre;
+					secChrono = secChronoParametre;
+				}
+			}
+		});
 
 		bRetourner.setOnAction(this);
 
@@ -372,14 +391,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 		bReset.setOnAction(e->{
 			partieStage.close();
 			try {
-				PartieView pv = new PartieView(partieStage);
+				PartieView pv = new PartieView(partieStage, nbJoueurs, minChrono, secChrono);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
-		
-		bFinirTour.setOnAction(this);
 
 		/** AJOUT AU BORDERPANE PRINCIPALE **/
 		bp.setTop(bpMenu);
@@ -468,25 +485,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			// EVENT FINIR SON TOUR
 			else if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
-				if (nbTour > 0) {
-					if (secTemps - secChrono < 0) {
-						secTemps = 60 + secTemps - secChrono;
-						minTemps--;
-					} else {
-						secTemps -= secChrono;
-					}
-					minTemps -= minChrono;
-					if (joueur == nbJoueurs) {
-						joueur = 1;
-						nbTour--;
-					} else {
-						joueur++;
-					}
-					if (nbTour != 0) {
-						minChrono = minChronoParametre;
-						secChrono = secChronoParametre;
-					}
-				}
 			}
 
 			// EVENT RETOURNER DOMINO

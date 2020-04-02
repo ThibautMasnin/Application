@@ -40,7 +40,7 @@ public class JeuController<T extends ActionEvent> implements EventHandler<T> {
 			else if (((Button) event.getSource()).getId() == "Reglement") {
 				ReglementView rv = new ReglementView(s);
 			}        	
-			else if (((Button) event.getSource()).getId() == "Credits") {
+			else if (((Button) event.getSource()).getId() == "Crédits") {
 				CreditView rv = new CreditView(s);
 			}	
 			else if (((Button) event.getSource()).getId() == "Statistiques") {

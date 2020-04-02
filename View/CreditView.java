@@ -40,7 +40,7 @@ public class CreditView implements Observer {
 		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
 
-		Text devs = new Text("Jeu developpe par :\n\nBAJARD Kevin\nDI BENEDETTO Valentin\nGOCER Efekan\nMASNIN Thibaut\nSULEK Aymeric");
+		Text devs = new Text("Jeu développé par :\n\nBAJARD Kevin\nDI BENEDETTO Valentin\nGOCER Efekan\nMASNIN Thibaut\nSULEK Aymeric");
 		devs.setFont(Font.font(36));
 
 		Button btnRetour = new Button();

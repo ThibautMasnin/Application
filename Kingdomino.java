@@ -1,6 +1,7 @@
 package Application;
 
 import Application.Model.PartieModel;
+import Application.View.JeuView;
 import Application.View.PartieView;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -27,7 +28,7 @@ public class Kingdomino extends Application {
     	mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play(); 
 		primaryStage.setTitle("KingDomino");
-		PartieView partieView = new PartieView(primaryStage);
+		JeuView jv = new JeuView(primaryStage);
 
 	 		 
 // Efekan, Kevin, Aymeric

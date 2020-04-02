@@ -114,9 +114,9 @@ public class PiocheModel extends Rectangle
 			//Requète pour récupérer ce que contient la table Domino
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM Domino;")){
 				try (ResultSet rs = stmt.executeQuery()){
-					while (rs.next()) { // R�cup�ration pour tout les dominos dans la BDD
-						idPaysage1 = rs.getInt("idPaysage1"); // R�cup�ration de l'id du paysage1 de chaque domino � la liste des ID
-						idPaysage2 = rs.getInt("idPaysage2"); // R�cup�ration de l'id du paysage2 de chaque domino � la liste des ID
+					while (rs.next()) { // Récupération pour tout les dominos dans la BDD
+						idPaysage1 = rs.getInt("idPaysage1"); // Récupération de l'id du paysage1 de chaque domino � la liste des ID
+						idPaysage2 = rs.getInt("idPaysage2"); // Récupération de l'id du paysage2 de chaque domino � la liste des ID
 						idPaysage.add(idPaysage1); // Ajout de l'id du paysage1 de chaque domino � la liste des ID
 						idPaysage.add(idPaysage2); // Ajout de l'id du paysage2 de chaque domino � la liste des ID
 					}

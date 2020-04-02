@@ -45,20 +45,25 @@ public class ParametrePartieView implements Observer {
 
 		Text nbJ = new Text("Nombre de joueurs :");
 		Text nbI = new Text("Nombre d'IA :");
-		Text temps = new Text("Secondes par tour :");
+		Text min = new Text("Minutes par tour :");
+		Text sec = new Text("Secondes par tour :");
 		nbJ.setFont(Font.font(36));
 		nbI.setFont(Font.font(36));
-		temps.setFont(Font.font(36));
+		min.setFont(Font.font(36));
+		sec.setFont(Font.font(36));
 
-		Spinner<Integer> nbJoueur = new Spinner<>(0,4,0);
+		Spinner<Integer> nbJoueur = new Spinner<>(4,4,0);
 		nbJoueur.setMaxWidth(100);
 		nbJoueur.setEditable(true);		
 		Spinner<Integer> nbIA = new Spinner<>(0,4,0);
 		nbIA.setMaxWidth(100);
 		nbIA.setEditable(true);
-		Spinner<Integer> minuteur = new Spinner<>(0,300,0);
-		minuteur.setMaxWidth(100);
-		minuteur.setEditable(true);
+		Spinner<Integer> minChrono = new Spinner<>(0,10,0);
+		minChrono.setMaxWidth(100);
+		minChrono.setEditable(true);
+		Spinner<Integer> secChrono = new Spinner<>(30,59,0);
+		secChrono.setMaxWidth(100);
+		secChrono.setEditable(true);
 
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int ht  = (int)dimension.getHeight();
@@ -76,13 +81,16 @@ public class ParametrePartieView implements Observer {
 				   "-fx-background-color: rgba(0, 0, 0, 0);");
         btnValider.setMinWidth(140);
         btnValider.setMinHeight(54);
-        btnValider.setOnAction(new ParametreController<ActionEvent>(stage));
+        btnValider.setOnAction((ActionEvent e) -> {
+        	ParametreController evt = new ParametreController<ActionEvent>(stage, nbJoueur.getValue()+nbIA.getValue(), minChrono.getValue(), secChrono.getValue());
+            evt.handle(e);
+		});
         
-        vb1.getChildren().addAll(nbJ, nbI, temps);
+        vb1.getChildren().addAll(nbJ, nbI, min, sec);
         vb1.setSpacing(50);
         vb1.setAlignment(Pos.CENTER);
-        vb2.getChildren().addAll(nbJoueur, nbIA, minuteur);
-        vb2.setSpacing(50);
+        vb2.getChildren().addAll(nbJoueur, nbIA, minChrono, secChrono);
+        vb2.setSpacing(74);
         vb2.setAlignment(Pos.CENTER);
         hb1.getChildren().addAll(vb1, vb2);
         hb1.setSpacing(50);
@@ -92,7 +100,7 @@ public class ParametrePartieView implements Observer {
         hb2.setSpacing(50);
         vb.getChildren().addAll(title, hb1, hb2);
         vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(ht*0.2575);
+        vb.setSpacing(ht*0.2);
 
 		bp.setCenter(vb);
 

@@ -89,8 +89,7 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 				ReglageView rv = new ReglageView(stage);
 			}			
 			else if (((Button) event.getSource()).getId() == "Quitter") {
-				//JeuView primaryScreen = new JeuView(stage);
-				stage.close();
+				JeuView primaryScreen = new JeuView(stage);
 			}			
 			else if (((Button) event.getSource()).getId() == "Sauvegarder") {
 				
