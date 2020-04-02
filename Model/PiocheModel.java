@@ -55,7 +55,7 @@ public class PiocheModel extends Rectangle
 		List<String> terrainType = new ArrayList<>(); // Liste avec tous les ID des terrains pour chaque paysage
 		String terrain;
 
-		//Connexion � la BDD
+		//Connexion à la BDD
 		try {	
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
@@ -69,24 +69,24 @@ public class PiocheModel extends Rectangle
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM Domino;")){
 				try (ResultSet rs = stmt.executeQuery()){
 					while (rs.next()) { // Récupération pour tout les dominos dans la BDD
-						idPaysage1 = rs.getInt("idPaysage1"); // Récupération de l'id du paysage1 de chaque domino � la liste des ID
-						idPaysage2 = rs.getInt("idPaysage2"); // Récupération de l'id du paysage2 de chaque domino � la liste des ID
-						idPaysage.add(idPaysage1); // Ajout de l'id du paysage1 de chaque domino � la liste des ID
-						idPaysage.add(idPaysage2); // Ajout de l'id du paysage2 de chaque domino � la liste des ID
+						idPaysage1 = rs.getInt("idPaysage1"); // Récupération de l'id du paysage1 de chaque domino à la liste des ID
+						idPaysage2 = rs.getInt("idPaysage2"); // Récupération de l'id du paysage2 de chaque domino à la liste des ID
+						idPaysage.add(idPaysage1); // Ajout de l'id du paysage1 de chaque domino à la liste des ID
+						idPaysage.add(idPaysage2); // Ajout de l'id du paysage2 de chaque domino à la liste des ID
 					}
 				}
 			}
 
-			//Requ�te pour r�cup�rer tout les paysages ET les couronnes des paysages dans la table Paysage
+			//Requête pour récupérer tout les paysages ET les couronnes des paysages dans la table Paysage
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM TerrainType JOIN Paysage USING(idTerrainType) WHERE idPaysage = ?;")){
-				for (int i=0 ; i<96 ; i++) { //R�cup�ration de tous les paysages
+				for (int i=0 ; i<96 ; i++) { //Récupération de tous les paysages
 					stmt.setInt(1, idPaysage.get(i));// ? = l'index de la liste idPaysages
 					try (ResultSet rs = stmt.executeQuery()){
 						while(rs.next()) {
-							idTerrainType = rs.getInt("idTerrainType");// R�cup�ration de l'id du terrain associ� au paysage
-							nbCouronne = rs.getInt("nbCouronne");// R�cup�ration ds couronnes associ� au paysage
-							id_CouPaysages.add(idTerrainType);//Ajout � la liste concernant les paysages
-							id_CouPaysages.add(nbCouronne);//Ajout � la liste concernant les paysages
+							idTerrainType = rs.getInt("idTerrainType");// Récupération de l'id du terrain associé au paysage
+							nbCouronne = rs.getInt("nbCouronne");// Récupération ds couronnes associé au paysage
+							id_CouPaysages.add(idTerrainType);//Ajout à la liste concernant les paysages
+							id_CouPaysages.add(nbCouronne);//Ajouté la liste concernant les paysages
 						}
 					}
 				}

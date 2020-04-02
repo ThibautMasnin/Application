@@ -35,7 +35,7 @@ public class ParametreController<T extends ActionEvent> implements EventHandler<
 	@Override
 	public void handle(T event) {
 		if (event.getSource() instanceof Button) {
-	    	File file = new File("src/Application/Ressources/Sons/clic.wav");  
+	    	File file = new File("src/Application/Ressources/Sons/clic.mp3");  
 	    	Media media = new Media(file.toURI().toString());
 	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
 	        mediaPlayer.play(); 
