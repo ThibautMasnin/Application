@@ -9,9 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import Application.Model.*;
-import Application.View.PartieView;
-import org.postgresql.ds.*;
 
 import org.postgresql.ds.PGSimpleDataSource;
 

@@ -1,16 +1,8 @@
 package Application.Model;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
-import org.postgresql.ds.PGSimpleDataSource;
 
 public class TourModel
 {
