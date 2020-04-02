@@ -38,8 +38,6 @@ public class TourModel
         //On tire les dominos et les place dans tirageCachee (ces dominos sont cach�s et seront envoy� � tirageRetournee le tour suivant)
         // et ensuite dans tirageRetournee (le joueur doit choisir parmis ces dominos)
         pioche.tirage();
-//		dominoDispo.addAll(partieEnCours.getPioche().getTirageRetourne());
-//		System.out.println("DOMINO DISPO : " + dominoDispo.size());
         if(TourRestant > 0)
         {
             if(TourRestant > 1)
@@ -48,7 +46,6 @@ public class TourModel
             }
             pioche.afficheTirageRetournee();
         }
-        //		pioche.affichePioche();
         dominoDispo.addAll(partieEnCours.getPioche().getTirageRetourne());
 
         for(int i = 0; i < partieEnCours.getListeJoueur().size(); i++)
@@ -69,12 +66,6 @@ public class TourModel
                         placerDomino(i + 1);
                         partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                     }
-////					placerDominoAleatoire(i + 1);
-//                    placerDomino(i + 1);
-//                    partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
-////					placerDominoAleatoire(i + 1);
-//                    placerDomino(i + 1);
-//                    partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                 }
                 if (TourRestant > 0) {
                     if(partieEnCours.getListeJoueur().get(i).isJoueurIA())
@@ -87,10 +78,6 @@ public class TourModel
                         selectionDomino(i);
                         selectionDomino(i);
                     }
-//                    selectionDomino(i);
-////					selectionDominoAleatoire(i);
-//                    selectionDomino(i);
-////					selectionDominoAleatoire(i);
                 }
             }
             else
@@ -106,9 +93,6 @@ public class TourModel
                         placerDomino(i + 1);
                         partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                     }
-////					placerDominoAleatoire(i + 1);
-//                    placerDomino(i + 1);
-//                    partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                 }
                 if (TourRestant > 0) {
                     if(partieEnCours.getListeJoueur().get(i).isJoueurIA())
@@ -119,29 +103,9 @@ public class TourModel
                     {
                         selectionDomino(i);
                     }
-//                    selectionDomino(i);
-//					selectionDominoAleatoire(i);
                 }
             }
         }
-
-		/*try {
-			PGSimpleDataSource ds = new PGSimpleDataSource();
-
-			ds.setServerName("localhost");
-			ds.setDatabaseName("m4106");
-			ds.setUser("postgres");
-			ds.setPassword("******");//VOTRE MDP!!!
-			Connection con = ds.getConnection();
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Tour VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}*/
     }
 
     public void afficheTour()
@@ -275,5 +239,4 @@ public class TourModel
         }
         dominoDispo.remove(var);
     }
-
 }

@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 public class JoueurModel
 {
-	//    private Color couleur;
-	//    private String pseudo;
-	    private boolean joueurIA;
-	//    private int point;
+	private boolean joueurIA;
+	private int point;
 	private int idJoueur;
 	private ArrayList<DominoModel> listeDomino;
 	private PlateauModel plateau;
@@ -20,26 +18,7 @@ public class JoueurModel
 		listeDomino = new ArrayList<>();
 		plateau = new PlateauModel();
 		joueurIA = false;
-		
-		/*try {
-			PGSimpleDataSource ds = new PGSimpleDataSource();
-
-			ds.setServerName(CBDD.getServerName());
-			ds.setDatabaseName(CBDD.getDatabaseName());
-			ds.setUser(CBDD.getUser());
-			ds.setPassword(CBDD.getPassword());
-			Connection con = ds.getConnection();
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,?,?,?);")){
-				stmt.setInt(1, this.idJoueur);
-				stmt.setString(2, this.couleur);
-				stmt.setBoolean(3, false);
-				stmt.setInt(4, this.point);
-			}
-			
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}*/
+		point = 0;
 	}
 
 	public boolean choixDomino(DominoModel domino)
@@ -52,11 +31,7 @@ public class JoueurModel
 		return listeDomino;
 	}
 
-	public PlateauModel getPlateau()
-	{
-
-		return plateau;
-	}
+	public PlateauModel getPlateau() { return plateau; }
 
 	public boolean isJoueurIA() {
 		return joueurIA;
@@ -66,27 +41,19 @@ public class JoueurModel
 		this.joueurIA = joueurIA;
 	}
 
-	public void choixCouleur() {
+	public int calculePoint()
+	{
+		int nbCouronnes = 0;
+		for (int i = 1; i < 8; i++)
+		{
+			for (int j = 1; j < 8; j++)
+			{
+				if (plateau.getElement(i, j) instanceof PaysageModel)
+				{
+					nbCouronnes += ((PaysageModel) plateau.getElement(i, j)).getNbCouronne();
+				}
+			}
+		}
+		return nbCouronnes;
 	}
-
-	public void choixChateau() {
-	}
-
-	public DominoModel choixDomino() {
-		return null;
-	}
-
-	public void placerDominos() {
-	}
-
-	public void calculerPoint() {
-	}
-
-	public void terminerTour() {
-	}
-
-	public void annulerCoup() {
-	}
-
-
 }

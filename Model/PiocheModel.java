@@ -37,36 +37,9 @@ public class PiocheModel extends Rectangle
 	//On crée la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
 	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
 	{
-//		if(pioche == null)
-//		{
-			partieEnCours = partieModel;
-//			pioche = new ArrayList<>();
-//			tirageCache = new ArrayList<>();
-//			tirageRetourne = new ArrayList<>();
-//		}
-//		else
-//		{
-//			System.out.println("deja une pioche");
-//		}
+		partieEnCours = partieModel;
 		return pioche;
 	}
-
-	//On crée la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
-	//	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
-	//	{
-	//		if(pioche == null)
-	//		{
-	//			partieEnCours = partieModel;
-	//			pioche = new ArrayList<>();
-	//			tirageCache = new ArrayList<>();
-	//			tirageRetourne = new ArrayList<>();
-	//		}
-	//		else
-	//		{
-	//			System.out.println("deja une pioche");
-	//		}
-	//		return pioche;
-	//	}
 
 	public void creerPioche() throws SQLException
 	{
@@ -119,14 +92,6 @@ public class PiocheModel extends Rectangle
 				}
 			}
 
-			/*for(int j = 0; j < 192; j = j+4) {
-				if(j % 4 == 0) {
-					System.out.println("Domino " + ((j/4) + 1) + " : ");
-				}
-				System.out.println("Paysage 1 : " + id_CouPaysages.get(j) + "\t nbCouronnes : " + id_CouPaysages.get(j+1));
-				System.out.println("Paysage 2 : " + id_CouPaysages.get(j+2) + "\t nbCouronnes : " + id_CouPaysages.get(j+3) + "\n\n");
-			}*/
-
 			//Requ�te pour r�cup�rer les terrains
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM TerrainType WHERE idTerrainType = ? ; ")){
 				for (int i=0 ; i<96 ; i++) {//96 pour r�cup�rer tous les terrains des 96 paysages
@@ -138,7 +103,6 @@ public class PiocheModel extends Rectangle
 							terrainType.add(terrain);
 						}
 					}
-					//System.out.println(terrainType.get(i));
 				}
 			}
 		} catch(Exception e) {
@@ -197,15 +161,10 @@ public class PiocheModel extends Rectangle
 				else {
 					indice2 = String.valueOf(indice);			
 				}
-				//				System.out.println(indice2);
 				String url = "Application/Ressources/Dominos/D"+indice2+"d.jpg";
 				pioche.add(new DominoModel(paysage1,paysage2,0, 0, 100, 50, url,Integer.parseInt(indice2)));
 		}
-//		for(int i = 0; i< pioche.size();i++) {
-//			System.out.println(pioche.get(i).getNumDomino());
-//		}
 		System.out.println("\n");
-//		affichePioche();
 		melangerPioche();
 	}
 
@@ -324,9 +283,6 @@ public class PiocheModel extends Rectangle
 						listT.remove(i+1);
 						listT.add(i+1, tmp);
 					}
-					/*for (int j = 0 ; j<listT.size();j++) {
-						System.out.println(listT.get(j).getNumDomino());
-					}*/
 				}
 
 				else if (i == listT.size()-1) {
@@ -339,9 +295,6 @@ public class PiocheModel extends Rectangle
 
 						listT.remove(0);
 						listT.add(0, tmp);
-						/*for (int j = 0 ; j<listT.size();j++) {
-							System.out.println(listT.get(j).getNumDomino());
-						}*/
 					}
 				}
 
