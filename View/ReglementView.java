@@ -99,6 +99,7 @@ public class ReglementView implements Observer {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
 
