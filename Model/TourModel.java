@@ -1,25 +1,17 @@
 package Application.Model;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import org.postgresql.ds.PGSimpleDataSource;
-
 public class TourModel
 {
-	private PartieModel partieEnCours;
-	private int idTour;
-	private int TourRestant;
-	private int numTour = 1;
-	private int nbTourRestant = 11;
-	ArrayList<DominoModel> dominoDispo;
+    private PartieModel partieEnCours;
+    private int idTour;
+    private int TourRestant;
+    private static int numTour = 1;
+    private static int nbTourRestant = 11;
+    ArrayList<DominoModel> dominoDispo;
 
     public TourModel(PartieModel partie)
     {
