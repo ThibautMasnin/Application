@@ -9,32 +9,37 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Application.Model.*;
+import Application.View.PartieView;
 import org.postgresql.ds.*;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
 public class PartieModel
 {
-	//    private int idPartie;
-	//    private int nbJoueur;
+	    //private int idPartie;
+	    private int nbJoueur;
 	    private int nbIA;
-	//    private int minuteurPartie;
-	//    private int minuteurTour;
-	//    private int nbDominos;
+	   	private int joueur;
+	   	private int nbTour;
+	    //private int nbDominos;
 
 	private ArrayList<JoueurModel> listeJoueur;     //On y trouvera les joueurs qu'on aura ajouté dans le constructeur
 	private PiocheModel pioche;
 
+	Connexion CBDD = new Connexion();
+
 	public PartieModel() throws SQLException
 	{
 		Scanner s = new Scanner(System.in);
-		int nbJoueur = 0;
+		nbJoueur = 0;
 		nbIA = 5;
 		while(!(nbJoueur >= 2 && nbJoueur <= 4))
 		{
 			System.out.println("Veuillez entrer le nombre de joueur total (entre 2 et 4) : ");
 			nbJoueur = s.nextInt();
 		}
+
 		while(!(nbIA >= 0 && nbIA <= nbJoueur))
 		{
 			System.out.println("Veuillez entrer le nombre de joueur IA (entre 0 et " + nbJoueur + ") : ");
@@ -53,6 +58,11 @@ public class PartieModel
 		{
 			listeJoueur.get(i).setJoueurIA(true);
 		}
+	}
+
+	public PartieModel(int joueur, int nbTour) {
+		this.joueur = joueur;
+		this.nbTour = nbTour;
 	}
 
 	public JoueurModel getJoueur(int idJoueur)
@@ -145,26 +155,27 @@ public class PartieModel
 	}
 
 	public void sauvegarderPartie() {
-		String pw = getPwd();
 		try {
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
-			ds.setServerName("localhost");
-			ds.setDatabaseName("m4106");
-			ds.setUser("postgres");
-			ds.setPassword(pw);
+			ds.setServerName(CBDD.getServerName());
+			ds.setDatabaseName(CBDD.getDatabaseName());
+			ds.setUser(CBDD.getUser());
+			ds.setPassword(CBDD.getPassword());
 			Connection con = ds.getConnection();
 
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(?,?,?,?,?,?);")){
-				stmt.setInt(1, /*this.idPartie*/1);
-				stmt.setInt(2, /*this.nbJoueur*/4);
-				stmt.setInt(3, /*this.nbIA*/0);
-				stmt.setInt(4, /*this.minuteurPartie*/1200);
-				stmt.setInt(5, /*this.minuteurTour*/30);
-				stmt.setInt(6, /*this.nbDominos*/48);
+			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(DEFAULT,?,?,?,?,?);")){
+				stmt.setInt(1, this.nbJoueur);
+				stmt.setInt(2, this.nbIA);
+				stmt.setInt(3, this.joueur);
+				stmt.setInt(4, this.nbTour);
+				stmt.setInt(5, 0);
 			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
+			/*try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
 				stmt.setInt(1, this.idTour);
 				stmt.setInt(2, this.partieEnCours.getId());
 				stmt.setInt(2, this.nbTourRestant);
@@ -196,7 +207,7 @@ public class PartieModel
 
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
-		}
+		}*/
 	}
 
 	public void rejouerPartie() {

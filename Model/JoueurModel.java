@@ -12,6 +12,8 @@ public class JoueurModel
 	private ArrayList<DominoModel> listeDomino;
 	private PlateauModel plateau;
 
+	Connexion CBDD = new Connexion();
+
 	public JoueurModel(int id)
 	{
 		idJoueur = id;
@@ -19,15 +21,15 @@ public class JoueurModel
 		plateau = new PlateauModel();
 		joueurIA = false;
 		
-		/*try {	
+		/*try {
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
-			ds.setServerName("localhost");
-			ds.setDatabaseName("m4106");
-			ds.setUser("postgres");
-			ds.setPassword("postgres");//VOTRE MDP!!!
+			ds.setServerName(CBDD.getServerName());
+			ds.setDatabaseName(CBDD.getDatabaseName());
+			ds.setUser(CBDD.getUser());
+			ds.setPassword(CBDD.getPassword());
 			Connection con = ds.getConnection();
-		
+
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,?,?,?);")){
 				stmt.setInt(1, this.idJoueur);
 				stmt.setString(2, this.couleur);

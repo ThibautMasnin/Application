@@ -133,14 +133,13 @@ public class TourModel
             }
         }
 
-		String pw = getPwd();
-		try {
+		/*try {
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
 			ds.setServerName("localhost");
 			ds.setDatabaseName("m4106");
 			ds.setUser("postgres");
-			ds.setPassword(pw);
+			ds.setPassword("******");//VOTRE MDP!!!
 			Connection con = ds.getConnection();
 
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Tour VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
@@ -150,32 +149,13 @@ public class TourModel
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
-		}
-	}
+		}*/
+    }
 
-	public String getPwd() {
-		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
-		String password = "";
-		try {
-			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
-			StringWriter out = new StringWriter();
-			int b;
-			while ((b=in.read()) != -1)
-				out.write(b);
-			out.flush();
-			password = out.toString();
-			out.close();
-			in.close();
-		} catch (Exception ex){
-			System.err.println("Error. "+ex.getMessage());
-		}
-		return password;
-	}
-	
-	public void afficheTour()
-	{
-		System.out.println("tour : " + idTour + " et tour restant : " + TourRestant);
-	}
+    public void afficheTour()
+    {
+        System.out.println("tour : " + idTour + " et tour restant : " + TourRestant);
+    }
 
     public void selectionDomino(int idJ)
     {

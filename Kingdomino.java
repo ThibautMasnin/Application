@@ -18,6 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Kingdomino extends Application {
+
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
 
@@ -31,10 +32,9 @@ public class Kingdomino extends Application {
 		JeuView jv = new JeuView(primaryStage);
 
 	 		 
-// Efekan, Kevin, Aymeric
-//		PartieModel partieModel = new PartieModel();
-//		partieModel.jouer();
-
+// Efekan, Kevin, Aymeric		VOIR Connexion.java
+ 		//PartieModel partieModel = new PartieModel();
+		//partieModel.jouer();
 	}
 
 	public static void main(String[] args) {

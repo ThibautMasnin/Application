@@ -29,8 +29,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.sql.*;
-import org.postgresql.ds.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -219,6 +217,11 @@ public class PartieView implements EventHandler<ActionEvent> {
 		btnSauvegarder.setMinWidth(282/2);
 		btnSauvegarder.setMinHeight(51/2);
 		btnSauvegarder.setOnAction(new PartieController<ActionEvent>(partieStage));
+
+		btnSauvegarder.setOnAction((ActionEvent e) -> {
+			PartieController evt = new PartieController<ActionEvent>(this.joueur, this.nbTour);
+			evt.handle(e);
+		});
 
 		/** BOUTON REGLEMENT **/
 		Button btnReglement = new Button();
