@@ -1,5 +1,5 @@
 package Application.Model;
-
+import Application.Model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +12,7 @@ import org.postgresql.ds.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import Application.Model.*;
 
 public class PiocheModel extends Rectangle
 {

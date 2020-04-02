@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import Application.Model.*;
 import Application.View.PartieView;
 import org.postgresql.ds.*;
 
@@ -207,7 +207,7 @@ public class PartieModel
 
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
-		}
+		}*/
 	}
 
 	public void rejouerPartie() {
