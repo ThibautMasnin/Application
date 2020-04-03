@@ -16,7 +16,7 @@ public class Connexion {
     private String ServerName = "localhost";
     private String DatabaseName = "m4106";
     private String User = "postgres";
-    private String Password = "D:\\Bureau\\text.txt";
+    private String Password = "mdp.txt";
 
     public Connexion() {}
 

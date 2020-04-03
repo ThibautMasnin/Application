@@ -160,15 +160,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 						}
 						else if(minChrono==0) {
 							if(nbTour!=0) {
-								if(secTemps-secChrono<0) {
-									secTemps=60+secTemps-secChrono;
-									minTemps--;
-								}
-								else {
-									secTemps-=secChrono;
-								}
-								minTemps-=minChrono;
-								secTemps=59;
 								if(joueur==nbJoueurs+nbIAs) {
 									joueur=1;
 									nbTour--;
@@ -177,9 +168,15 @@ public class PartieView implements EventHandler<ActionEvent> {
 									joueur++;
 								}
 								if(nbTour!=0) {
-									jouerTour();
 									minChrono=minChronoParametre;
-									secChrono=secChronoParametre;
+									if(secChronoParametre!=0) {
+										secChrono=secChronoParametre-1;										
+									}
+									else {
+										minChrono--;
+										secChrono=59;
+									}
+									jouerTour();
 								}
 							}
 						}
@@ -388,7 +385,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 					secChrono = secChronoParametre;
 				}
 			}
-
 			/** Permet au joueur suivant de jouer son tour lorsque le joueur précédent clique sur "Finir tour" **/
 			jouerTour();
 		});
@@ -425,6 +421,59 @@ public class PartieView implements EventHandler<ActionEvent> {
 	}
 
 
+
+	/** Méthode qui permet de mettre en relation le domino avec un plateau (si la couleur de selection du domino est rouge alors il peut UNIQUEMENT être placé sur le plateau rouge **/
+	public void setDominoGrille(DominoModel domino, Color color) {
+
+		if (color.equals(Color.RED)) {
+			domino.setOnMouseClicked(grille1);
+		}
+		else if (color.equals(Color.BLUE)) {
+			domino.setOnMouseClicked(grille2);
+		}
+		else if (color.equals(Color.YELLOW)) {
+			domino.setOnMouseClicked(grille3);
+		}
+		else {
+			domino.setOnMouseClicked(grille4);
+		}
+	}
+
+
+	/** Méthode qui permet de "simuler" un tour de jeu **/
+	public void jouerTour() {
+
+		/** On change la couleur de selection en fonction du joueur qui joue **/
+		d1_tmp.setEffectSelected(d1_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d1_tmp, getColorJoueur());
+
+		d2_tmp.setEffectSelected(d2_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d2_tmp, getColorJoueur());
+
+		d3_tmp.setEffectSelected(d3_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d3_tmp, getColorJoueur());
+
+		d4_tmp.setEffectSelected(d4_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d4_tmp, getColorJoueur());
+	}
+
+
+	/** Méthode qui permet de changer la couleur de selection en fonction du joueur **/
+	public Color getColorJoueur(){
+		switch (joueur) {
+			case 1:
+				return Color.RED;
+			case 2:
+				return Color.BLUE;
+			case 3:
+				return Color.YELLOW;
+			case 4:
+				return Color.GREEN;
+			default:
+				return Color.TRANSPARENT;
+		}
+	}
+	
 	@Override
 	public void handle(ActionEvent actionEvent) {
 		if (actionEvent.getSource() instanceof Button) {
@@ -570,59 +619,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 				}
 				zoneJeu.getChildren().add(d8_tmp);
 			}
-		}
-	}
-
-
-	/** Méthode qui permet de mettre en relation le domino avec un plateau (si la couleur de selection du domino est rouge alors il peut UNIQUEMENT être placé sur le plateau rouge **/
-	public void setDominoGrille(DominoModel domino, Color color) {
-
-		if (color.equals(Color.RED)) {
-			domino.setOnMouseClicked(grille1);
-		}
-		else if (color.equals(Color.BLUE)) {
-			domino.setOnMouseClicked(grille2);
-		}
-		else if (color.equals(Color.YELLOW)) {
-			domino.setOnMouseClicked(grille3);
-		}
-		else {
-			domino.setOnMouseClicked(grille4);
-		}
-	}
-
-
-	/** Méthode qui permet de "simuler" un tour de jeu **/
-	public void jouerTour() {
-
-		/** On change la couleur de selection en fonction du joueur qui joue **/
-		d1_tmp.setEffectSelected(d1_tmp.getEffectSelectedJ1(), getColorJoueur());
-		setDominoGrille(d1_tmp, getColorJoueur());
-
-		d2_tmp.setEffectSelected(d2_tmp.getEffectSelectedJ1(), getColorJoueur());
-		setDominoGrille(d2_tmp, getColorJoueur());
-
-		d3_tmp.setEffectSelected(d3_tmp.getEffectSelectedJ1(), getColorJoueur());
-		setDominoGrille(d3_tmp, getColorJoueur());
-
-		d4_tmp.setEffectSelected(d4_tmp.getEffectSelectedJ1(), getColorJoueur());
-		setDominoGrille(d4_tmp, getColorJoueur());
-	}
-
-
-	/** Méthode qui permet de changer la couleur de selection en fonction du joueur **/
-	public Color getColorJoueur(){
-		switch (joueur) {
-			case 1:
-				return Color.RED;
-			case 2:
-				return Color.BLUE;
-			case 3:
-				return Color.YELLOW;
-			case 4:
-				return Color.GREEN;
-			default:
-				return Color.TRANSPARENT;
 		}
 	}
 }
