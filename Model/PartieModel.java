@@ -18,24 +18,22 @@ public class PartieModel
 	private ArrayList<JoueurModel> listeJoueur;     //On y trouvera les joueurs qu'on aura ajouté dans le constructeur
 	private PiocheModel pioche;
 
-
-
 	public PartieModel() throws SQLException
 	{
-		/*Scanner s = new Scanner(System.in);
+		Scanner s = new Scanner(System.in);
 		nbJoueurs = 0;
-		nbIAs = 5;*/
-		/*while(!(nbJoueurs >= 2 && nbJoueurs <= 4))
+		nbIAs = 5;
+		while(!(nbJoueurs >= 2 && nbJoueurs <= 4))
 		{
 			System.out.println("Veuillez entrer le nombre de joueur total (entre 2 et 4) : ");
 			nbJoueurs = s.nextInt();
 		}
 
-		while(!(nbIAs >= 0 && nbIA <= nbJoueur))
+		while(!(nbIAs >= 0 && nbIAs <= nbJoueurs))
 		{
 			System.out.println("Veuillez entrer le nombre de joueur IA (entre 0 et " + nbJoueurs + ") : ");
 			nbIAs = s.nextInt();
-		}*/
+		}
 
 
 								//On crée la pioche vide pour l'instant avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioche
