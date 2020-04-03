@@ -123,7 +123,7 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 			}			
 			else if (((Button) event.getSource()).getId() == "Sauvegarder") {
 				try {
-					PartieModel sauvegarde = new PartieModel();
+					PartieModel sauvegarde = new PartieModel(2);
 					sauvegarde.setNbJoueurs(this.nbJoueurs);
 					sauvegarde.setNbIAs(this.nbIAs);
 					sauvegarde.setJoueur(this.joueur);

@@ -30,7 +30,9 @@ public class Kingdomino extends Application {
 		primaryStage.setTitle("KingDomino");
 		JeuView jv = new JeuView(primaryStage);
 
-// 		PartieModel partieModel = new PartieModel();
+//		PartieView partieView = new PartieView(primaryStage, 4, 0, 0, 30);
+
+// 		PartieModel partieModel = new PartieModel(1);
 //		partieModel.jouer();
 	}
 

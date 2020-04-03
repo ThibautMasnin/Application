@@ -55,30 +55,20 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel d8_tmp;
 
 	private Group zoneJeu;
-	private PlateauModel grille;
-	private int cpt;
 
-	private int nbJoueurs;
-	private int nbIAs;
+	private PlateauModel grille1;
+	private PlateauModel grille2;
+	private PlateauModel grille3;
+	private PlateauModel grille4;
 
-	private Grille grille1;
-	private Grille grille2;
-	private Grille grille3;
-	private Grille grille4;
-	
 	private int minChrono;
 	private int secChrono;
 	private int minTemps;
 	private int secTemps;
-	private int joueur=1;
-	private int nbTour;
-	private ArrayList<DominoModel> l1;
-	private ArrayList<DominoModel> l2;
-	private int minChronoParametre = 1;
-	private int secChronoParametre = 15;
 	private int joueur = 1;
-	private int nbJoueurs = 4;
-	private int nbTour = 2;
+	private int nbJoueurs;
+	private int nbIAs;
+	private int nbTour;
 
 
 	public PartieView(Stage partieStage, int nbJoueurs, int nbIAs, int minChronoParametre, int secChronoParametre) throws SQLException{
@@ -88,24 +78,18 @@ public class PartieView implements EventHandler<ActionEvent> {
 		else {
 			nbTour=12;
 		}
+
 		this.nbJoueurs=nbJoueurs;
 		this.nbIAs=nbIAs;
 		minChrono=minChronoParametre;
 		secChrono=secChronoParametre;
 		minTemps = (nbJoueurs+nbIAs)*minChrono*nbTour+secChrono*(nbJoueurs+nbIAs)*nbTour/60;
 		secTemps = secChrono*(nbJoueurs+nbIAs)*nbTour%60;
-	public PartieView(Stage partieStage) throws SQLException{
 
-		minChrono = minChronoParametre;
-		secChrono = secChronoParametre;
-		minTemps = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
-		secTemps = secChrono*nbJoueurs*nbTour%60;
-
-		PartieModel partieModel = new PartieModel();
+		PartieModel partieModel = new PartieModel(2);
 		partieModel.setNbJoueurs(this.nbJoueurs);
 		partieModel.setNbIAs(this.nbIAs);
 
-		cpt = 0;
 
 		/** Borderpane principale **/
 		BorderPane bp = new BorderPane();
@@ -113,11 +97,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 				"-fx-background-position: center center;" +
 				"-fx-background-size: cover;");
 		Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-		Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80); 
+		Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);
 
 
-		/** Menu en haut **/
+		/** MENU EN HAUT **/
 		BorderPane bpMenu = new BorderPane();
+
 
 		HBox hbox1 = new HBox();
 		hbox1.setSpacing(50);
@@ -128,21 +113,17 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Timeline timelinePartie = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(secTemps>0) {
-					secTemps--;					
-				}
-				else if(secTemps==0) {
-					if(minTemps>0) {
-						minTemps--;	
-						secTemps=59;				
-					}
-					else if(minTemps==0) {
-					}
-					else {
+				if (secTemps > 0) {
+					secTemps--;
+				} else if (secTemps == 0) {
+					if (minTemps > 0) {
+						minTemps--;
+						secTemps = 59;
+					} else if (minTemps == 0) {
+					} else {
 						System.out.println("Erreur dans les minutes du chrono");
 					}
-				}
-				else {
+				} else {
 					System.out.println("Erreur dans les secondes du chrono");
 				}
 				lTempsPartie.setText("Temps restants  :  " + minTemps + ":" + secTemps);
@@ -169,14 +150,14 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Timeline timelineJoueur = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(nbTour>0) {	
+				if(nbTour>0) {
 					if(secChrono>0) {
-						secChrono--;					
+						secChrono--;
 					}
 					else if(secChrono==0) {
 						if(minChrono>0) {
-							minChrono--;	
-							secChrono=59;				
+							minChrono--;
+							secChrono=59;
 						}
 						else if(minChrono==0) {
 							if(nbTour!=0) {
@@ -185,10 +166,10 @@ public class PartieView implements EventHandler<ActionEvent> {
 									minTemps--;
 								}
 								else {
-									secTemps-=secChrono;					
+									secTemps-=secChrono;
 								}
 								minTemps-=minChrono;
-								secTemps=59;		
+								secTemps=59;
 								if(joueur==nbJoueurs+nbIAs) {
 									joueur=1;
 									nbTour--;
@@ -197,9 +178,9 @@ public class PartieView implements EventHandler<ActionEvent> {
 									joueur++;
 								}
 								if(nbTour!=0) {
-									minChrono=minChronoParametre;	
-									secChrono=secChronoParametre;					
-								}			
+									minChrono=minChronoParametre;
+									secChrono=secChronoParametre;
+								}
 							}
 						}
 						else {
@@ -231,9 +212,9 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		hbox2.getChildren().addAll(lTempsJoueur);
 		hbox2.setAlignment(Pos.CENTER);
-		hbox2.setMinWidth(650);	
-		hbox2.setMaxWidth(650);	
-		hbox2.setMinHeight(90);		
+		hbox2.setMinWidth(650);
+		hbox2.setMaxWidth(650);
+		hbox2.setMinHeight(90);
 		hbox2.setStyle("-fx-background-image: url('Application/Ressources/Images/planche.png');" +
 				"-fx-background-position: center center;");
 		bpMenu.setCenter(hbox2);
@@ -242,8 +223,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 		hbox3.setSpacing(20);
 		hbox3.setMinWidth(600);
 
-		
-		/** Bouton "Sauvegarder" **/
+
+		/** Bouton Sauvegarder **/
 		Button btnSauvegarder = new Button();
 		btnSauvegarder.setId("Sauvegarder");
 		btnSauvegarder.setStyle("-fx-background-image: url('Application/Ressources/Images/sauvegarder.png');" +
@@ -269,7 +250,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 				"-fx-background-size: 100%");
 		btnReglement.setMinWidth(266/2);
 		btnReglement.setMinHeight(54/2);
-        btnReglement.setOnAction(new PartieController<ActionEvent>(partieStage));
+		btnReglement.setOnAction(new PartieController<ActionEvent>(partieStage));
 
 
 		/** Bouton "Réglages" **/
@@ -292,7 +273,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 		btnQuitter.setMinWidth(245/2);
 		btnQuitter.setMinHeight(56/2);
 		btnQuitter.setOnAction(new PartieController<ActionEvent>(partieStage));
-		
+
 		hbox3.getChildren().addAll(btnSauvegarder, btnReglement, btnReglages, btnQuitter);
 		hbox3.setAlignment(Pos.CENTER);
 		bpMenu.setRight(hbox3);
@@ -337,19 +318,19 @@ public class PartieView implements EventHandler<ActionEvent> {
 		/** Plateau des joueurs **/
 
 		// Joueur 1
-		grille1 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg",0, 0);
+		grille1 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg",0, 0);
 		grille1.dessinerGrille();
 
 		// Joueur 2
-		grille2 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg",800, 0);
+		grille2 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg",800, 0);
 		grille2.dessinerGrille();
 
 		// Joueur 3
-		grille3 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg",0, 500);
+		grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg",0, 500);
 		grille3.dessinerGrille();
 
 		// Joueur 4
-		grille4 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg", 800, 500);
+		grille4 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg", 800, 500);
 		grille4.dessinerGrille();
 
 		/** Création de la pioche **/
@@ -365,44 +346,14 @@ public class PartieView implements EventHandler<ActionEvent> {
 		d7 = new DominoModel(650, 500, 100, 50);
 		d8 = new DominoModel(650, 600, 100, 50);
 
-
-		
 		/** PLATEAU DES JOUEURS **/
+		zoneJeu = new Group();
+		zoneJeu.setStyle("-fx-background-color: #336699;");
+
+
 		/** Placement des éléments dans la zone de jeu **/
 		zoneJeu = new Group();
 		zoneJeu.setStyle("-fx-background-color: #336699;");
-		
-		// JOUEUR 1
-		grille = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
-		grille.dessinerGrille();
-
-		// JOUEUR 2
-		PlateauModel grille2 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
-		grille2.dessinerGrille();
-
-		if(nbJoueurs+nbIAs==2) {
-			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
-			grille2.getPane().setLayoutX(800);
-		}
-		if(nbJoueurs+nbIAs==3) {
-			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
-			grille3.dessinerGrille();
-			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
-			grille2.getPane().setLayoutX(800);
-			grille3.getPane().setLayoutY(500);
-		}
-		else if(nbJoueurs+nbIAs==4) {
-			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
-			grille3.dessinerGrille();
-			PlateauModel grille4 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
-			grille4.dessinerGrille();	
-			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
-			grille2.getPane().setLayoutX(800);
-			grille3.getPane().setLayoutY(500);
-			grille4.getPane().setLayoutX(800);
-			grille4.getPane().setLayoutY(500);
-		}
-
 		zoneJeu.getChildren().addAll(grille1.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
 		grille2.getPane().setLayoutX(800);
 		grille3.getPane().setLayoutY(500);
@@ -413,14 +364,16 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		/** Event sur les boutons **/
 		bRotateDroit.setOnAction(this);
+
 		bRotateGauche.setOnAction(this);
+
 		bAnnulerCoup.setOnAction(this);
 
 		bFinirTour.setOnAction(e -> {
-			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
-	    	Media media = new Media(file.toURI().toString());
-	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
-	        mediaPlayer.play(); 
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");
+			Media media = new Media(file.toURI().toString());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
 			if (nbTour > 0) {
 				if (secTemps - secChrono < 0) {
 					secTemps = 60 + secTemps - secChrono;
@@ -440,29 +393,30 @@ public class PartieView implements EventHandler<ActionEvent> {
 					secChrono = secChronoParametre;
 				}
 			}
+
+			/** Permet au joueur suivant de jouer son tour lorsque le joueur précédent clique sur "Finir tour" **/
+			jouerTour();
 		});
 
-		bRetourner.setOnAction(this);
-
-		bFinirTour.setOnAction(this);
 		bMelanger.setOnAction(this);
+
 		bDemarrer.setOnAction(this);
 
 		bReset.setOnAction(e->{
-			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
-	    	Media media = new Media(file.toURI().toString());
-	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
-	        mediaPlayer.play(); 
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");
+			Media media = new Media(file.toURI().toString());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
 			partieStage.close();
 			try {
 				PartieView pv = new PartieView(partieStage, nbJoueurs, nbIAs, minChronoParametre, secChronoParametre);
+				//PartieView pv = new PartieView(partieStage);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
 
-		bFinirTour.setOnAction(this);
 
 		/** Ajout au borderpane principale **/
 		bp.setTop(bpMenu);
@@ -482,16 +436,10 @@ public class PartieView implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent actionEvent) {
 
 		if (actionEvent.getSource() instanceof Button) {
-			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
-	    	Media media = new Media(file.toURI().toString());
-	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
-	        mediaPlayer.play(); 
-			// EVENT ROTATION A DROITE
-			if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
-				Rotate rotate = new Rotate(90, dominoTMP.getPivotX(), dominoTMP.getPivotY());
-				dominoTMP.getTransforms().add(rotate);
-				cpt += 1;
-				dominoTMP.setCptRotation(cpt);
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");
+			Media media = new Media(file.toURI().toString());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
 
 			/** Event "Rotation droite" **/
 			if (((Button) actionEvent.getSource()).getText() == "Rotation droite") {
@@ -499,21 +447,25 @@ public class PartieView implements EventHandler<ActionEvent> {
 				if (d1_tmp.isSelected()) {
 					Rotate rotate = new Rotate(90, d1_tmp.getPivotX(), d1_tmp.getPivotY());
 					d1_tmp.getTransforms().add(rotate);
+					d1_tmp.switchSelected();
 				}
 
 				else if (d2_tmp.isSelected()) {
 					Rotate rotate = new Rotate(90, d2_tmp.getPivotX(), d2_tmp.getPivotY());
 					d2_tmp.getTransforms().add(rotate);
+					d2_tmp.switchSelected();
 				}
 
 				else if (d3_tmp.isSelected()) {
 					Rotate rotate = new Rotate(90, d3_tmp.getPivotX(), d3_tmp.getPivotY());
 					d3_tmp.getTransforms().add(rotate);
+					d3_tmp.switchSelected();
 				}
 
 				else if (d4_tmp.isSelected()) {
 					Rotate rotate = new Rotate(90, d4_tmp.getPivotX(), d4_tmp.getPivotY());
 					d4_tmp.getTransforms().add(rotate);
+					d4_tmp.switchSelected();
 				}
 			}
 
@@ -523,21 +475,25 @@ public class PartieView implements EventHandler<ActionEvent> {
 				if (d1_tmp.isSelected()) {
 					Rotate rotate = new Rotate(-90, d1_tmp.getPivotX(), d1_tmp.getPivotY());
 					d1_tmp.getTransforms().add(rotate);
+					d1_tmp.switchSelected();
 				}
 
 				else if (d2_tmp.isSelected()) {
 					Rotate rotate = new Rotate(-90, d2_tmp.getPivotX(), d2_tmp.getPivotY());
 					d2_tmp.getTransforms().add(rotate);
+					d2_tmp.switchSelected();
 				}
 
 				else if (d3_tmp.isSelected()) {
 					Rotate rotate = new Rotate(-90, d3_tmp.getPivotX(), d3_tmp.getPivotY());
 					d3_tmp.getTransforms().add(rotate);
+					d3_tmp.switchSelected();
 				}
 
 				else if (d4_tmp.isSelected()) {
 					Rotate rotate = new Rotate(-90, d4_tmp.getPivotX(), d4_tmp.getPivotY());
 					d4_tmp.getTransforms().add(rotate);
+					d4_tmp.switchSelected();
 				}
 			}
 
@@ -547,39 +503,11 @@ public class PartieView implements EventHandler<ActionEvent> {
 			}
 
 
-			/** Event "finir tour" **/
-			else if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
-			}
-				if (nbTour > 0) {
-					if (secTemps - secChrono < 0) {
-						secTemps = 60 + secTemps - secChrono;
-						minTemps--;
-					} else {
-						secTemps -= secChrono;
-					}
-					minTemps -= minChrono;
-					if (joueur == nbJoueurs) {
-						joueur = 1;
-						nbTour--;
-					} else {
-						joueur++;
-					}
-					if (nbTour != 0) {
-						minChrono = minChronoParametre;
-						secChrono = secChronoParametre;
-					}
-				}
-
-				/** Permet au joueur suivant de jouer son tour lorsque le joueur précédent clique sur "Finir tour" **/
-				jouerTour();
-			}
-
-
 			/** Event "Melanger" **/
 			else if (((Button) actionEvent.getSource()).getText() == "Melanger") {
 				pioche.melangerPioche();
 			}
-			
+
 
 			/** Event "Demarrer" **/
 			else if (((Button) actionEvent.getSource()).getText() == "Demarrer") {

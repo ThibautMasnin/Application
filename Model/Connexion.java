@@ -20,11 +20,11 @@ public class Connexion {
     private String Password = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt";*/
 
     //VALENTIN
-    /*private String ServerName = "";
-    private String DatabaseName = "";
-    private String User = "";
-    private String Password = "";
-    */
+    private String ServerName = "localhost";
+    private String DatabaseName = "m4106";
+    private String User = "postgres";
+    private String Password = "C:\\Users\\Valentin\\Desktop\\Projet_S3S4\\S4\\Kingdomino\\src\\password.txt";
+
 
     //EFEKAN
     /*private String ServerName = "";
@@ -41,10 +41,11 @@ public class Connexion {
     */
 
     //AYMERIC
-   private String ServerName = "localhost"; //"C:\\Users\\Aymer\\IdeaProjects\\Kingdomino\\servername.txt";
+    /*private String ServerName = "localhost"; //"C:\\Users\\Aymer\\IdeaProjects\\Kingdomino\\servername.txt";
     private String DatabaseName ="postgres"; //"C:\\Users\\Aymer\\IdeaProjects\\Kingdomino\\databasename.txt";
     private String User = "postgres"; //"C:\\Users\\Aymer\\IdeaProjects\\Kingdomino\\user.txt";
     private String Password = "C:\\Users\\Aymer\\IdeaProjects\\Kingdomino\\password.txt";
+    */
 
     public Connexion() {
 

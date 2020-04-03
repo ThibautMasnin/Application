@@ -142,7 +142,6 @@ public class DominoModel extends Rectangle
 		dropShadow.setColor(color);
 	}
 
-
 	public double getPivotX() {
 		return pivotX;
 	}

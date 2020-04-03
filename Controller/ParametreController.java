@@ -49,7 +49,7 @@ public class ParametreController<T extends ActionEvent> implements EventHandler<
             	if(nbJoueurs+nbIAs==2||nbJoueurs+nbIAs==3||nbJoueurs+nbIAs==4) {
     				try {
     					PartieView partieView = new PartieView(s, nbJoueurs, nbIAs, minChrono, secChrono);
-						PartieModel partieModel = new PartieModel();
+						PartieModel partieModel = new PartieModel(2);
     				} catch (SQLException e) {
     					e.printStackTrace();
     				}

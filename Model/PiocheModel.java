@@ -315,7 +315,6 @@ public class PiocheModel extends Rectangle
 
 	public void melangerPioche()
 	{
-		this.setFill(getFirstDominoD());
 		Random r = new Random();
 		int var = 0;
 		ArrayList<DominoModel> piocheTmp = new ArrayList<>();
