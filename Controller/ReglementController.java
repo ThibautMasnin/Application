@@ -29,6 +29,9 @@ public class ReglementController<T extends ActionEvent> implements EventHandler<
 			if (((Button) event.getSource()).getId() == "Retour") {
 				JeuView ppv = new JeuView(s);
 			}
+			else if (((Button) event.getSource()).getId() == "Quitter") {
+				s.close();
+			}
 		}
 	}
 }
