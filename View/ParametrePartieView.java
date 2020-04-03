@@ -82,7 +82,7 @@ public class ParametrePartieView implements Observer {
         btnValider.setMinWidth(140);
         btnValider.setMinHeight(54);
         btnValider.setOnAction((ActionEvent e) -> {
-        	ParametreController evt = new ParametreController<ActionEvent>(stage, nbJoueur.getValue()+nbIA.getValue(), minChrono.getValue(), secChrono.getValue());
+        	ParametreController evt = new ParametreController<ActionEvent>(stage, nbJoueur.getValue(), nbIA.getValue(), minChrono.getValue(), secChrono.getValue());
             evt.handle(e);
 		});
         

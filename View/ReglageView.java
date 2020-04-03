@@ -60,7 +60,7 @@ public class ReglageView implements Observer {
 		Slider musique = new Slider(0, 1, 0.5);
 		musique.setMaxWidth(150);
 		ComboBox<String> langue = new ComboBox<>();
-		langue.getItems().addAll("Français", "English", "Italiano", "Espanol", "Deutsch", "Nederlands", "Português", "русский");
+		langue.getItems().addAll("Français", "English", "Italiano", "Espanol", "Deutsch", "Nederlands", "Português", "Pусский");
 		langue.getSelectionModel().select(0);
 		langue.setMinWidth(150);
 		langue.setMinHeight(25);

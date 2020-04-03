@@ -1,5 +1,6 @@
 package Application;
 
+import Application.Model.Connexion;
 import Application.Model.PartieModel;
 import Application.View.JeuView;
 import Application.View.PartieView;
@@ -23,7 +24,7 @@ public class Kingdomino extends Application {
 	public void start(Stage primaryStage) throws SQLException {
 
 // Thibaut, Valentin
-    	File file = new File("src/Application/Ressources/Sons/musique.mp3");  
+    	File file = new File("src/Application/Ressources/Sons/musique.mp3");
     	Media media = new Media(file.toURI().toString());
     	MediaPlayer mediaPlayer = new MediaPlayer(media); 
     	mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);

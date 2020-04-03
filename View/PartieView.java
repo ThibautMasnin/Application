@@ -2,6 +2,7 @@ package Application.View;
 
 import Application.Controller.PartieController;
 import Application.Model.DominoModel;
+import Application.Model.PartieModel;
 import Application.Model.PiocheModel;
 import Application.Model.PlateauModel;
 import javafx.animation.Animation;
@@ -46,7 +47,9 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private Group zoneJeu;
 	private PlateauModel grille;
 	private int cpt;
-	
+
+	private int nbJoueurs;
+	private int nbIAs;
 	private int minChrono;
 	private int secChrono;
 	private int minTemps;
@@ -57,17 +60,23 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private ArrayList<DominoModel> l2;
 
 
-	public PartieView(Stage partieStage, int nbJoueurs, int minChronoParametre, int secChronoParametre) throws SQLException{
-		if(nbJoueurs==2) {
+	public PartieView(Stage partieStage, int nbJoueurs, int nbIAs, int minChronoParametre, int secChronoParametre) throws SQLException{
+		if(nbJoueurs+nbIAs==2) {
 			nbTour=6;
 		}
 		else {
 			nbTour=12;
 		}
+		this.nbJoueurs=nbJoueurs;
+		this.nbIAs=nbIAs;
 		minChrono=minChronoParametre;
 		secChrono=secChronoParametre;
-		minTemps = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
-		secTemps = secChrono*nbJoueurs*nbTour%60;
+		minTemps = (nbJoueurs+nbIAs)*minChrono*nbTour+secChrono*(nbJoueurs+nbIAs)*nbTour/60;
+		secTemps = secChrono*(nbJoueurs+nbIAs)*nbTour%60;
+
+		PartieModel partieModel = new PartieModel();
+		partieModel.setNbJoueurs(this.nbJoueurs);
+		partieModel.setNbIAs(this.nbIAs);
 
 		cpt = 0;
 
@@ -155,7 +164,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 								}
 								minTemps-=minChrono;
 								secTemps=59;		
-								if(joueur==nbJoueurs) {
+								if(joueur==nbJoueurs+nbIAs) {
 									joueur=1;
 									nbTour--;
 								}
@@ -216,10 +225,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 				"-fx-background-size: 100%");
 		btnSauvegarder.setMinWidth(282/2);
 		btnSauvegarder.setMinHeight(51/2);
-		btnSauvegarder.setOnAction(new PartieController<ActionEvent>(partieStage));
-
 		btnSauvegarder.setOnAction((ActionEvent e) -> {
-			PartieController evt = new PartieController<ActionEvent>(this.joueur, this.nbTour);
+			PartieController evt = new PartieController<ActionEvent>();
+			evt.setNbJoueurs(this.nbJoueurs);
+			evt.setNbIAs(this.nbIAs);
+			evt.setJoueur(this.joueur);
+			evt.setNbTour(this.nbTour);
 			evt.handle(e);
 		});
 
@@ -337,18 +348,18 @@ public class PartieView implements EventHandler<ActionEvent> {
 		PlateauModel grille2 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
 		grille2.dessinerGrille();
 
-		if(nbJoueurs==2) {
+		if(nbJoueurs+nbIAs==2) {
 			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
 			grille2.getPane().setLayoutX(800);
 		}
-		if(nbJoueurs==3) {
+		if(nbJoueurs+nbIAs==3) {
 			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
 			grille3.dessinerGrille();
 			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
 			grille2.getPane().setLayoutX(800);
 			grille3.getPane().setLayoutY(500);
 		}
-		else if(nbJoueurs==4) {
+		else if(nbJoueurs+nbIAs==4) {
 			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
 			grille3.dessinerGrille();
 			PlateauModel grille4 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
@@ -385,7 +396,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 					secTemps -= secChrono;
 				}
 				minTemps -= minChrono;
-				if (joueur == nbJoueurs) {
+				if (joueur == nbJoueurs+nbIAs) {
 					joueur = 1;
 					nbTour--;
 				} else {
@@ -413,7 +424,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 	        mediaPlayer.play(); 
 			partieStage.close();
 			try {
-				PartieView pv = new PartieView(partieStage, nbJoueurs, minChronoParametre, secChronoParametre);
+				PartieView pv = new PartieView(partieStage, nbJoueurs, nbIAs, minChronoParametre, secChronoParametre);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

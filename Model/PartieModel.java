@@ -1,9 +1,5 @@
 package Application.Model;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,49 +10,62 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 public class PartieModel
 {
-	private int nbJoueur;
-	private int nbIA;
+	private int nbJoueurs;
+	private int nbIAs;
 	private int joueur;
 	private int nbTour;
 
 	private ArrayList<JoueurModel> listeJoueur;     //On y trouvera les joueurs qu'on aura ajouté dans le constructeur
 	private PiocheModel pioche;
 
-	Connexion CBDD = new Connexion();
+
 
 	public PartieModel() throws SQLException
 	{
-		Scanner s = new Scanner(System.in);
-		nbJoueur = 0;
-		nbIA = 5;
-		while(!(nbJoueur >= 2 && nbJoueur <= 4))
+		/*Scanner s = new Scanner(System.in);
+		nbJoueurs = 0;
+		nbIAs = 5;*/
+		/*while(!(nbJoueurs >= 2 && nbJoueurs <= 4))
 		{
 			System.out.println("Veuillez entrer le nombre de joueur total (entre 2 et 4) : ");
-			nbJoueur = s.nextInt();
+			nbJoueurs = s.nextInt();
 		}
 
-		while(!(nbIA >= 0 && nbIA <= nbJoueur))
+		while(!(nbIAs >= 0 && nbIA <= nbJoueur))
 		{
-			System.out.println("Veuillez entrer le nombre de joueur IA (entre 0 et " + nbJoueur + ") : ");
-			nbIA = s.nextInt();
-		}
+			System.out.println("Veuillez entrer le nombre de joueur IA (entre 0 et " + nbJoueurs + ") : ");
+			nbIAs = s.nextInt();
+		}*/
+
+
 								//On crée la pioche vide pour l'instant avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioche
 		pioche = new PiocheModel();
 		pioche.getPioche(this);
 								//On crée les joueur et les ajoute dans la liste qu'on utilisera
 		listeJoueur = new ArrayList<>();
-		for(int i = 0; i < nbJoueur; i++)
+		for(int i = 0; i < nbJoueurs; i++)
 		{
 			listeJoueur.add(new JoueurModel(i+1));
 		}
-		for(int i = 0; i < nbIA; i++)
+		for(int i = 0; i < nbIAs; i++)
 		{
 			listeJoueur.get(i).setJoueurIA(true);
 		}
 	}
 
-	public PartieModel(int joueur, int nbTour) {
+	public void setNbJoueurs(int nbJoueurs) {
+		this.nbJoueurs = nbJoueurs;
+	}
+
+	public void setNbIAs(int nbIAs) {
+		this.nbIAs = nbIAs;
+	}
+
+	public void setJoueur(int joueur) {
 		this.joueur = joueur;
+	}
+
+	public void setNbTour(int nbTour) {
 		this.nbTour = nbTour;
 	}
 
@@ -90,29 +99,12 @@ public class PartieModel
 		{
 			System.out.println("Le joueur " + (j+1) + " a " + listeJoueur.get(j).calculePoint() + " couronnes");
 		}
+
+		this.sauvegarderPartie();
 	}
 
 	public PiocheModel getPioche() {
 		return pioche;
-	}
-	
-	public String getPwd() {
-		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
-		String password = "";
-		try {
-			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
-			StringWriter out = new StringWriter();
-			int b;
-			while ((b=in.read()) != -1)
-				out.write(b);
-			out.flush();
-			password = out.toString();
-			out.close();
-			in.close();
-		} catch (Exception ex){
-			System.err.println("Error. "+ex.getMessage());
-		}
-		return password;
 	}
 	
 	public ArrayList<JoueurModel> getListeJoueur()
@@ -122,6 +114,8 @@ public class PartieModel
 
 	public void sauvegarderPartie() {
 		try {
+			Connexion CBDD = new Connexion();
+
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
 			ds.setServerName(CBDD.getServerName());
@@ -131,48 +125,15 @@ public class PartieModel
 			Connection con = ds.getConnection();
 
 			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(DEFAULT,?,?,?,?,?);")){
-				stmt.setInt(1, this.nbJoueur);
-				stmt.setInt(2, this.nbIA);
+				stmt.setInt(1, this.nbJoueurs);
+				stmt.setInt(2, this.nbIAs);
 				stmt.setInt(3, this.joueur);
 				stmt.setInt(4, this.nbTour);
 				stmt.setInt(5, 0);
+				stmt.executeQuery();
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-
-			/*try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Tour VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO StatJeu VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO TerrainType VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Paysage VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}*/
 	}
 }

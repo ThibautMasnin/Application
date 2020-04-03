@@ -1,4 +1,11 @@
-DROP TABLE IF EXISTS Partie, Joueur, Tour, StatJeu, TerrainType, Paysage, Domino CASCADE;
+DROP TABLE IF EXISTS Joueur, Partie, Tour, StatJeu, Coup, TerrainType, Paysage, Domino CASCADE;
+
+CREATE TABLE Joueur (
+    idJoueur serial PRIMARY KEY,
+    couleur text NOT NULL,
+    ia boolean DEFAULT false,
+    point int DEFAULT 0
+);
 
 CREATE TABLE Partie (
     idPartie serial PRIMARY KEY,
@@ -7,13 +14,6 @@ CREATE TABLE Partie (
     dernierJoueur int REFERENCES Joueur (idJoueur) NOT NULL,
     nbTour int NOT NULL,
     nbDominos int DEFAULT 0
-);
-
-CREATE TABLE Joueur (
-    idJoueur serial PRIMARY KEY,
-    couleur text NOT NULL,
-    ia boolean DEFAULT false,
-    point int DEFAULT 0
 );
 
 CREATE TABLE Tour (
@@ -134,6 +134,9 @@ INSERT INTO Domino VALUES (46,10,15);
 INSERT INTO Domino VALUES (47,10,15);
 INSERT INTO Domino VALUES (48,1,16);
 
-
+INSERT INTO Joueur VALUES (DEFAULT,'rouge',DEFAULT,DEFAULT);
+INSERT INTO Joueur VALUES (DEFAULT,'bleu',DEFAULT,DEFAULT);
+INSERT INTO Joueur VALUES (DEFAULT,'jaune',DEFAULT,DEFAULT);
+INSERT INTO Joueur VALUES (DEFAULT,'vert',DEFAULT,DEFAULT);
 
 SELECT * FROM Partie;
