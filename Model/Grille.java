@@ -1,19 +1,19 @@
 package Application.Model;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
 
 public class Grille implements EventHandler<MouseEvent> {
 	private int tailleCase;
@@ -21,15 +21,15 @@ public class Grille implements EventHandler<MouseEvent> {
 	private int nbLignes;
 	private int nbColonnes;
 	private DominoModel dominoSelectionne;
-	private Line ligne;
-	private Rectangle caseGrille;
-	private Group groupe;
 	private Pane pane;
 	private String colorLine;
 	private String chateau;
 
+	private int tmpX;
+	private int tmpY;
 
-	public Grille(int tc, int d, int l, int c, String cl, String ch) {
+
+	public Grille(int tc, int d, int l, int c, String cl, String ch, int x, int y) {
 		tailleCase = tc;
 		decalage = d;
 		nbLignes = l;
@@ -38,31 +38,21 @@ public class Grille implements EventHandler<MouseEvent> {
 		colorLine = cl;
 		chateau = ch;
 
-//		ligne = new Line();
-//		ligne.setStrokeWidth(1);
-//		ligne.setStroke(Color.DARKGREY);
+		tmpX = x;
+		tmpY = y;
 
-//		caseGrille = new Rectangle();
-//		caseGrille.setFill(Color.RED);
-//		caseGrille.setStroke(Color.TRANSPARENT);
-
-		groupe = new Group();
 		pane = new Pane();
-//		pane.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
-//				"-fx-background-position: center center;" +
-//				"-fx-background-size: cover;");
-		//pane.setPrefSize(1000,1000);
 	}
 
 
 	/** CREATION DE LA GRILLE **/
 	public void dessinerGrille() {
 
-		// CREATION DES LIGNES HORIZONTALES ET VERTICALES
+		/** Creation des lignes verticales et horizontales **/
 		for (int i = 0; i <= nbLignes-1; i++) {
 			for (int j = 0; j <= nbColonnes-1; j++) {
 
-				// LIGNES VERTICALES
+				/** lignes verticales **/
 				Line ligne = new Line((tailleCase * j), 0, (tailleCase * j), (9 * tailleCase));
 				ligne.setStrokeWidth(1.5);
 				ligne.setStroke(Color.WHITE);
@@ -85,7 +75,7 @@ public class Grille implements EventHandler<MouseEvent> {
 				}
 			}
 
-			// LIGNES HORIZONTALES
+			/** Lignes horizontales **/
 			Line ligne = new Line(0, (tailleCase * i), (9 * tailleCase), (tailleCase * i));
 			ligne.setStrokeWidth(1.5);
 			ligne.setStroke(Color.WHITE);
@@ -94,16 +84,8 @@ public class Grille implements EventHandler<MouseEvent> {
 	}
  
 
-	public Group getGroupe() {
-		return groupe;
-	}
-
 	public Pane getPane() {
 		return pane;
-	}
-
-	public void setGroupe(Node e) {
-		groupe.getChildren().add(e);
 	}
 
 	public void setPane(Node e) {
@@ -133,64 +115,49 @@ public class Grille implements EventHandler<MouseEvent> {
 
 	@Override
 	public void handle(MouseEvent event) {
-		@SuppressWarnings("unused")
-		double x = event.getX();
-		@SuppressWarnings("unused")
-		double y = event.getY();
-
-		//System.out.println("clic en " + x + "," + y);
 
 		Object o = event.getSource();
 
-		if(o instanceof DominoModel)
+		if (o instanceof DominoModel)
 		{
 			DominoModel d = (DominoModel)o;
 
-			//si on selectionne un nouveau pion ou deselectionne le pion deja selectionne
-			if(dominoSelectionne == null || dominoSelectionne == d)
+			/** Si on sélectionne un nouveau domino ou déselectionne le domino deja selectionné **/
+			if (dominoSelectionne == null || dominoSelectionne == d)
 			{
 				d.switchSelected();
 
-				if(dominoSelectionne == null) {
+				if (dominoSelectionne == null) {
 					dominoSelectionne = d;
-					System.out.println("Le domino est selectionné");
 				}
+
 				else {
 					dominoSelectionne = null;
 				}
 			}
 		}
-		else if(o instanceof Rectangle && dominoSelectionne != null)
+
+		else if (o instanceof Rectangle && dominoSelectionne != null)
 		{
 			Rectangle r = (Rectangle)o;
 
-			// On récupère le centre de la case selectionné
-			double newX =  r.getX();
-			double newY =  r.getY();
+			/** On récupère le centre de la case selectionné **/
+			double newX =  r.getX() + tmpX;
+			double newY =  r.getY() + tmpY;
 
-			System.out.println("Position RECTANGLE : (" + newX + " ; " + newY + ")");
-
-			// temps de l'animation
-			int tps = 1000;
+			/** Temps de l'animation **/
+			int tps = 200;
 
 			dominoSelectionne.switchSelected();
 
-			//            if (dominoSelectionne.getCptRotation() == 2){
-			//                dominoSelectionne.setPivotTX(dominoSelectionne.getX() - 50);
-			//                dominoSelectionne.setPivotTY(dominoSelectionne.getY() - 100);
-			//            }
-			//
-			//            dominoSelectionne.xProperty().set(dominoSelectionne.getPivotTX());
-			//            dominoSelectionne.yProperty().set(dominoSelectionne.getPivotTY());
-
-			/*Timeline timeline = new Timeline();
+			Timeline timeline = new Timeline();
             timeline.getKeyFrames().addAll(
                     new KeyFrame(new Duration(tps),
                             new KeyValue(dominoSelectionne.xProperty(), newX),
                             new KeyValue(dominoSelectionne.yProperty(), newY),
                             new KeyValue(dominoSelectionne.fillProperty(), dominoSelectionne.getImg())
                     ));
-            timeline.play();*/
+            timeline.play();
 
 			dominoSelectionne.setPivotX(newX + (tailleCase/2));
 			dominoSelectionne.setPivotY(newY + (tailleCase/2));
@@ -203,37 +170,7 @@ public class Grille implements EventHandler<MouseEvent> {
 				dominoSelectionne.setY(newY);
 			}
 
-			//            dominoSelectionne.setPivotTX(newX);
-			//            dominoSelectionne.setPivotTY(newY);
-
-			System.out.println("Compteur : " + dominoSelectionne.getCptRotation());
-			System.out.println("Position DOMINO : (" + dominoSelectionne.getX() + " ; " + dominoSelectionne.getY() + ")");
-			System.out.println("Position DOMINO2 : (" + dominoSelectionne.xProperty().get() + " ; " + dominoSelectionne.yProperty().get() + ")");
-
-			/** Position du pivot**/
-			Circle circle1 = new Circle(dominoSelectionne.getX(), dominoSelectionne.getY(), 5);
-			circle1.setFill(Color.RED);
-
-			Circle circle2 = new Circle(dominoSelectionne.getX() + 50, dominoSelectionne.getY(), 5);
-			circle2.setFill(Color.GREEN);
-
-			Circle circle3 = new Circle(dominoSelectionne.getX() + 50, dominoSelectionne.getY() + 100, 5);
-			circle3.setFill(Color.BLUE);
-
-			Circle circle4 = new Circle(dominoSelectionne.getX(), dominoSelectionne.getY() + 100, 5);
-			circle4.setFill(Color.BLACK);
-
-			Circle circle5 = new Circle(dominoSelectionne.getPivotTX(), dominoSelectionne.getPivotTY(), 5);
-			circle5.setFill(Color.YELLOW);
-
-			//pane.getChildren().addAll(circle1, circle2, circle3, circle4, circle5);
 			dominoSelectionne = null;
 		}
-
-
-
-
-		System.out.println("Fin d'event");
-		System.out.println();
 	}
 }

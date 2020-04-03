@@ -19,20 +19,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.sql.*;
-import org.postgresql.ds.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 public class PartieView implements EventHandler<ActionEvent> {
-	private DominoModel dominoTMP;
+
 	private PiocheModel pioche;
+
 	private DominoModel d1;
 	private DominoModel d2;
 	private DominoModel d3;
@@ -41,35 +39,43 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel d6;
 	private DominoModel d7;
 	private DominoModel d8;
+
+	private DominoModel d1_tmp;
+	private DominoModel d2_tmp;
+	private DominoModel d3_tmp;
+	private DominoModel d4_tmp;
+	private DominoModel d5_tmp;
+	private DominoModel d6_tmp;
+	private DominoModel d7_tmp;
+	private DominoModel d8_tmp;
+
 	private Group zoneJeu;
-	private Grille grille;
-	private int cpt;
+
+	private Grille grille1;
+	private Grille grille2;
+	private Grille grille3;
+	private Grille grille4;
 	
 	private int minChrono;
 	private int secChrono;
 	private int minTemps;
 	private int secTemps;
-	private int minChronoParametre=1;
-	private int secChronoParametre=15;
-	private int joueur=1;
+	private int minChronoParametre = 1;
+	private int secChronoParametre = 15;
+	private int joueur = 1;
 	private int nbJoueurs = 4;
-	private int nbTour=2;
-	private ArrayList<DominoModel> l1;
-	private ArrayList<DominoModel> l2;
+	private int nbTour = 2;
 
 
 	public PartieView(Stage partieStage) throws SQLException{
-		
 
-
-		minChrono=minChronoParametre;
-		secChrono=secChronoParametre;
+		minChrono = minChronoParametre;
+		secChrono = secChronoParametre;
 		minTemps = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
 		secTemps = secChrono*nbJoueurs*nbTour%60;
 
-		cpt = 0;
 
-		/** BORDERPANE PRINCIPAL **/
+		/** Borderpane principale **/
 		BorderPane bp = new BorderPane();
 		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
 				"-fx-background-position: center center;" +
@@ -78,9 +84,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80); 
 
 
-		/** MENU EN HAUT **/
+		/** Menu en haut **/
 		BorderPane bpMenu = new BorderPane();
-		
 
 		HBox hbox1 = new HBox();
 		hbox1.setSpacing(50);
@@ -114,8 +119,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 		}));
 		timelinePartie.setCycleCount(Animation.INDEFINITE);
 		timelinePartie.play();
-		
-		
 
 		lTempsPartie.setTextFill(Color.web("#ffffff"));
 		lTempsPartie.setFont(new Font("Viner Hand ITC", 24));
@@ -130,6 +133,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 		hbox2.setPadding(new Insets(-40, 0, 0, 0));
 		hbox2.setSpacing(25);
 		Label lTempsJoueur = new Label();
+
 		Timeline timelineJoueur = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -205,9 +209,10 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 		HBox hbox3 = new HBox();
 		hbox3.setSpacing(20);
-		hbox3.setMinWidth(600);		
+		hbox3.setMinWidth(600);
+
 		
-		/** BOUTON SAUVEGARDER **/
+		/** Bouton "Sauvegarder" **/
 		Button btnSauvegarder = new Button();
 		btnSauvegarder.setId("Sauvegarder");
 		btnSauvegarder.setStyle("-fx-background-image: url('Application/Ressources/Images/sauvegarder.png');" +
@@ -217,7 +222,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 		btnSauvegarder.setMinHeight(51/2);
 		btnSauvegarder.setOnAction(new PartieController<ActionEvent>(partieStage));
 
-		/** BOUTON REGLEMENT **/
+
+		/** Bouton "Réglement" **/
 		Button btnReglement = new Button();
 		btnReglement.setId("Reglement");
 		btnReglement.setStyle("-fx-background-image: url('Application/Ressources/Images/reglement.png');" +
@@ -227,7 +233,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 		btnReglement.setMinHeight(54/2);
         btnReglement.setOnAction(new PartieController<ActionEvent>(partieStage));
 
-		/** BOUTON REGLAGES **/
+
+		/** Bouton "Réglages" **/
 		Button btnReglages = new Button();
 		btnReglages.setId("Reglages");
 		btnReglages.setStyle("-fx-background-image: url('Application/Ressources/Images/reglages2.png');" +
@@ -237,7 +244,8 @@ public class PartieView implements EventHandler<ActionEvent> {
 		btnReglages.setMinHeight(54/2);
 		btnReglages.setOnAction(new PartieController<ActionEvent>(partieStage));
 
-		/** BOUTON QUITTER **/
+
+		/** Bouton "Quitter" **/
 		Button btnQuitter = new Button();
 		btnQuitter.setId("Quitter");
 		btnQuitter.setStyle("-fx-background-image: url('Application/Ressources/Images/quitter.png');" +
@@ -253,7 +261,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 		bpMenu.setStyle("-fx-background-color: rgba(0, 0, 0, 0.75);-fx-border-color: #000000; -fx-border-width: 0 0 1 0;");
 
 
-		/** MENU A GAUCHE **/
+		/** Menu à gauche **/
 		VBox vActionDomino = new VBox();
 		vActionDomino.setMinWidth(210);
 		vActionDomino.setSpacing(50);
@@ -270,24 +278,16 @@ public class PartieView implements EventHandler<ActionEvent> {
 		Button bFinirTour = new Button("Finir tour");
 		bFinirTour.setMaxSize(110,20);
 
-		Button bRetourner = new Button("Retourner");
-		bRetourner.setMaxSize(110,20);
-
 		Button bMelanger = new Button("Melanger");
 		bMelanger.setMaxSize(110,20);
 
 		Button bDemarrer = new Button("Demarrer");
 		bDemarrer.setMaxSize(110,20);
 
-		/*
-		Button bTrier = new Button("Trier");
-		bTrier.setMaxSize(110,20);
-		*/
-
 		Button bReset= new Button("Reset");
 		bReset.setMaxSize(110,20);
 
-		vActionDomino.getChildren().addAll(bRotateDroit, bRotateGauche, bAnnulerCoup, bFinirTour, bRetourner, bMelanger, bDemarrer/*, bTrier*/, bReset);
+		vActionDomino.getChildren().addAll(bRotateDroit, bRotateGauche, bAnnulerCoup, bFinirTour, bMelanger, bDemarrer, bReset);
 		vActionDomino.setAlignment(Pos.CENTER);
 		vActionDomino.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);-fx-border-color: #000000; -fx-border-width: 0 1 0 0;");
 
@@ -296,25 +296,28 @@ public class PartieView implements EventHandler<ActionEvent> {
 		vDetailPartie.setStyle("-fx-background-color: rgba(0, 0, 0, 0.25);-fx-border-color: #000000; -fx-border-width: 0 0 0 1;");
 
 
-		/** PLATEAU DES JOUEURS **/
-		// JOUEUR 1
-		grille = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
-		grille.dessinerGrille();
+		/** Plateau des joueurs **/
 
-		// JOUEUR 2
-		Grille grille2 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
+		// Joueur 1
+		grille1 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg",0, 0);
+		grille1.dessinerGrille();
+
+		// Joueur 2
+		grille2 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg",800, 0);
 		grille2.dessinerGrille();
 
-		// JOUEUR 3
-		Grille grille3 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
+		// Joueur 3
+		grille3 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg",0, 500);
 		grille3.dessinerGrille();
 
-		// JOUEUR 4
-		Grille grille4 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
+		// Joueur 4
+		grille4 = new Grille(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg", 800, 500);
 		grille4.dessinerGrille();
 
+		/** Création de la pioche **/
 		pioche = new PiocheModel();
-		//dominoTMP = new Domino(0, 0, 50, 100, "Application/Ressources/Dominos/D1.jpg");
+
+		/** Création des emplacements des dominos dans la zone de jeu **/
 		d1 = new DominoModel(500, 300, 100, 50);
 		d2 = new DominoModel(500, 400, 100, 50);
 		d3 = new DominoModel(500, 500, 100, 50);
@@ -323,22 +326,12 @@ public class PartieView implements EventHandler<ActionEvent> {
 		d6 = new DominoModel(650, 400, 100, 50);
 		d7 = new DominoModel(650, 500, 100, 50);
 		d8 = new DominoModel(650, 600, 100, 50);
-		dominoTMP = d1;
-
-		//dominoTMP.setOnMouseClicked(grille);
-		//d1.setOnMouseClicked(grille);
-		//d2.setOnMouseClicked(grille);
-		//d3.setOnMouseClicked(grille);
-		//d4.setOnMouseClicked(grille);
-		//d5.setOnMouseClicked(grille);
-		//d6.setOnMouseClicked(grille);
-		//d7.setOnMouseClicked(grille);
-		//d8.setOnMouseClicked(grille);
 
 
+		/** Placement des éléments dans la zone de jeu **/
 		zoneJeu = new Group();
 		zoneJeu.setStyle("-fx-background-color: #336699;");
-		zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
+		zoneJeu.getChildren().addAll(grille1.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
 		grille2.getPane().setLayoutX(800);
 		grille3.getPane().setLayoutY(500);
 		grille4.getPane().setLayoutX(800);
@@ -346,24 +339,13 @@ public class PartieView implements EventHandler<ActionEvent> {
 		pioche.setLayoutX(470);
 
 
-
-
-		/** EVENT DOMINO **/
+		/** Event sur les boutons **/
 		bRotateDroit.setOnAction(this);
-
 		bRotateGauche.setOnAction(this);
-
 		bAnnulerCoup.setOnAction(this);
-
 		bFinirTour.setOnAction(this);
-
-		bRetourner.setOnAction(this);
-
 		bMelanger.setOnAction(this);
-
 		bDemarrer.setOnAction(this);
-
-		//bTrier.setOnAction(this);
 
 		bReset.setOnAction(e->{
 			partieStage.close();
@@ -374,91 +356,83 @@ public class PartieView implements EventHandler<ActionEvent> {
 				e1.printStackTrace();
 			}
 		});
-		
+
 		bFinirTour.setOnAction(this);
 
-		/** AJOUT AU BORDERPANE PRINCIPALE **/
+		/** Ajout au borderpane principale **/
 		bp.setTop(bpMenu);
 		bp.setLeft(vActionDomino);
 		bp.setRight(vDetailPartie);
 		bp.setCenter(zoneJeu);
-
 
 		partieStage.setScene(scene);
 		partieStage.setResizable(false);
 		partieStage.setFullScreen(true);
 		partieStage.setFullScreenExitHint("");
 		partieStage.show();
-
-
-		/** LE CURSEUR CHANGE QUAND ON SE PLACE SUR LA CARTE POUR MONTRER QU'ON PEUT REALISER DES ACTIONS DESSUS **/
-		dominoTMP.setCursor(Cursor.HAND);
-
-	}
-
-	public void setDominoTMP(DominoModel d){
-		dominoTMP = d;
-	}
-
-	public int getCpt(){
-		return cpt;
 	}
 
 
 	@Override
 	public void handle(ActionEvent actionEvent) {
+
 		if (actionEvent.getSource() instanceof Button) {
-			// EVENT ROTATION A DROITE
-			if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
-				Rotate rotate = new Rotate(90, dominoTMP.getPivotX(), dominoTMP.getPivotY());
-				dominoTMP.getTransforms().add(rotate);
-				cpt += 1;
-				dominoTMP.setCptRotation(cpt);
 
+			/** Event "Rotation droite" **/
+			if (((Button) actionEvent.getSource()).getText() == "Rotation droite") {
 
-				if (cpt == 1) {
-					dominoTMP.setPivotTX(dominoTMP.getX() + 50);
-					dominoTMP.setPivotTY(dominoTMP.getY());
-					System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
-					System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
-					System.out.println();
-				} else if (cpt == 2) {
-					//dominoTMP.setPivotTX(dominoTMP.getX());
-					dominoTMP.setPivotTY(dominoTMP.getY() + 50);
-					//System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
-					System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
-					System.out.println();
-				} else if (cpt == 3) {
-					dominoTMP.setPivotTX(dominoTMP.getPivotTX() - 50);
-					//dominoTMP.setPivotTY(dominoTMP.getY());
-					//System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
-					System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
-					System.out.println();
-				} else if (cpt == 4) {
-					//dominoTMP.setPivotTX(dominoTMP.getX());
-					dominoTMP.setPivotTY(dominoTMP.getPivotTY() - 50);
-					//System.out.println("Position DOMINO : (" + dominoTMP.getX() + " ; " + dominoTMP.getY() + ")");
-					System.out.println("Position DOMINO : (" + dominoTMP.getPivotTX() + " ; " + dominoTMP.getPivotTY() + ")");
-					System.out.println();
+				if (d1_tmp.isSelected()) {
+					Rotate rotate = new Rotate(90, d1_tmp.getPivotX(), d1_tmp.getPivotY());
+					d1_tmp.getTransforms().add(rotate);
 				}
 
+				else if (d2_tmp.isSelected()) {
+					Rotate rotate = new Rotate(90, d2_tmp.getPivotX(), d2_tmp.getPivotY());
+					d2_tmp.getTransforms().add(rotate);
+				}
 
-				//dominoTMP.setRotate(dominoTMP.getRotate() + 90);
+				else if (d3_tmp.isSelected()) {
+					Rotate rotate = new Rotate(90, d3_tmp.getPivotX(), d3_tmp.getPivotY());
+					d3_tmp.getTransforms().add(rotate);
+				}
+
+				else if (d4_tmp.isSelected()) {
+					Rotate rotate = new Rotate(90, d4_tmp.getPivotX(), d4_tmp.getPivotY());
+					d4_tmp.getTransforms().add(rotate);
+				}
 			}
 
-			// EVENT ROTATION A GAUCHE
-			else if (((Button) actionEvent.getSource()).getText() == "Rotation gauche" && dominoTMP.isSelected()) {
-				Rotate rotate = new Rotate(-90, dominoTMP.getPivotX(), dominoTMP.getPivotY());
-				dominoTMP.getTransforms().add(rotate);
-				cpt += 1;
-				dominoTMP.setCptRotation(cpt);
+			/** Event "Rotation gauche" **/
+			else if (((Button) actionEvent.getSource()).getText() == "Rotation gauche") {
+
+				if (d1_tmp.isSelected()) {
+					Rotate rotate = new Rotate(-90, d1_tmp.getPivotX(), d1_tmp.getPivotY());
+					d1_tmp.getTransforms().add(rotate);
+				}
+
+				else if (d2_tmp.isSelected()) {
+					Rotate rotate = new Rotate(-90, d2_tmp.getPivotX(), d2_tmp.getPivotY());
+					d2_tmp.getTransforms().add(rotate);
+				}
+
+				else if (d3_tmp.isSelected()) {
+					Rotate rotate = new Rotate(-90, d3_tmp.getPivotX(), d3_tmp.getPivotY());
+					d3_tmp.getTransforms().add(rotate);
+				}
+
+				else if (d4_tmp.isSelected()) {
+					Rotate rotate = new Rotate(-90, d4_tmp.getPivotX(), d4_tmp.getPivotY());
+					d4_tmp.getTransforms().add(rotate);
+				}
 			}
 
-			// EVENT ANNULER SON COUP
+
+			/** Event "Annuler coup" **/
 			else if (((Button) actionEvent.getSource()).getText() == "Annuler coup") {
 			}
 
-			// EVENT FINIR SON TOUR
+
+			/** Event "finir tour" **/
 			else if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
 				if (nbTour > 0) {
 					if (secTemps - secChrono < 0) {
@@ -479,105 +453,140 @@ public class PartieView implements EventHandler<ActionEvent> {
 						secChrono = secChronoParametre;
 					}
 				}
+
+				/** Permet au joueur suivant de jouer son tour lorsque le joueur précédent clique sur "Finir tour" **/
+				jouerTour();
 			}
 
-			// EVENT RETOURNER DOMINO
-			else if (((Button) actionEvent.getSource()).getText() == "Retourner") {
-			}
 
-			// EVENT MELANGER DOMINO
+			/** Event "Melanger" **/
 			else if (((Button) actionEvent.getSource()).getText() == "Melanger") {
 				pioche.melangerPioche();
 			}
+			
 
-			// EVENT JOUER DOMINO
+			/** Event "Demarrer" **/
 			else if (((Button) actionEvent.getSource()).getText() == "Demarrer") {
+				/** On récupére le premier domino de la pioche (deck) **/
+				d1_tmp = new DominoModel(500, 300, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino(), getColorJoueur());
+				/** On change le curseur pour montrer qu'il peut avoir une interaction avec le domino **/
+				d1_tmp.setCursor(Cursor.HAND);
+				/** Puisque le domino a été pioché, on le retire de la pioche (deck) **/
+				pioche.getListeDominos().remove(pioche.getSize() - 1);
+				/** On change le visuel le visuel de la pioche puisque le premier domino n'est plus le même **/
+				pioche.setFill(pioche.getFirstDominoD());
+				/** On ajoute le domino pioché dans la zone de jeu **/
+				zoneJeu.getChildren().add(d1_tmp);
+				/** On fait en sorte que le domino sélectionné puisse être ajouté au bon plateau donc en fonction du joueur qui joue **/
+				setDominoGrille(d1_tmp, getColorJoueur());
 
-				DominoModel d1_ = new DominoModel(500, 300, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
-				d1_.setOnMouseClicked(grille);
+
+				/** On fait la même chose pour le reste des dominos **/
+				d2_tmp = new DominoModel(500, 400, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino(), getColorJoueur());
+				d2_tmp.setCursor(Cursor.HAND);
 				pioche.getListeDominos().remove(pioche.getSize() - 1);
 				pioche.setFill(pioche.getFirstDominoD());
-				zoneJeu.getChildren().add(d1_);
-				dominoTMP = d1_;
+				zoneJeu.getChildren().add(d2_tmp);
+				setDominoGrille(d2_tmp, getColorJoueur());
 
 
-				DominoModel d2_ = new DominoModel(500, 400, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
-				d2_.setOnMouseClicked(grille);
+				d3_tmp = new DominoModel(500, 500, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino(), getColorJoueur());
+				d3_tmp.setCursor(Cursor.HAND);
 				pioche.getListeDominos().remove(pioche.getSize() - 1);
 				pioche.setFill(pioche.getFirstDominoD());
-				zoneJeu.getChildren().add(d2_);
+				zoneJeu.getChildren().add(d3_tmp);
+				setDominoGrille(d3_tmp, getColorJoueur());
 
 
-				DominoModel d3_ = new DominoModel(500, 500, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
-				d3_.setOnMouseClicked(grille);
+				d4_tmp = new DominoModel(500, 600, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino(), getColorJoueur());
+				d4_tmp.setCursor(Cursor.HAND);
 				pioche.getListeDominos().remove(pioche.getSize() - 1);
 				pioche.setFill(pioche.getFirstDominoD());
-				zoneJeu.getChildren().add(d3_);
+				zoneJeu.getChildren().add(d4_tmp);
+				setDominoGrille(d4_tmp, getColorJoueur());
 
 
-				DominoModel d4_ = new DominoModel(500, 600, 100, 50, pioche.getFirstDomino(), pioche.getNumFirstDomino());
-				d4_.setOnMouseClicked(grille);
+				d5_tmp = new DominoModel(650, 300, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino(), null);
 				pioche.getListeDominos().remove(pioche.getSize() - 1);
 				pioche.setFill(pioche.getFirstDominoD());
-				zoneJeu.getChildren().add(d4_);
+				zoneJeu.getChildren().add(d5_tmp);
 
 
-				DominoModel d5_ = new DominoModel(650, 300, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
-				d5_.setOnMouseClicked(grille);
+				d6_tmp = new DominoModel(650, 400, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino(), null);
 				pioche.getListeDominos().remove(pioche.getSize() - 1);
 				pioche.setFill(pioche.getFirstDominoD());
-				zoneJeu.getChildren().add(d5_);
+				zoneJeu.getChildren().add(d6_tmp);
 
 
-				DominoModel d6_ = new DominoModel(650, 400, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
-				d6_.setOnMouseClicked(grille);
+				d7_tmp = new DominoModel(650, 500, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino(), null);
 				pioche.getListeDominos().remove(pioche.getSize() - 1);
 				pioche.setFill(pioche.getFirstDominoD());
-				zoneJeu.getChildren().add(d6_);
+				zoneJeu.getChildren().add(d7_tmp);
 
 
-				DominoModel d7_ = new DominoModel(650, 500, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
-				d7_.setOnMouseClicked(grille);
+				d8_tmp = new DominoModel(650, 600, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino(), null);
 				pioche.getListeDominos().remove(pioche.getSize() - 1);
-				pioche.setFill(pioche.getFirstDominoD());
-				zoneJeu.getChildren().add(d7_);
-
-
-				DominoModel d8_ = new DominoModel(650, 600, 100, 50, pioche.getFirstDominoD(), pioche.getNumFirstDomino());
-				d8_.setOnMouseClicked(grille);
-				pioche.getListeDominos().remove(pioche.getSize() - 1);
-				System.out.println("###" + pioche.getSize());
 				if (pioche.getSize() > 0) {
 					pioche.setFill(pioche.getFirstDominoD());
 				} else {
-					pioche.setFill("Application/Ressources/Dominos/ekekan.jpg");
+					pioche.setFill(Color.TRANSPARENT);
+					pioche.setStroke(Color.BLACK);
 				}
-
-				zoneJeu.getChildren().add(d8_);
-
-				//l1 = null;
-				//l2 = null;
+				zoneJeu.getChildren().add(d8_tmp);
 			}
+		}
+	}
 
 
-			// EVENT TRIER DOMINO
-			else if (((Button) actionEvent.getSource()).getText() == "Trier") {
-				l1 = new ArrayList<DominoModel>();
-				l2 = new ArrayList<DominoModel>();
+	/** Méthode qui permet de mettre en relation le domino avec un plateau (si la couleur de selection du domino est rouge alors il peut UNIQUEMENT être placé sur le plateau rouge **/
+	public void setDominoGrille(DominoModel domino, Color color) {
 
-				for (int i = 0; i < 4; i++) {
-					l1.add(i, pioche.getLastDomino());
-					pioche.getListeDominos().remove(pioche.getLastDomino());
-				}
+		if (color.equals(Color.RED)) {
+			domino.setOnMouseClicked(grille1);
+		}
+		else if (color.equals(Color.BLUE)) {
+			domino.setOnMouseClicked(grille2);
+		}
+		else if (color.equals(Color.YELLOW)) {
+			domino.setOnMouseClicked(grille3);
+		}
+		else {
+			domino.setOnMouseClicked(grille4);
+		}
+	}
 
-				for (int j = 0; j < 4; j++) {
-					l2.add(j, pioche.getLastDomino());
-					pioche.getListeDominos().remove(pioche.getLastDomino());
-				}
 
-				pioche.triDomino(l1);
-				pioche.triDomino(l2);
-			}
+	/** Méthode qui permet de "simuler" un tour de jeu **/
+	public void jouerTour() {
+
+		/** On change la couleur de selection en fonction du joueur qui joue **/
+		d1_tmp.setEffectSelected(d1_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d1_tmp, getColorJoueur());
+
+		d2_tmp.setEffectSelected(d2_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d2_tmp, getColorJoueur());
+
+		d3_tmp.setEffectSelected(d3_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d3_tmp, getColorJoueur());
+
+		d4_tmp.setEffectSelected(d4_tmp.getEffectSelectedJ1(), getColorJoueur());
+		setDominoGrille(d4_tmp, getColorJoueur());
+	}
+
+
+	/** Méthode qui permet de changer la couleur de selection en fonction du joueur **/
+	public Color getColorJoueur(){
+		switch (joueur) {
+			case 1:
+				return Color.RED;
+			case 2:
+				return Color.BLUE;
+			case 3:
+				return Color.YELLOW;
+			case 4:
+				return Color.GREEN;
+			default:
+				return Color.TRANSPARENT;
 		}
 	}
 }

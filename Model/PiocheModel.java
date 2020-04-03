@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.sql.*;
+
+import com.sun.corba.se.internal.Interceptors.PIORB;
+import javafx.scene.Cursor;
 import org.postgresql.ds.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
@@ -68,7 +71,7 @@ public class PiocheModel extends Rectangle
 
 	//Méthode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
 	public String getPwd() {
-		String chemin = "C:\\Users\\kevin\\eclipse-workspace\\Kingdomino\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
+		String chemin = "C:\\Users\\Valentin\\Desktop\\Projet_S3S4\\S4\\Kingdomino\\src\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
 		String password = "";
 		try {
 			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
@@ -220,7 +223,8 @@ public class PiocheModel extends Rectangle
 				String url = "Application/Ressources/Dominos/D"+indice2+"d.jpg";
 				pioche.add(new DominoModel(paysage1,paysage2,0, 0, 100, 50, url,Integer.parseInt(indice2)));
 		}
-//		for(int i = 0; i< pioche.size();i++) {
+
+//		for(int i = 0 ; i < pioche.size() ; i++) {
 //			System.out.println(pioche.get(i).getNumDomino());
 //		}
 		System.out.println("\n");

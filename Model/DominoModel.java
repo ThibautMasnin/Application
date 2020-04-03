@@ -30,11 +30,9 @@ public class DominoModel extends Rectangle
 	private double pivotY;
 	private double pivotTX;
 	private double pivotTY;
+
 	private int cptRotation;
 
-	public DominoModel(){
-
-	}
 
 	public DominoModel(PaysageModel p1, PaysageModel p2,double centerX, double centerY, double width, double height, String u, int num) {
 		super(centerX, centerY, width, height);
@@ -71,7 +69,7 @@ public class DominoModel extends Rectangle
 		paysage2 = p2;
 	}
 
-	public DominoModel(double centerX, double centerY, double width, double height, String u, int num) {
+	public DominoModel(double centerX, double centerY, double width, double height, String u, int num, Color colorEffect) {
 		super(centerX, centerY, width, height);
 		isSelected = false;
 
@@ -84,8 +82,8 @@ public class DominoModel extends Rectangle
 		effectSelected = new DropShadow();
 		effectSelected.setBlurType(BlurType.GAUSSIAN);
 		effectSelected.setSpread(10);
-		effectSelected.setColor(Color.RED);
-		effectSelected.setRadius(2);
+		effectSelected.setColor(colorEffect);
+		effectSelected.setRadius(3);
 
 		pivotX = this.getX() + (this.getWidth()/2);
 		pivotY = this.getY() + (this.getHeight()/4);
@@ -101,12 +99,8 @@ public class DominoModel extends Rectangle
 		super(centerX, centerY, width, height);
 		isSelected = false;
 
-		/*url = null;
-		img = new ImagePattern(new Image(getUrl()));
-		setFill(img);*/
 		setFill(Color.TRANSPARENT);
 		setStroke(Color.BLACK);
-
 
 		effectSelected = new DropShadow();
 		effectSelected.setBlurType(BlurType.GAUSSIAN);
@@ -144,6 +138,11 @@ public class DominoModel extends Rectangle
 	public DropShadow getEffectSelectedJ1() {
 		return effectSelected;
 	}
+
+	public void setEffectSelected(DropShadow dropShadow, Color color) {
+		dropShadow.setColor(color);
+	}
+
 
 	public double getPivotX() {
 		return pivotX;

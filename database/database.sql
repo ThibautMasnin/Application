@@ -1,4 +1,5 @@
 /*DROP TABLE IF EXISTS Partie, Joueur, Tour, StatJeu, TerrainType, Paysage,Domino CASCADE;*/
+CREATE DATABASE m4106;
 
 CREATE TABLE Partie (
     idPartie serial PRIMARY KEY,
