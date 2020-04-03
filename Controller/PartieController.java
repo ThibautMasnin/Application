@@ -2,6 +2,7 @@ package Application.Controller;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import Application.Model.DominoModel;
 import Application.Model.PartieModel;
@@ -11,7 +12,13 @@ import Application.View.ReglementView;
 import Application.View.PartieView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.control.ButtonType;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -23,6 +30,7 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 
 	private int nbJoueurs;
 	private int nbIAs;
+	private String langue="fr"; 
 	private int joueur;
 	private int nbTour;
 
@@ -92,30 +100,26 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 			 // EVENT RETOURNER DOMINO
 			 if (((Button) event.getSource()).getText() == "Retourner") {
 			 }
-
-			 if (((Button) event.getSource()).getText() == "Sauvegarder") {
-			 }
-
-			 if (((Button) event.getSource()).getText() == "Reglement") {
-				 ReglementView rv = new ReglementView(stage);
-			 }
-
-			 if (((Button) event.getSource()).getText() == "Reglages") {
-				 ReglageView rv = new ReglageView(stage);
-			 }
-
-			 if (((Button) event.getSource()).getText() == "Quitter") {
-				 stage.close();
-			 }
-			 
+		 
 			if (((Button) event.getSource()).getId() == "Reglement") {
-				ReglementView rv = new ReglementView(stage);
+				Stage secondStage = new Stage();
+				ReglementView rv = new ReglementView(secondStage, true);
 			}       
 			else if (((Button) event.getSource()).getId() == "Reglages") {
-				ReglageView rv = new ReglageView(stage);
+				Stage secondStage = new Stage();
+				ReglageView rv = new ReglageView(secondStage, true);
 			}			
 			else if (((Button) event.getSource()).getId() == "Quitter") {
-				JeuView primaryScreen = new JeuView(stage);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Confirmer la sortie");
+				alert.setContentText("Voulez vous vraiment quitter la partie ?");
+				ButtonType btnOui = new ButtonType("Quitter");
+				ButtonType btnNon = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+				alert.getButtonTypes().setAll(btnOui, btnNon);
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == btnOui) {
+					JeuView primaryScreen = new JeuView(stage);
+				}				
 			}			
 			else if (((Button) event.getSource()).getId() == "Sauvegarder") {
 				try {

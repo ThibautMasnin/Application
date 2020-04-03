@@ -5,6 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import Application.Controller.ReglageController;
+import Application.Controller.ReglementController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,8 +29,7 @@ public class ReglageView implements Observer {
 	final VBox vb = new VBox();
 	final HBox hb = new HBox();
 
-
-	public ReglageView(Stage stage) {
+	public ReglageView(Stage stage, boolean dialog) {
 		BorderPane bp = new BorderPane();
 		Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 		Scene scene = new Scene(bp, screenBounds.getWidth()-20, screenBounds.getHeight()-80);  
@@ -47,6 +47,7 @@ public class ReglageView implements Observer {
 		Label title = new Label("Reglages du jeu");
 		title.setFont(new Font("Viner Hand ITC", 64));
 		title.setTextFill(Color.web("#ffffff"));
+        title.setPadding(new Insets(0, 0,ht*0.15,0));
 
 		Text t1 = new Text("Sons :");
 		Text t2 = new Text("Musique :");
@@ -64,15 +65,7 @@ public class ReglageView implements Observer {
 		langue.getSelectionModel().select(0);
 		langue.setMinWidth(150);
 		langue.setMinHeight(25);
-		
-		
-        Button btnRetour = new Button();
-        btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnRetour.setMinWidth(140);
-        btnRetour.setMinHeight(54);
-        btnRetour.setOnAction(new ReglageController<ActionEvent>(stage));
+	
         Button btnValider = new Button();
         btnValider.setId("Valider");
         btnValider.setStyle("-fx-background-image: url('Application/Ressources/Images/valider.png');" +
@@ -80,9 +73,26 @@ public class ReglageView implements Observer {
         btnValider.setMinWidth(140);
         btnValider.setMinHeight(54);
         btnValider.setOnAction(new ReglageController<ActionEvent>(stage));
-
-        title.setPadding(new Insets(0, 0,ht*0.15,0));
-        hb.getChildren().addAll(btnRetour, btnValider);
+        if(dialog) {
+        	Button btnQuitter = new Button();
+        	btnQuitter.setId("Quitter");
+        	btnQuitter.setStyle("-fx-background-image: url('Application/Ressources/Images/quitter.png');" +
+        			"-fx-background-color: rgba(0, 0, 0, 0);");
+        	btnQuitter.setMinWidth(245);
+        	btnQuitter.setMinHeight(56);
+        	btnQuitter.setOnAction(new ReglageController<ActionEvent>(stage));  
+            hb.getChildren().addAll(btnQuitter, btnValider);
+        }
+        else {
+        	  Button btnRetour = new Button();
+              btnRetour.setId("Retour");
+              btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
+      				   "-fx-background-color: rgba(0, 0, 0, 0);");
+              btnRetour.setMinWidth(140);
+              btnRetour.setMinHeight(54);
+              btnRetour.setOnAction(new ReglageController<ActionEvent>(stage));
+              hb.getChildren().addAll(btnRetour, btnValider);
+        }
         vb.getChildren().addAll(title, t1, son, espace1, t2, musique, espace2, t3, langue, hb);
         vb.setSpacing(25);
         hb.setSpacing(25);
@@ -94,8 +104,10 @@ public class ReglageView implements Observer {
         
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setFullScreen(true);
-		stage.setFullScreenExitHint("");
+        if(!dialog) {
+            stage.setFullScreen(true);
+    		stage.setFullScreenExitHint("");        	
+        }
         stage.show();
     }
 
