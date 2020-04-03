@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -42,6 +43,7 @@ public class CreditView implements Observer {
 
 		Text devs = new Text("Jeu développé par :\n\nBAJARD Kevin\nDI BENEDETTO Valentin\nGOCER Efekan\nMASNIN Thibaut\nSULEK Aymeric");
 		devs.setFont(Font.font(36));
+		devs.setTextAlignment(TextAlignment.CENTER);
 
 		Button btnRetour = new Button();
 		btnRetour.setId("Retour");

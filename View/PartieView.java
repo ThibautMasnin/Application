@@ -373,6 +373,10 @@ public class PartieView implements EventHandler<ActionEvent> {
 		bAnnulerCoup.setOnAction(this);
 
 		bFinirTour.setOnAction(e -> {
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
+	    	Media media = new Media(file.toURI().toString());
+	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
+	        mediaPlayer.play(); 
 			if (nbTour > 0) {
 				if (secTemps - secChrono < 0) {
 					secTemps = 60 + secTemps - secChrono;
@@ -403,9 +407,13 @@ public class PartieView implements EventHandler<ActionEvent> {
 		//bTrier.setOnAction(this);
 
 		bReset.setOnAction(e->{
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
+	    	Media media = new Media(file.toURI().toString());
+	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
+	        mediaPlayer.play(); 
 			partieStage.close();
 			try {
-				PartieView pv = new PartieView(partieStage, nbJoueurs, minChrono, secChrono);
+				PartieView pv = new PartieView(partieStage, nbJoueurs, minChronoParametre, secChronoParametre);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -443,7 +451,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent actionEvent) {
 		if (actionEvent.getSource() instanceof Button) {
-			File file = new File("src/Application/Ressources/Sons/clic.wav");  
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
 	    	Media media = new Media(file.toURI().toString());
 	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
 	        mediaPlayer.play(); 

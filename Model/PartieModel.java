@@ -14,12 +14,10 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 public class PartieModel
 {
-	    //private int idPartie;
-	    private int nbJoueur;
-	    private int nbIA;
-	   	private int joueur;
-	   	private int nbTour;
-	    //private int nbDominos;
+	private int nbJoueur;
+	private int nbIA;
+	private int joueur;
+	private int nbTour;
 
 	private ArrayList<JoueurModel> listeJoueur;     //On y trouvera les joueurs qu'on aura ajouté dans le constructeur
 	private PiocheModel pioche;
@@ -87,34 +85,11 @@ public class PartieModel
 				listeJoueur.get(j).getPlateau().affichePlateau();
 				System.out.println();
 			}
-
-			//            System.out.println("joueur 1 :");
-			//            listeJoueur.get(0).getPlateau().affichePlateau();
-			//            System.out.println("joueur 2 :");
-			//            listeJoueur.get(1).getPlateau().affichePlateau();
-			//            System.out.println("joueur 3 :");
-			//            listeJoueur.get(2).getPlateau().affichePlateau();
-			//            System.out.println("joueur 4 :");
-			//            listeJoueur.get(3).getPlateau().affichePlateau();
 		}
-		//        pioche.afficheTirageRetournee();
-		//        System.out.println("Carte joueur 1 :");
-		//        listeJoueur.get(0).afficheListeDomino();
-		//        System.out.println("Carte joueur 2 :");
-		//        listeJoueur.get(1).afficheListeDomino();
-		//        System.out.println("Carte joueur 3 :");
-		//        listeJoueur.get(2).afficheListeDomino();
-		//        System.out.println("Carte joueur 4 :");
-		//        listeJoueur.get(3).afficheListeDomino();
-
-		//        System.out.println("joueur 1 :");
-		//        listeJoueur.get(0).getPlateau().affichePlateau();
-		//        System.out.println("joueur 2 :");
-		//        listeJoueur.get(1).getPlateau().affichePlateau();
-		//        System.out.println("joueur 3 :");
-		//        listeJoueur.get(2).getPlateau().affichePlateau();
-		//        System.out.println("joueur 4 :");
-		//        listeJoueur.get(3).getPlateau().affichePlateau();
+		for(int j = 0; j < listeJoueur.size(); j++)
+		{
+			System.out.println("Le joueur " + (j+1) + " a " + listeJoueur.get(j).calculePoint() + " couronnes");
+		}
 	}
 
 	public PiocheModel getPioche() {
@@ -143,12 +118,6 @@ public class PartieModel
 	public ArrayList<JoueurModel> getListeJoueur()
 	{
 		return listeJoueur;
-	}
-
-	public void ajouterJoueur() {
-	}
-
-	public void parametrerPartie() {
 	}
 
 	public void sauvegarderPartie() {
@@ -206,17 +175,4 @@ public class PartieModel
 			System.out.println(e.getMessage());
 		}*/
 	}
-
-	public void rejouerPartie() {
-	}
-
-	public void revoirPartie() {
-	}
-
-	public void reprendrePartie() {
-	}
-
-	public void quitterPartie() {
-	}
-
 }
