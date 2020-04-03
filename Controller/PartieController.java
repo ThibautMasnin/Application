@@ -1,6 +1,7 @@
 package Application.Controller;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import Application.Model.DominoModel;
@@ -26,6 +27,9 @@ import javafx.stage.Stage;
 public class PartieController<T extends ActionEvent> implements EventHandler<T> {
 	private Stage stage;
 	private DominoModel dominoTMP;
+
+	private int nbJoueurs;
+	private int nbIAs;
 	private String langue="fr"; 
 	private int joueur;
 	private int nbTour;
@@ -35,8 +39,22 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 		stage = s;
 	}
 
-	public PartieController(int joueur, int nbTour) {
+	public PartieController() {
+	}
+
+	public void setNbJoueurs(int nbJoueurs) {
+		this.nbJoueurs = nbJoueurs;
+	}
+
+	public void setNbIAs(int nbIAs) {
+		this.nbIAs = nbIAs;
+	}
+
+	public void setJoueur(int joueur) {
 		this.joueur = joueur;
+	}
+
+	public void setNbTour(int nbTour) {
 		this.nbTour = nbTour;
 	}
 
@@ -104,7 +122,16 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 				}				
 			}			
 			else if (((Button) event.getSource()).getId() == "Sauvegarder") {
-				PartieModel sauvegarde = new PartieModel(this.joueur, this.nbTour);
+				try {
+					PartieModel sauvegarde = new PartieModel();
+					sauvegarde.setNbJoueurs(this.nbJoueurs);
+					sauvegarde.setNbIAs(this.nbIAs);
+					sauvegarde.setJoueur(this.joueur);
+					sauvegarde.setNbTour(this.nbTour);
+					sauvegarde.sauvegarderPartie();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		 }
 	 }

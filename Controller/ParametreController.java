@@ -3,6 +3,7 @@ package Application.Controller;
 import java.io.File;
 import java.sql.SQLException;
 
+import Application.Model.PartieModel;
 import Application.View.JeuView;
 import Application.View.PartieView;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ public class ParametreController<T extends ActionEvent> implements EventHandler<
 
 	private Stage s;	
 	private int nbJoueurs;
+	private int nbIAs;
 	private int minChrono;
 	private int secChrono;
 
@@ -24,10 +26,11 @@ public class ParametreController<T extends ActionEvent> implements EventHandler<
 		this.s=s;
 	}
 	
-	public ParametreController(Stage s, int nb, int min, int sec) {
+	public ParametreController(Stage s, int nb, int nbIAs, int min, int sec) {
 		super();
 		this.s=s;
 		this.nbJoueurs=nb;
+		this.nbIAs=nbIAs;
 		this.minChrono=min;
 		this.secChrono=sec;
 	}
@@ -43,9 +46,10 @@ public class ParametreController<T extends ActionEvent> implements EventHandler<
 				JeuView ppv = new JeuView(s);
 			}
         	else if (((Button) event.getSource()).getId() == "Valider") {
-            	if(nbJoueurs==2||nbJoueurs==3||nbJoueurs==4) {
+            	if(nbJoueurs+nbIAs==2||nbJoueurs+nbIAs==3||nbJoueurs+nbIAs==4) {
     				try {
-    					PartieView partieView = new PartieView(s, nbJoueurs, minChrono, secChrono);
+    					PartieView partieView = new PartieView(s, nbJoueurs, nbIAs, minChrono, secChrono);
+						PartieModel partieModel = new PartieModel();
     				} catch (SQLException e) {
     					e.printStackTrace();
     				}
