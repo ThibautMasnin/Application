@@ -43,7 +43,7 @@ public class PiocheModel extends Rectangle
 
 	public void creerPioche() throws SQLException
 	{
-		//Variables n�cessaires pour r�cup�rer les donn�es des requ�tes
+		//Variables nécessaires pour r�cup�rer les données des requetes
 		List<Integer> idPaysage = new ArrayList<>(); // Liste avec tous les ID des paysages
 		int idPaysage1;
 		int idPaysage2;

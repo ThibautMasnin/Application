@@ -1,10 +1,6 @@
 package Application.View;
 
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
-
-import Application.Controller.JeuController;
 import Application.Controller.ReglementController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -23,7 +19,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class ReglementView implements Observer {
+public class ReglementView {
 
 	final VBox vb1 = new VBox();
 	final VBox vb2 = new VBox();
@@ -117,11 +113,5 @@ public class ReglementView implements Observer {
             stage.setFullScreenExitHint("");
         }
         stage.show();
-    }
-
-
-    @Override
-    public void update(Observable o, Object arg) {
-
     }
 }

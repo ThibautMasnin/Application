@@ -1,12 +1,7 @@
 package Application.View;
 
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
-
 import Application.Controller.ParametreController;
-import Application.Controller.ReglageController;
-import Application.Controller.StatistiqueController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -23,7 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class ParametrePartieView implements Observer {
+public class ParametrePartieView {
 
 	final VBox vb = new VBox();
 	final VBox vb1 = new VBox();
@@ -109,10 +104,5 @@ public class ParametrePartieView implements Observer {
 		stage.setFullScreen(true);
 		stage.setFullScreenExitHint("");
 		stage.show();
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-
 	}
 }

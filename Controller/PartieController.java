@@ -9,15 +9,12 @@ import Application.Model.PartieModel;
 import Application.View.JeuView;
 import Application.View.ReglageView;
 import Application.View.ReglementView;
-import Application.View.PartieView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.ButtonType;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -64,9 +61,7 @@ public class PartieController<T extends ActionEvent> implements EventHandler<T> 
 	}
 
 
-	/**
-	 * ACTION EVENT
-	 **/
+	// ACTION EVENT
 	 @Override
 	 public void handle(T event) {
 

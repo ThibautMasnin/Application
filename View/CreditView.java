@@ -1,11 +1,7 @@
 package Application.View;
 
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
-
 import Application.Controller.ReglageController;
-import Application.Controller.StatistiqueController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -13,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -22,7 +17,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class CreditView implements Observer {
+public class CreditView {
 
 	final VBox vb = new VBox();
 
@@ -64,10 +59,5 @@ public class CreditView implements Observer {
 		stage.setFullScreen(true);
 		stage.setFullScreenExitHint("");
 		stage.show();
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-
 	}
 }

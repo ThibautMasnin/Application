@@ -1,11 +1,7 @@
 package Application.View;
 
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
-
 import Application.Controller.ReglageController;
-import Application.Controller.ReglementController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,7 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class ReglageView implements Observer {
+public class ReglageView {
 
 	final VBox vb = new VBox();
 	final HBox hb = new HBox();
@@ -36,7 +32,7 @@ public class ReglageView implements Observer {
 		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
 				"-fx-background-position: center center;" +
 				"-fx-background-size: cover;");
-
+		
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		int ht  = (int)dimension.getHeight();
 
@@ -110,11 +106,4 @@ public class ReglageView implements Observer {
         }
         stage.show();
     }
-
-    @Override
-    public void update(Observable o, Object arg) {
-
-    }
 }
-
-

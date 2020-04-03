@@ -3,19 +3,12 @@ package Application;
 import Application.Model.PartieModel;
 import Application.View.JeuView;
 import Application.View.PartieView;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import java.io.File;
 import java.sql.SQLException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Kingdomino extends Application {
 
@@ -29,8 +22,6 @@ public class Kingdomino extends Application {
     	mediaPlayer.play();
 		primaryStage.setTitle("KingDomino");
 		JeuView jv = new JeuView(primaryStage);
-
-//		PartieView partieView = new PartieView(primaryStage, 4, 0, 0, 30);
 
 // 		PartieModel partieModel = new PartieModel(1);
 //		partieModel.jouer();

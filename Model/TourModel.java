@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class TourModel
-{
+public class TourModel {
     private PartieModel partieEnCours;
     private int idTour;
     private int TourRestant;
@@ -13,12 +12,10 @@ public class TourModel
     private static int nbTourRestant = 11;
     ArrayList<DominoModel> dominoDispo;
 
-    public TourModel(PartieModel partie)
-    {
+    public TourModel(PartieModel partie) {
         partieEnCours = partie;
         idTour = numTour;
-        if(partie.getListeJoueur().size() == 2 && nbTourRestant == 11)
-        {
+        if(partie.getListeJoueur().size() == 2 && nbTourRestant == 11) {
             nbTourRestant = 5;
         }
         TourRestant = nbTourRestant;
@@ -32,35 +29,29 @@ public class TourModel
     }
 
 
-    public void jouerTour(PiocheModel pioche)
-    {
+    public void jouerTour(PiocheModel pioche) {
         afficheTour();
         //On tire les dominos et les place dans tirageCachee (ces dominos sont cach�s et seront envoy� � tirageRetournee le tour suivant)
         // et ensuite dans tirageRetournee (le joueur doit choisir parmis ces dominos)
         pioche.tirage();
-        if(TourRestant > 0)
-        {
-            if(TourRestant > 1)
-            {
+        if(TourRestant > 0) {
+            if(TourRestant > 1) {
                 pioche.afficheTirageCachee();
             }
             pioche.afficheTirageRetournee();
         }
         dominoDispo.addAll(partieEnCours.getPioche().getTirageRetourne());
 
-        for(int i = 0; i < partieEnCours.getListeJoueur().size(); i++)
-        {
+        for(int i = 0; i < partieEnCours.getListeJoueur().size(); i++) {
             if(partieEnCours.getListeJoueur().size() == 2) {
                 if (idTour > 1) {
-                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA())
-                    {
+                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA()) {
                         placerDominoAleatoire(i + 1);
                         partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
     					placerDominoAleatoire(i + 1);
                         partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                     }
-                    else
-                    {
+                    else {
                         placerDomino(i + 1);
                         partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                         placerDomino(i + 1);
@@ -68,39 +59,32 @@ public class TourModel
                     }
                 }
                 if (TourRestant > 0) {
-                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA())
-                    {
+                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA()) {
                         selectionDominoAleatoire(i);
                         selectionDominoAleatoire(i);
                     }
-                    else
-                    {
+                    else {
                         selectionDomino(i);
                         selectionDomino(i);
                     }
                 }
             }
-            else
-            {
+            else {
                 if (idTour > 1) {
-                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA())
-                    {
+                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA()) {
                         placerDominoAleatoire(i + 1);
                         partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                     }
-                    else
-                    {
+                    else {
                         placerDomino(i + 1);
                         partieEnCours.getJoueur(i + 1).getListeDomino().remove(0);
                     }
                 }
                 if (TourRestant > 0) {
-                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA())
-                    {
+                    if(partieEnCours.getListeJoueur().get(i).isJoueurIA()) {
                         selectionDominoAleatoire(i);
                     }
-                    else
-                    {
+                    else {
                         selectionDomino(i);
                     }
                 }
@@ -108,26 +92,22 @@ public class TourModel
         }
     }
 
-    public void afficheTour()
-    {
+    public void afficheTour() {
         System.out.println("tour : " + idTour + " et tour restant : " + TourRestant);
     }
 
-    public void selectionDomino(int idJ)
-    {
+    public void selectionDomino(int idJ) {
         Scanner s = new Scanner(System.in);
         System.out.println("JOUEUR " + (idJ + 1) + " choisissez votre domino : ");
         int numDominoChoisi = s.nextInt();
         partieEnCours.getJoueur(idJ+1).choixDomino(partieEnCours.getPioche().getTirageRetourne().get(numDominoChoisi-1));
     }
 
-    public void placerDomino(int idJoueur)
-    {
+    public void placerDomino(int idJoueur) {
         boolean placementValide = false;
         Scanner s = new Scanner(System.in);
 
-        while(!placementValide)
-        {
+        while(!placementValide) {
             System.out.println("JOUEUR "  + (idJoueur) + " placez le domino : " + "[Domino n"
                     + partieEnCours.getJoueur(idJoueur).getListeDomino().get(0).getNumDomino()
                     +"] ------ "+ partieEnCours.getJoueur(idJoueur).getListeDomino().get(0).toStringPaysage());
@@ -140,33 +120,27 @@ public class TourModel
             System.out.println("JOUEUR " + (idJoueur) + " entrez la lettre du sens (h, d, g, b) : ");
             scs = s.next();
             String sens = null;
-            if(scs.equalsIgnoreCase("D"))
-            {
+            if(scs.equalsIgnoreCase("D")) {
                 sens = "D";
             }
-            else if(scs.equalsIgnoreCase("H"))
-            {
+            else if(scs.equalsIgnoreCase("H")) {
                 sens = "H";
             }
-            else if(scs.equalsIgnoreCase("B"))
-            {
+            else if(scs.equalsIgnoreCase("B")) {
                 sens = "B";
             }
-            else if(scs.equalsIgnoreCase("G"))
-            {
+            else if(scs.equalsIgnoreCase("G")) {
                 sens = "G";
             }
 
             placementValide = partieEnCours.getJoueur(idJoueur).getPlateau().ajouteDomino(partieEnCours.getJoueur(idJoueur).getListeDomino().get(0), ligne, colonne, sens);
-            if(!placementValide)
-            {
+            if(!placementValide) {
                 System.out.println("Placement invalide, veuillez réessayer : ");
             }
         }
     }
 
-    public void placerDominoAleatoire(int idJoueur)
-    {
+    public void placerDominoAleatoire(int idJoueur) {
         Random r = new Random();
         int max = 6;    // taille max d'une ligne et colonne
         int x = 0;
@@ -176,64 +150,51 @@ public class TourModel
         boolean placementValide = false;
         int cmp = 0;
 
-        while(!placementValide && cmp < 200)
-        {
+        while(!placementValide && cmp < 200) {
             x = r.nextInt(max)+1;
             y = r.nextInt(max)+1;
             lettre = r.nextInt(3);
-            if(lettre == 0)
-            {
-                if(y == 1)
-                {
+            if(lettre == 0) {
+                if(y == 1) {
                     y++;
                 }
                 s = "G";
             }
-            else if(lettre == 1)
-            {
-                if(x == 1)
-                {
+            else if(lettre == 1) {
+                if(x == 1) {
                     x++;
                 }
                 s = "H";
             }
-            else if(lettre == 2)
-            {
-                if(y == 7)
-                {
+            else if(lettre == 2) {
+                if(y == 7) {
                     y--;
                 }
                 s = "D";
             }
-            else if(lettre == 3)
-            {
-                if(x == 7)
-                {
+            else if(lettre == 3) {
+                if(x == 7) {
                     x--;
                 }
                 s = "B";
             }
-            else
-            {
+            else {
                 System.out.println("ERREUR LETTRE SENS");
             }
             placementValide = partieEnCours.getJoueur(idJoueur).getPlateau().ajouteDomino(partieEnCours.getJoueur(idJoueur).getListeDomino().get(0), x, y, s);
             cmp++;
         }
-        if(cmp == 199)
-        {
+        if(cmp == 199) {
             partieEnCours.getJoueur(idJoueur).getListeDomino().remove(0);
         }
     }
 
-    public void selectionDominoAleatoire(int i)
-    {
+    public void selectionDominoAleatoire(int i) {
         Random r = new Random();
         int max = dominoDispo.size();
         int var = 0;
         boolean dominoValide = false;
-        while(!dominoValide)
-        {
+        while(!dominoValide) {
             var = r.nextInt(max);
             dominoValide = partieEnCours.getJoueur(i+1).choixDomino(dominoDispo.get(var));
         }

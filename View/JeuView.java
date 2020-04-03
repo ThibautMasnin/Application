@@ -1,8 +1,5 @@
 package Application.View;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import Application.Controller.JeuController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -10,21 +7,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class JeuView implements Observer {
+public class JeuView {
 
 	final VBox vb = new VBox();
 	final HBox hb = new HBox();
@@ -119,10 +108,5 @@ public class JeuView implements Observer {
 		stage.setFullScreen(true);
 		stage.setFullScreenExitHint("");
 		stage.show();
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-
 	}
 }

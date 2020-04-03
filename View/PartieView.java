@@ -90,7 +90,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 		partieModel.setNbJoueurs(this.nbJoueurs);
 		partieModel.setNbIAs(this.nbIAs);
 
-
 		/** Borderpane principale **/
 		BorderPane bp = new BorderPane();
 		bp.setStyle("-fx-background-image: url('Application/Ressources/Images/wallpaper.png');" +
@@ -178,6 +177,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 									joueur++;
 								}
 								if(nbTour!=0) {
+									jouerTour();
 									minChrono=minChronoParametre;
 									secChrono=secChronoParametre;
 								}
@@ -204,11 +204,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 		timelineJoueur.play();
 		lTempsJoueur.setTextFill(Color.web("#ffffff"));
 		lTempsJoueur.setFont(new Font("Viner Hand ITC", 24));
-
-//		Timeline timeline = new Timeline(new KeyFrame(
-//				Duration.millis(2500),
-//				ae -> doSomething()));
-//		timeline.play();
 
 		hbox2.getChildren().addAll(lTempsJoueur);
 		hbox2.setAlignment(Pos.CENTER);
@@ -410,9 +405,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 			partieStage.close();
 			try {
 				PartieView pv = new PartieView(partieStage, nbJoueurs, nbIAs, minChronoParametre, secChronoParametre);
-				//PartieView pv = new PartieView(partieStage);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
@@ -434,7 +427,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent actionEvent) {
-
 		if (actionEvent.getSource() instanceof Button) {
 			File file = new File("src/Application/Ressources/Sons/clic.mp3");
 			Media media = new Media(file.toURI().toString());
