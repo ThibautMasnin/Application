@@ -1,12 +1,11 @@
 package Application.Model;
 
-import javafx.scene.shape.Rectangle;
-
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 public class DominoModel extends Rectangle
 //extends ElementModel

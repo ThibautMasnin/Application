@@ -1,20 +1,18 @@
 package Application.Model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
-import java.sql.*;
-
-import com.sun.corba.se.internal.Interceptors.PIORB;
-import javafx.scene.Cursor;
-import org.postgresql.ds.*;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+
+import org.postgresql.ds.PGSimpleDataSource;
+
 
 public class PiocheModel extends Rectangle
 {
@@ -23,6 +21,7 @@ public class PiocheModel extends Rectangle
 	private ArrayList<DominoModel> tirageCache;     //Les dominos pour le tour d'apres, on les enverra dans tirageRetournee
 	private ArrayList<DominoModel> tirageRetourne;      //Le joueur chosit un domino parmis celle propose ici
 
+	Connexion CBDD = new Connexion();
 
 	public PiocheModel() throws SQLException{
 		super(100, 100, 100, 50);
@@ -38,60 +37,12 @@ public class PiocheModel extends Rectangle
 	//On crée la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
 	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
 	{
-//		if(pioche == null)
-//		{
-			partieEnCours = partieModel;
-//			pioche = new ArrayList<>();
-//			tirageCache = new ArrayList<>();
-//			tirageRetourne = new ArrayList<>();
-//		}
-//		else
-//		{
-//			System.out.println("deja une pioche");
-//		}
+		partieEnCours = partieModel;
 		return pioche;
-	}
-
-	//On crée la pioche avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioches
-	//	public ArrayList<DominoModel> getPioche(PartieModel partieModel)
-	//	{
-	//		if(pioche == null)
-	//		{
-	//			partieEnCours = partieModel;
-	//			pioche = new ArrayList<>();
-	//			tirageCache = new ArrayList<>();
-	//			tirageRetourne = new ArrayList<>();
-	//		}
-	//		else
-	//		{
-	//			System.out.println("deja une pioche");
-	//		}
-	//		return pioche;
-	//	}
-
-	//Méthode pour lire le mdp dans un fichier txt, plutot que de le mettre en clair dans le code
-	public String getPwd() {
-		String chemin = "C:\\Users\\Valentin\\Desktop\\Projet_S3S4\\S4\\Kingdomino\\src\\password.txt"; // Mettre ici le chemin du fichier txt ou se trouve le mdp pour se co a la bdd
-		String password = "";
-		try {
-			BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(chemin)));
-			StringWriter out = new StringWriter();
-			int b;
-			while ((b=in.read()) != -1)
-				out.write(b);
-			out.flush();
-			password = out.toString();
-			out.close();
-			in.close();
-		} catch (Exception ex){
-			System.err.println("Error. "+ex.getMessage());
-		}
-		return password;
 	}
 
 	public void creerPioche() throws SQLException
 	{
-		String password = getPwd(); // regarder la methode getPwd, sinon mettre directement en clair le mdp pour se co a la bdd (pour les flemmards :p)
 		//Variables n�cessaires pour r�cup�rer les donn�es des requ�tes
 		List<Integer> idPaysage = new ArrayList<>(); // Liste avec tous les ID des paysages
 		int idPaysage1;
@@ -104,50 +55,42 @@ public class PiocheModel extends Rectangle
 		List<String> terrainType = new ArrayList<>(); // Liste avec tous les ID des terrains pour chaque paysage
 		String terrain;
 
-		//Connexion � la BDD
+		//Connexion à la BDD
 		try {	
 			PGSimpleDataSource ds = new PGSimpleDataSource();
 
-			ds.setServerName("localhost");
-			ds.setDatabaseName("m4106");
-			ds.setUser("postgres");
-			ds.setPassword(password);
+			ds.setServerName(CBDD.getServerName());
+			ds.setDatabaseName(CBDD.getDatabaseName());
+			ds.setUser(CBDD.getUser());
+			ds.setPassword(CBDD.getPassword());
 			Connection con = ds.getConnection();
 
 			//Requète pour récupérer ce que contient la table Domino
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM Domino;")){
 				try (ResultSet rs = stmt.executeQuery()){
-					while (rs.next()) { // R�cup�ration pour tout les dominos dans la BDD
-						idPaysage1 = rs.getInt("idPaysage1"); // R�cup�ration de l'id du paysage1 de chaque domino � la liste des ID
-						idPaysage2 = rs.getInt("idPaysage2"); // R�cup�ration de l'id du paysage2 de chaque domino � la liste des ID
-						idPaysage.add(idPaysage1); // Ajout de l'id du paysage1 de chaque domino � la liste des ID
-						idPaysage.add(idPaysage2); // Ajout de l'id du paysage2 de chaque domino � la liste des ID
+					while (rs.next()) { // Récupération pour tout les dominos dans la BDD
+						idPaysage1 = rs.getInt("idPaysage1"); // Récupération de l'id du paysage1 de chaque domino à la liste des ID
+						idPaysage2 = rs.getInt("idPaysage2"); // Récupération de l'id du paysage2 de chaque domino à la liste des ID
+						idPaysage.add(idPaysage1); // Ajout de l'id du paysage1 de chaque domino à la liste des ID
+						idPaysage.add(idPaysage2); // Ajout de l'id du paysage2 de chaque domino à la liste des ID
 					}
 				}
 			}
 
-			//Requ�te pour r�cup�rer tout les paysages ET les couronnes des paysages dans la table Paysage
+			//Requête pour récupérer tout les paysages ET les couronnes des paysages dans la table Paysage
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM TerrainType JOIN Paysage USING(idTerrainType) WHERE idPaysage = ?;")){
-				for (int i=0 ; i<96 ; i++) { //R�cup�ration de tous les paysages
+				for (int i=0 ; i<96 ; i++) { //Récupération de tous les paysages
 					stmt.setInt(1, idPaysage.get(i));// ? = l'index de la liste idPaysages
 					try (ResultSet rs = stmt.executeQuery()){
 						while(rs.next()) {
-							idTerrainType = rs.getInt("idTerrainType");// R�cup�ration de l'id du terrain associ� au paysage
-							nbCouronne = rs.getInt("nbCouronne");// R�cup�ration ds couronnes associ� au paysage
-							id_CouPaysages.add(idTerrainType);//Ajout � la liste concernant les paysages
-							id_CouPaysages.add(nbCouronne);//Ajout � la liste concernant les paysages
+							idTerrainType = rs.getInt("idTerrainType");// Récupération de l'id du terrain associé au paysage
+							nbCouronne = rs.getInt("nbCouronne");// Récupération ds couronnes associé au paysage
+							id_CouPaysages.add(idTerrainType);//Ajout à la liste concernant les paysages
+							id_CouPaysages.add(nbCouronne);//Ajouté la liste concernant les paysages
 						}
 					}
 				}
 			}
-
-			/*for(int j = 0; j < 192; j = j+4) {
-				if(j % 4 == 0) {
-					System.out.println("Domino " + ((j/4) + 1) + " : ");
-				}
-				System.out.println("Paysage 1 : " + id_CouPaysages.get(j) + "\t nbCouronnes : " + id_CouPaysages.get(j+1));
-				System.out.println("Paysage 2 : " + id_CouPaysages.get(j+2) + "\t nbCouronnes : " + id_CouPaysages.get(j+3) + "\n\n");
-			}*/
 
 			//Requ�te pour r�cup�rer les terrains
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM TerrainType WHERE idTerrainType = ? ; ")){
@@ -160,7 +103,6 @@ public class PiocheModel extends Rectangle
 							terrainType.add(terrain);
 						}
 					}
-					//System.out.println(terrainType.get(i));
 				}
 			}
 		} catch(Exception e) {
@@ -219,16 +161,10 @@ public class PiocheModel extends Rectangle
 				else {
 					indice2 = String.valueOf(indice);			
 				}
-				//				System.out.println(indice2);
 				String url = "Application/Ressources/Dominos/D"+indice2+"d.jpg";
 				pioche.add(new DominoModel(paysage1,paysage2,0, 0, 100, 50, url,Integer.parseInt(indice2)));
 		}
-
-//		for(int i = 0 ; i < pioche.size() ; i++) {
-//			System.out.println(pioche.get(i).getNumDomino());
-//		}
 		System.out.println("\n");
-		affichePioche();
 		melangerPioche();
 	}
 
@@ -347,9 +283,6 @@ public class PiocheModel extends Rectangle
 						listT.remove(i+1);
 						listT.add(i+1, tmp);
 					}
-					/*for (int j = 0 ; j<listT.size();j++) {
-						System.out.println(listT.get(j).getNumDomino());
-					}*/
 				}
 
 				else if (i == listT.size()-1) {
@@ -362,9 +295,6 @@ public class PiocheModel extends Rectangle
 
 						listT.remove(0);
 						listT.add(0, tmp);
-						/*for (int j = 0 ; j<listT.size();j++) {
-							System.out.println(listT.get(j).getNumDomino());
-						}*/
 					}
 				}
 
@@ -385,6 +315,7 @@ public class PiocheModel extends Rectangle
 
 	public void melangerPioche()
 	{
+		this.setFill(getFirstDominoD());
 		Random r = new Random();
 		int var = 0;
 		ArrayList<DominoModel> piocheTmp = new ArrayList<>();

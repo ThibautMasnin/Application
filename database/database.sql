@@ -1,20 +1,19 @@
-/*DROP TABLE IF EXISTS Partie, Joueur, Tour, StatJeu, TerrainType, Paysage,Domino CASCADE;*/
-CREATE DATABASE m4106;
-
-CREATE TABLE Partie (
-    idPartie serial PRIMARY KEY,
-    nbJoueurs int DEFAULT 0,
-    nbIAs int DEFAULT 0,
-    minuteurPartie int, /*en secondes*/
-    minuteurTour int, /*en secondes*/
-    nbDominos int DEFAULT 0
-);
+DROP TABLE IF EXISTS Joueur, Partie, Tour, StatJeu, Coup, TerrainType, Paysage, Domino CASCADE;
 
 CREATE TABLE Joueur (
     idJoueur serial PRIMARY KEY,
     couleur text NOT NULL,
     ia boolean DEFAULT false,
     point int DEFAULT 0
+);
+
+CREATE TABLE Partie (
+    idPartie serial PRIMARY KEY,
+    nbJoueurs int DEFAULT 0,
+    nbIAs int DEFAULT 0,
+    dernierJoueur int REFERENCES Joueur (idJoueur) NOT NULL,
+    nbTour int NOT NULL,
+    nbDominos int DEFAULT 0
 );
 
 CREATE TABLE Tour (
@@ -29,6 +28,14 @@ CREATE TABLE StatJeu (
     tempsJoue int DEFAULT 0, /*en secondes*/
     dernierLancement timestamp NOT NULL,
     nbJoueursCrees int DEFAULT 0
+);
+
+CREATE TABLE Coup (
+    idCoup serial PRIMARY KEY,
+    nbPartie int REFERENCES Partie NOT NULL,
+    idJoueur int REFERENCES Joueur NOT NULL,
+    date timestamp DEFAULT current_timestamp,
+    action text NOT NULL
 );
 
 CREATE TABLE TerrainType (
@@ -126,3 +133,10 @@ INSERT INTO Domino VALUES (45,15,1);
 INSERT INTO Domino VALUES (46,10,15);
 INSERT INTO Domino VALUES (47,10,15);
 INSERT INTO Domino VALUES (48,1,16);
+
+INSERT INTO Joueur VALUES (DEFAULT,'rouge',DEFAULT,DEFAULT);
+INSERT INTO Joueur VALUES (DEFAULT,'bleu',DEFAULT,DEFAULT);
+INSERT INTO Joueur VALUES (DEFAULT,'jaune',DEFAULT,DEFAULT);
+INSERT INTO Joueur VALUES (DEFAULT,'vert',DEFAULT,DEFAULT);
+
+SELECT * FROM Partie;

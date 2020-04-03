@@ -3,6 +3,8 @@ package Application.View;
 import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
+
+import Application.Controller.JeuController;
 import Application.Controller.ReglementController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -25,8 +27,8 @@ public class ReglementView implements Observer {
 
 	final VBox vb1 = new VBox();
 	final VBox vb2 = new VBox();
-
-	public ReglementView(Stage stage) {
+	
+	public ReglementView(Stage stage, boolean dialog) {
 		BorderPane bp = new BorderPane();
 		ScrollPane sp = new ScrollPane();
 
@@ -72,22 +74,34 @@ public class ReglementView implements Observer {
         image2.setFitHeight(wd-55);
         image3.setFitHeight(wd-55);
         image4.setFitHeight(wd-55);    
-
-        Button btnRetour = new Button();
-        btnRetour.setId("Retour");
-        btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
-				   "-fx-background-color: rgba(0, 0, 0, 0);");
-        btnRetour.setMinWidth(140);
-        btnRetour.setMinHeight(54);
-        btnRetour.setOnAction(new ReglementController<ActionEvent>(stage));
-
+        
         imageView1.setCenter(image1);  
         imageView2.setCenter(image2); 
         imageView3.setCenter(image3);  
         imageView4.setCenter(image4);
+                
+        if(dialog) {
+        	Button btnQuitter = new Button();
+        	btnQuitter.setId("Quitter");
+        	btnQuitter.setStyle("-fx-background-image: url('Application/Ressources/Images/quitter.png');" +
+        			"-fx-background-color: rgba(0, 0, 0, 0);");
+        	btnQuitter.setMinWidth(245);
+        	btnQuitter.setMinHeight(56);
+        	btnQuitter.setOnAction(new ReglementController<ActionEvent>(stage));  
+            vb2.getChildren().addAll(title, sp, btnQuitter);       	
+        }
+        else {
+            Button btnRetour = new Button();
+            btnRetour.setId("Retour");
+            btnRetour.setStyle("-fx-background-image: url('Application/Ressources/Images/retour.png');" +
+    				   "-fx-background-color: rgba(0, 0, 0, 0);");
+            btnRetour.setMinWidth(140);
+            btnRetour.setMinHeight(54);
+            btnRetour.setOnAction(new ReglementController<ActionEvent>(stage));
+            vb2.getChildren().addAll(title, sp, btnRetour);       	
+        }
         
         vb1.getChildren().addAll(imageView1, imageView2, imageView3, imageView4); 
-        vb2.getChildren().addAll(title, sp, btnRetour);   
         vb1.setAlignment(Pos.CENTER);
         vb2.setAlignment(Pos.CENTER);
         vb2.setSpacing(10);
@@ -98,9 +112,13 @@ public class ReglementView implements Observer {
 
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setFullScreen(true);
+        if(!dialog) {
+            stage.setFullScreen(true);
+            stage.setFullScreenExitHint("");
+        }
         stage.show();
     }
+
 
     @Override
     public void update(Observable o, Object arg) {

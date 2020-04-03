@@ -5,18 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.postgresql.ds.*;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
 public class PartieModel
 {
-	//    private int idPartie;
-	//    private int nbJoueur;
-	    private int nbIA;
-	//    private int minuteurPartie;
-	//    private int minuteurTour;
-	//    private int nbDominos;
+	private int nbJoueurs;
+	private int nbIAs;
+	private int joueur;
+	private int nbTour;
 
 	private ArrayList<JoueurModel> listeJoueur;     //On y trouvera les joueurs qu'on aura ajouté dans le constructeur
 	private PiocheModel pioche;
@@ -24,31 +21,50 @@ public class PartieModel
 	public PartieModel() throws SQLException
 	{
 		Scanner s = new Scanner(System.in);
-		int nbJoueur = 0;
-		nbIA = 5;
-		while(!(nbJoueur >= 2 && nbJoueur <= 4))
+		nbJoueurs = 0;
+		nbIAs = 5;
+		while(!(nbJoueurs >= 2 && nbJoueurs <= 4))
 		{
 			System.out.println("Veuillez entrer le nombre de joueur total (entre 2 et 4) : ");
-			nbJoueur = s.nextInt();
+			nbJoueurs = s.nextInt();
 		}
-		while(!(nbIA >= 0 && nbIA <= nbJoueur))
+
+		while(!(nbIAs >= 0 && nbIAs <= nbJoueurs))
 		{
-			System.out.println("Veuillez entrer le nombre de joueur IA (entre 0 et " + nbJoueur + ") : ");
-			nbIA = s.nextInt();
+			System.out.println("Veuillez entrer le nombre de joueur IA (entre 0 et " + nbJoueurs + ") : ");
+			nbIAs = s.nextInt();
 		}
+
+
 								//On crée la pioche vide pour l'instant avec getPioche car c'est un singleton car on ne peut avoir plusieurs pioche
 		pioche = new PiocheModel();
 		pioche.getPioche(this);
 								//On crée les joueur et les ajoute dans la liste qu'on utilisera
 		listeJoueur = new ArrayList<>();
-		for(int i = 0; i < nbJoueur; i++)
+		for(int i = 0; i < nbJoueurs; i++)
 		{
 			listeJoueur.add(new JoueurModel(i+1));
 		}
-		for(int i = 0; i < nbIA; i++)
+		for(int i = 0; i < nbIAs; i++)
 		{
 			listeJoueur.get(i).setJoueurIA(true);
 		}
+	}
+
+	public void setNbJoueurs(int nbJoueurs) {
+		this.nbJoueurs = nbJoueurs;
+	}
+
+	public void setNbIAs(int nbIAs) {
+		this.nbIAs = nbIAs;
+	}
+
+	public void setJoueur(int joueur) {
+		this.joueur = joueur;
+	}
+
+	public void setNbTour(int nbTour) {
+		this.nbTour = nbTour;
 	}
 
 	public JoueurModel getJoueur(int idJoueur)
@@ -76,115 +92,47 @@ public class PartieModel
 				listeJoueur.get(j).getPlateau().affichePlateau();
 				System.out.println();
 			}
-
-			//            System.out.println("joueur 1 :");
-			//            listeJoueur.get(0).getPlateau().affichePlateau();
-			//            System.out.println("joueur 2 :");
-			//            listeJoueur.get(1).getPlateau().affichePlateau();
-			//            System.out.println("joueur 3 :");
-			//            listeJoueur.get(2).getPlateau().affichePlateau();
-			//            System.out.println("joueur 4 :");
-			//            listeJoueur.get(3).getPlateau().affichePlateau();
 		}
-		//        pioche.afficheTirageRetournee();
-		//        System.out.println("Carte joueur 1 :");
-		//        listeJoueur.get(0).afficheListeDomino();
-		//        System.out.println("Carte joueur 2 :");
-		//        listeJoueur.get(1).afficheListeDomino();
-		//        System.out.println("Carte joueur 3 :");
-		//        listeJoueur.get(2).afficheListeDomino();
-		//        System.out.println("Carte joueur 4 :");
-		//        listeJoueur.get(3).afficheListeDomino();
+		for(int j = 0; j < listeJoueur.size(); j++)
+		{
+			System.out.println("Le joueur " + (j+1) + " a " + listeJoueur.get(j).calculePoint() + " couronnes");
+			System.out.println("Le joueur " + (j+1) + " a " + listeJoueur.get(j).calculePoint2() + " points \n");
+		}
 
-		//        System.out.println("joueur 1 :");
-		//        listeJoueur.get(0).getPlateau().affichePlateau();
-		//        System.out.println("joueur 2 :");
-		//        listeJoueur.get(1).getPlateau().affichePlateau();
-		//        System.out.println("joueur 3 :");
-		//        listeJoueur.get(2).getPlateau().affichePlateau();
-		//        System.out.println("joueur 4 :");
-		//        listeJoueur.get(3).getPlateau().affichePlateau();
+		this.sauvegarderPartie();
 	}
 
 	public PiocheModel getPioche() {
 		return pioche;
 	}
-
+	
 	public ArrayList<JoueurModel> getListeJoueur()
 	{
 		return listeJoueur;
 	}
 
-	public void ajouterJoueur() {
-	}
-
-	public void parametrerPartie() {
-	}
-
 	public void sauvegarderPartie() {
-//		try {
-//			PGSimpleDataSource ds = new PGSimpleDataSource();
-//
-//			ds.setServerName("localhost");
-//			ds.setDatabaseName("m4106");
-//			ds.setUser("postgres");
-//			ds.setPassword("postgres");//VOTRE MDP!!!
-//			Connection con = ds.getConnection();
-//
-//			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(?,?,?,?,?,?);")){
-//				stmt.setInt(1, /*this.idPartie*/1);
-//				stmt.setInt(2, /*this.nbJoueur*/4);
-//				stmt.setInt(3, /*this.nbIA*/0);
-//				stmt.setInt(4, /*this.minuteurPartie*/1200);
-//				stmt.setInt(5, /*this.minuteurTour*/30);
-//				stmt.setInt(6, /*this.nbDominos*/48);
-//			}
+		try {
+			Connexion CBDD = new Connexion();
 
-			/*try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
+			PGSimpleDataSource ds = new PGSimpleDataSource();
+
+			ds.setServerName(CBDD.getServerName());
+			ds.setDatabaseName(CBDD.getDatabaseName());
+			ds.setUser(CBDD.getUser());
+			ds.setPassword(CBDD.getPassword());
+			Connection con = ds.getConnection();
+
+			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie VALUES(DEFAULT,?,?,?,?,?);")){
+				stmt.setInt(1, this.nbJoueurs);
+				stmt.setInt(2, this.nbIAs);
+				stmt.setInt(3, this.joueur);
+				stmt.setInt(4, this.nbTour);
+				stmt.setInt(5, 0);
+				stmt.executeQuery();
 			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Tour VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO StatJeu VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO TerrainType VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}
-
-			try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Paysage VALUES(?,(SELECT MAX(idPartie) FROM Partie),?);")){
-				stmt.setInt(1, this.idTour);
-				//stmt.setInt(2, this.partieEnCours.getId());
-				stmt.setInt(2, this.nbTourRestant);
-			}*/
-//
-//		} catch(Exception e) {
-//			System.out.println(e.getMessage());
-//		}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
-
-	public void rejouerPartie() {
-	}
-
-	public void revoirPartie() {
-	}
-
-	public void reprendrePartie() {
-	}
-
-	public void quitterPartie() {
-	}
-
 }

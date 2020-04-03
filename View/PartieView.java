@@ -2,8 +2,9 @@ package Application.View;
 
 import Application.Controller.PartieController;
 import Application.Model.DominoModel;
-import Application.Model.Grille;
+import Application.Model.PartieModel;
 import Application.Model.PiocheModel;
+import Application.Model.PlateauModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,12 +19,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
 import java.sql.SQLException;
 
 
@@ -50,6 +55,11 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private DominoModel d8_tmp;
 
 	private Group zoneJeu;
+	private PlateauModel grille;
+	private int cpt;
+
+	private int nbJoueurs;
+	private int nbIAs;
 
 	private Grille grille1;
 	private Grille grille2;
@@ -60,6 +70,10 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private int secChrono;
 	private int minTemps;
 	private int secTemps;
+	private int joueur=1;
+	private int nbTour;
+	private ArrayList<DominoModel> l1;
+	private ArrayList<DominoModel> l2;
 	private int minChronoParametre = 1;
 	private int secChronoParametre = 15;
 	private int joueur = 1;
@@ -67,6 +81,19 @@ public class PartieView implements EventHandler<ActionEvent> {
 	private int nbTour = 2;
 
 
+	public PartieView(Stage partieStage, int nbJoueurs, int nbIAs, int minChronoParametre, int secChronoParametre) throws SQLException{
+		if(nbJoueurs+nbIAs==2) {
+			nbTour=6;
+		}
+		else {
+			nbTour=12;
+		}
+		this.nbJoueurs=nbJoueurs;
+		this.nbIAs=nbIAs;
+		minChrono=minChronoParametre;
+		secChrono=secChronoParametre;
+		minTemps = (nbJoueurs+nbIAs)*minChrono*nbTour+secChrono*(nbJoueurs+nbIAs)*nbTour/60;
+		secTemps = secChrono*(nbJoueurs+nbIAs)*nbTour%60;
 	public PartieView(Stage partieStage) throws SQLException{
 
 		minChrono = minChronoParametre;
@@ -74,6 +101,11 @@ public class PartieView implements EventHandler<ActionEvent> {
 		minTemps = nbJoueurs*minChrono*nbTour+secChrono*nbJoueurs*nbTour/60;
 		secTemps = secChrono*nbJoueurs*nbTour%60;
 
+		PartieModel partieModel = new PartieModel();
+		partieModel.setNbJoueurs(this.nbJoueurs);
+		partieModel.setNbIAs(this.nbIAs);
+
+		cpt = 0;
 
 		/** Borderpane principale **/
 		BorderPane bp = new BorderPane();
@@ -157,7 +189,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 								}
 								minTemps-=minChrono;
 								secTemps=59;		
-								if(joueur==nbJoueurs) {
+								if(joueur==nbJoueurs+nbIAs) {
 									joueur=1;
 									nbTour--;
 								}
@@ -179,7 +211,6 @@ public class PartieView implements EventHandler<ActionEvent> {
 					}
 				}
 				else {
-					System.out.println("0");
 					minChrono=0;
 					secChrono=0;
 					minTemps=0;
@@ -220,7 +251,14 @@ public class PartieView implements EventHandler<ActionEvent> {
 				"-fx-background-size: 100%");
 		btnSauvegarder.setMinWidth(282/2);
 		btnSauvegarder.setMinHeight(51/2);
-		btnSauvegarder.setOnAction(new PartieController<ActionEvent>(partieStage));
+		btnSauvegarder.setOnAction((ActionEvent e) -> {
+			PartieController evt = new PartieController<ActionEvent>();
+			evt.setNbJoueurs(this.nbJoueurs);
+			evt.setNbIAs(this.nbIAs);
+			evt.setJoueur(this.joueur);
+			evt.setNbTour(this.nbTour);
+			evt.handle(e);
+		});
 
 
 		/** Bouton "Réglement" **/
@@ -328,9 +366,43 @@ public class PartieView implements EventHandler<ActionEvent> {
 		d8 = new DominoModel(650, 600, 100, 50);
 
 
+		
+		/** PLATEAU DES JOUEURS **/
 		/** Placement des éléments dans la zone de jeu **/
 		zoneJeu = new Group();
 		zoneJeu.setStyle("-fx-background-color: #336699;");
+		
+		// JOUEUR 1
+		grille = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(240, 0, 0, 0.45);", "Application/Ressources/Dominos/C1.jpg");
+		grille.dessinerGrille();
+
+		// JOUEUR 2
+		PlateauModel grille2 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 0, 170, 0.28);", "Application/Ressources/Dominos/C2.jpg");
+		grille2.dessinerGrille();
+
+		if(nbJoueurs+nbIAs==2) {
+			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
+			grille2.getPane().setLayoutX(800);
+		}
+		if(nbJoueurs+nbIAs==3) {
+			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
+			grille3.dessinerGrille();
+			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
+			grille2.getPane().setLayoutX(800);
+			grille3.getPane().setLayoutY(500);
+		}
+		else if(nbJoueurs+nbIAs==4) {
+			PlateauModel grille3 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(250, 210, 0, 0.43);", "Application/Ressources/Dominos/C3.jpg");
+			grille3.dessinerGrille();
+			PlateauModel grille4 = new PlateauModel(50, 25, 10, 10, "-fx-background-color: rgba(0, 175, 0, 0.35);", "Application/Ressources/Dominos/C4.jpg");
+			grille4.dessinerGrille();	
+			zoneJeu.getChildren().addAll(grille.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
+			grille2.getPane().setLayoutX(800);
+			grille3.getPane().setLayoutY(500);
+			grille4.getPane().setLayoutX(800);
+			grille4.getPane().setLayoutY(500);
+		}
+
 		zoneJeu.getChildren().addAll(grille1.getPane(), grille2.getPane(), grille3.getPane(), grille4.getPane(), pioche, d1, d2, d3, d4, d5, d6, d7, d8);
 		grille2.getPane().setLayoutX(800);
 		grille3.getPane().setLayoutY(500);
@@ -343,14 +415,47 @@ public class PartieView implements EventHandler<ActionEvent> {
 		bRotateDroit.setOnAction(this);
 		bRotateGauche.setOnAction(this);
 		bAnnulerCoup.setOnAction(this);
+
+		bFinirTour.setOnAction(e -> {
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
+	    	Media media = new Media(file.toURI().toString());
+	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
+	        mediaPlayer.play(); 
+			if (nbTour > 0) {
+				if (secTemps - secChrono < 0) {
+					secTemps = 60 + secTemps - secChrono;
+					minTemps--;
+				} else {
+					secTemps -= secChrono;
+				}
+				minTemps -= minChrono;
+				if (joueur == nbJoueurs+nbIAs) {
+					joueur = 1;
+					nbTour--;
+				} else {
+					joueur++;
+				}
+				if (nbTour != 0) {
+					minChrono = minChronoParametre;
+					secChrono = secChronoParametre;
+				}
+			}
+		});
+
+		bRetourner.setOnAction(this);
+
 		bFinirTour.setOnAction(this);
 		bMelanger.setOnAction(this);
 		bDemarrer.setOnAction(this);
 
 		bReset.setOnAction(e->{
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
+	    	Media media = new Media(file.toURI().toString());
+	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
+	        mediaPlayer.play(); 
 			partieStage.close();
 			try {
-				PartieView pv = new PartieView(partieStage);
+				PartieView pv = new PartieView(partieStage, nbJoueurs, nbIAs, minChronoParametre, secChronoParametre);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -377,6 +482,16 @@ public class PartieView implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent actionEvent) {
 
 		if (actionEvent.getSource() instanceof Button) {
+			File file = new File("src/Application/Ressources/Sons/clic.mp3");  
+	    	Media media = new Media(file.toURI().toString());
+	    	MediaPlayer mediaPlayer = new MediaPlayer(media); 
+	        mediaPlayer.play(); 
+			// EVENT ROTATION A DROITE
+			if (((Button) actionEvent.getSource()).getText() == "Rotation droite" && dominoTMP.isSelected()) {
+				Rotate rotate = new Rotate(90, dominoTMP.getPivotX(), dominoTMP.getPivotY());
+				dominoTMP.getTransforms().add(rotate);
+				cpt += 1;
+				dominoTMP.setCptRotation(cpt);
 
 			/** Event "Rotation droite" **/
 			if (((Button) actionEvent.getSource()).getText() == "Rotation droite") {
@@ -434,6 +549,7 @@ public class PartieView implements EventHandler<ActionEvent> {
 
 			/** Event "finir tour" **/
 			else if (((Button) actionEvent.getSource()).getText() == "Finir tour") {
+			}
 				if (nbTour > 0) {
 					if (secTemps - secChrono < 0) {
 						secTemps = 60 + secTemps - secChrono;
